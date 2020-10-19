@@ -4,6 +4,9 @@ import 'devextreme/dist/css/dx.common.css';
 import 'devextreme/dist/css/dx.light.css';
 import store from './store'
 import router from './router';
+import { BootstrapVue } from 'bootstrap-vue'
+
+Vue.use(BootstrapVue);
 
 Vue.config.productionTip = false
 
@@ -12,3 +15,4 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app')
+

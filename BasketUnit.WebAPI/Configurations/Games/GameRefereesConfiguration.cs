@@ -1,0 +1,23 @@
+﻿using BasketUnit.WebAPI.Models;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace BasketUnit.WebAPI.Configurations
+{
+    public class GameRefereesConfiguration : IEntityTypeConfiguration<GameReferees>
+    {
+        public void Configure(EntityTypeBuilder<GameReferees> builder)
+        {
+            builder
+                .HasOne(x => x.Game)
+                .WithMany(y => y.GameReferees);
+            builder
+                .HasOne(x => x.Referee)
+                .WithMany(y => y.GameReferees);
+        }
+    }
+}
