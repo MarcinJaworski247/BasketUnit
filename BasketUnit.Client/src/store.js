@@ -9,7 +9,7 @@ import statisticsStore from './modules/statistics/store/index'
 import teamsStore from './modules/teams/store/index'
 import workoutsStore from './modules/workouts/store/index'
 
-Vue.use(vuex)
+Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
