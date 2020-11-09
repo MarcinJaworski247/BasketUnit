@@ -3,27 +3,27 @@
         <div class="printers ml-4">
             <div class="main-header mt-4 mb-2">
                 <h3 class="main-header-title">
-                    Administracja
+                    Treningi
                 </h3>
             </div>
             <div class="mt-4">
-                <router-link :to="{ name: 'administration.humanResources.index' }">
+                <router-link :to="{ name: 'workouts.workoutTypes.index' }">
                     <div class="tile">
                         <div class="tile-image">
                             <span class="fas fa-users"></span>
                         </div>
                         <div class="tile-name">
-                            <span>HUMAN RESOURCES</span>
+                            <span>RODZAJE TRENINGÓW</span>
                         </div>
                     </div>
                 </router-link>
-                <router-link :to="{ name: 'administration.clubs.index' }">
+                <router-link :to="{ name: 'workouts.excercises.index' }">
                     <div class="tile">
                         <div class="tile-image">
                             <span class="fas fa-users"></span>
                         </div>
                         <div class="tile-name">
-                            <span>KLUBY</span>
+                            <span>ĆWICZENIA</span>
                         </div>
                     </div>
                 </router-link>

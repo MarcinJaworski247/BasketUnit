@@ -3,39 +3,50 @@
         <div class="printers ml-4">
             <div class="main-header mt-4 mb-2">
                 <h3 class="main-header-title">
-                    Administracja
+                    Drużyny
                 </h3>
             </div>
             <div class="mt-4">
-                <router-link :to="{ name: 'administration.humanResources.index' }">
+                <router-link :to="{ name: 'administration.clubs.teams' }">
                     <div class="tile">
                         <div class="tile-image">
                             <span class="fas fa-users"></span>
                         </div>
                         <div class="tile-name">
-                            <span>HUMAN RESOURCES</span>
+                            <span>DANE ZESPOŁÓW</span>
                         </div>
                     </div>
                 </router-link>
-                <router-link :to="{ name: 'administration.clubs.index' }">
+                <router-link :to="{ name: 'administration.clubs.arenas' }">
                     <div class="tile">
                         <div class="tile-image">
                             <span class="fas fa-users"></span>
                         </div>
                         <div class="tile-name">
-                            <span>KLUBY</span>
+                            <span>ARENY</span>
                         </div>
                     </div>
                 </router-link>
+            </div>
+            <div class="d-flex end-xs mt-5">
+                <DxButton 
+                    text="Wstecz"
+                    type="default"
+                    styling-mode="outlined"
+                    @click="function() { $router.push({ name: 'administration.index' }) }"
+                />
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import DxButton from 'devextreme-vue/button';
 export default {
-    
-}
+  components: {
+      DxButton
+  }
+};
 </script>
 
 <style scoped>
