@@ -27,3 +27,5 @@ export default new Vuex.Store({
         AdministrationEditRefereeStore
     }
 });
+
+// to do akcje, mutacje itd. do danych użytkownika

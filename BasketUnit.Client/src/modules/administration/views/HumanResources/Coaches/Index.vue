@@ -4,12 +4,17 @@
     <div class="main-header mt-1 mb-2"> 
         <h3 class="main-header-title"> Trenerzy
         </h3>
-        
+        <DxButton 
+            :use-submit-behavior="false"
+            type="default"
+            text="Dodaj"
+            class="main-tabpanel-button"
+            @click="showAddPopup" />
     </div>
     
     <DxDataGrid
         id="gridContainer"
-        :data-source="coaches"
+        :data-source="getCoachesList"
         :show-borders="true"
         key-expr="Id"
         :allow-column-reordering="true"
@@ -35,20 +40,28 @@
             alignment="center"
             caption="Data urodzenia" />
         <DxColumn 
-            data-field="EmailAddress"
-            data-type="date"
-            alignment="center"
-            caption="Email" />
-        <DxColumn 
-            data-field="PhoneNumber"
-            data-type="date"
-            alignment="center"
-            caption="Nr. tel." />
-        <DxColumn 
             data-field="Team"
-            data-type="string"
             alignment="left"
-            caption="Drużyna" />
+            caption="Drużyna">
+            <DxLookup
+                :data-source="getTeams"
+                value-expr="Value"
+                display-expr="Text" />
+        </DxColumn>
+        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
+        <DxPaging :page-size="5" />
+        <DxColumn 
+            data-field="Id"
+            alignment="center"
+            caption=""
+            cell-template="actionsCellTemplate"
+            :allow-search="false"
+            :allow-filtering="false"
+            width="100" />
+        <div slot="actionsCellTemplate" slot-scope="{ data }">
+            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
+            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+        </div>
     </DxDataGrid>
     <div class="d-flex end-xs mt-5">
         <DxButton
@@ -59,6 +72,59 @@
                 @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
     </div>
     </div>    
+
+     <!-- add popup -->
+    <DxPopup 
+        id="addPopup"
+        :visible.sync="addPopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        :width="500"
+        height="auto"
+        class="popup"
+        title-template="titleTemplate">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Dodaj trenera</h3>
+        </div>
+        <addForm @closeAdd="onAddPopupClose"></addForm>
+    </DxPopup>
+
+    <!-- edit popup -->
+    <DxPopup
+        id="editPopup"
+        :visible.sync="editPopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        :width="500"
+        height="auto"
+        class="popup"
+        title-template="titleTemplate">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Edycja</h3>
+        </div>
+        <editForm @closeEdit="onEditPopupClose"></editForm>
+    </DxPopup>
+
+    <!-- delete popup -->
+    <DxPopup
+        :visible.sync="deletePopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        title="Czy na pewno usunąć?"
+        height="150"
+        width="280">
+        <DxButton
+            text="Anuluj"
+            type="default"
+            styling-mode="outlined"
+            @click="hideDeletePopup()" />
+        <DxButton
+            text="Usuń"
+            type="danger"
+            styling-mode="outlined"
+            @click="deleteTeam()" />
+    </DxPopup>
+
 </div>
 </template>
 
@@ -67,22 +133,79 @@ import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow, 
-    DxButton } 
-from 'devextreme-vue';
-
+    DxButton } from 'devextreme-vue';
+import notify from 'devextreme/ui/notify';
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
+import addForm from "./Components/Add.vue";
+import editForm from "./Components/Edit.vue";
+const store = "HumanResourcesCoachStore";
 
 export default {
     name: "coaches",
     data() {
         return {
-            coaches: []
+            pageSizes: [5, 10, 15],
+            addPopupOptions: {
+                popupVisible: false
+            },
+            editPopupOptions: {
+                popupVisible: false
+            },
+            deletePopupOptions: {
+                popupVisible: false
+            }
         }
     },
     created() {
     },
+    computed: {
+        ...mapGetters(store, ["getCoachesList", "getTeams"]),
+        ...mapFields(store, ["idToDelete"])
+    },
     methods: {      
+        ...mapActions(store, ["setCoachesList", "setTeams", "setDetails"]),
+        showAddPopup(){
+            this.addPopupOptions.popupVisible = true;
+        },      
+        onAddPopupClose(){
+            this.addPopupOptions.popupVisible = false;
+            this.setCoachesList();
+        },
+        showEditPopup(options){
+            this.setDetails(options.data.Id);
+            this.editPopupOptions.popupVisible = true;
+        },
+        onEditPopupClose(){
+            this.editPopupOptions.popupVisible = false;
+            this.setCoachesList();
+        },
+        showDeletePopup(data) {
+            this.deletePopupOptions.popupVisible = true;
+            this.idToDelete = data.value;
+        },
+        hideDeletePopup() {
+            this.deletePopupOptions.popupVisible = false;
+            this.idToDelete = null;
+        },
+        deleteTeam() {
+            this.deleteTeam()
+                .then(() => {
+                    this.setCoachesList();
+                });
+            this.deletePopupOptions.popupVisible = false;
+            this.showDeletedNotify();
+            this.idToDelete = null;
+        },
+        showDeletedNotify() {
+            this.$nextTick(() => {
+                notify("Usunięto", "warning", 500);
+            });
+        }    
     },
     mounted() {
+        this.setCoachesList();
+        this.setTeams();
     },
     components: {
         DxDataGrid,

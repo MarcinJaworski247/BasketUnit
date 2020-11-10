@@ -39,8 +39,7 @@
             data-field="Name"
             alignment="left"
             caption="Nazwa"
-            data-type="string">
-        </DxColumn>
+            data-type="string"/>
         <DxColumn 
             data-field="City"
             data-type="string"
@@ -82,11 +81,11 @@
 
     <div class="d-flex end-xs mt-5">
         <DxButton
-                :use-submit-behavior="false"
-                type="normal"
-                styling-mode="outlined"
-                text="Wróć"
-                @click="function(){ $router.push({ name: `administration.clubs.index` }) }" />
+            :use-submit-behavior="false"
+            type="normal"
+            styling-mode="outlined"
+            text="Wróć"
+            @click="function(){ $router.push({ name: `administration.clubs.index` }) }" />
     </div>
 
     </div>

@@ -7,12 +7,13 @@
             :use-submit-behavior="false"
             type="default"
             text="Dodaj"
-            @click="function() { $router.push({ name: 'administration.humanResources.players.add' }) }" />
+            class="main-tabpanel-button"
+            @click="showAddPopup" />
     </div>
     
     <DxDataGrid
         id="gridContainer"
-        :data-source="coaches"
+        :data-source="getPlayersList"
         :show-borders="true"
         key-expr="Id"
         :allow-column-reordering="true"
@@ -22,7 +23,7 @@
     >
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="avatar"
+            data-field="Avatar"
             caption=""
             cell-template="avatarCellTemplate"
             :allow-search="false"
@@ -56,25 +57,23 @@
             alignment="center"
             caption="Data urodzenia" />
         <DxColumn 
-            data-field="EmailAddress"
-            data-type="date"
-            alignment="center"
-            caption="Email" />
-        <DxColumn 
-            data-field="PhoneNumber"
-            data-type="date"
-            alignment="center"
-            caption="Nr. tel." />
-        <DxColumn 
-            data-field="Position"
-            data-type="string"
+            data-field="PositionId"
             alignment="left"
-            caption="Pozycja" />
+            caption="Pozycja">
+            <DxLookup
+                :data-source="getPositions"
+                value-expr="Value"
+                display-expr="Text" />
+        </DxColumn>
         <DxColumn 
             data-field="Team"
-            data-type="string"
             alignment="left"
-            caption="Drużyna" />
+            caption="Drużyna">
+            <DxLookup
+                :data-source="getTeams"
+                value-expr="Value"
+                display-expr="Text" />
+        </DxColumn>
         <DxColumn 
             data-field="Id"
             alignment="center"
@@ -91,25 +90,75 @@
             >
                 <i hint="Szczegóły" class="fas fa-chevron-right"></i>
             </router-link>
-            <router-link
-                class="datagrid-btn"
-                :to="{ name: 'administration.humanResources.players.edit', params: { id: data.value } }"
-            >
-                <i hint="Edycja" class="fas fa-pen"></i>
-            </router-link>
+            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
+            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
         </div>
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
         <DxPaging :page-size="5" />
     </DxDataGrid>
+
     <div class="d-flex end-xs mt-5">
         <DxButton
-                :use-submit-behavior="false"
-                type="normal"
-                styling-mode="outlined"
-                text="Wróć"
-                @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
+            :use-submit-behavior="false"
+            type="normal"
+            styling-mode="outlined"
+            text="Wróć"
+            @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
     </div>
     </div>    
+
+    <!-- add popup -->
+    <DxPopup 
+        id="addPopup"
+        :visible.sync="addPopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        :width="500"
+        height="auto"
+        class="popup"
+        title-template="titleTemplate">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Dodaj zawodnika</h3>
+        </div>
+        <addForm @closeAdd="onAddPopupClose"></addForm>
+    </DxPopup>
+
+    <!-- edit popup -->
+    <DxPopup
+        id="editPopup"
+        :visible.sync="editPopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        :width="500"
+        height="auto"
+        class="popup"
+        title-template="titleTemplate">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Edycja</h3>
+        </div>
+        <editForm @closeEdit="onEditPopupClose"></editForm>
+    </DxPopup>
+
+    <!-- delete popup -->
+    <DxPopup
+        :visible.sync="deletePopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        title="Czy na pewno usunąć?"
+        height="150"
+        width="280">
+        <DxButton
+            text="Anuluj"
+            type="default"
+            styling-mode="outlined"
+            @click="hideDeletePopup()" />
+        <DxButton
+            text="Usuń"
+            type="danger"
+            styling-mode="outlined"
+            @click="deleteTeam()" />
+    </DxPopup>
+
 </div>
 </template>
 
@@ -122,22 +171,80 @@ import
     DxButton,
     DxPager,
     DxPaging
-} 
-from 'devextreme-vue';
-
+} from 'devextreme-vue';
+import notify from 'devextreme/ui/notify';
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
+import addForm from "./Components/Add.vue";
+import editForm from "./Components/Edit.vue";
+const store = "HumanResourcesPlayerStore";
 
 export default {
-    name: "coaches",
+    name: "players",
     data() {
         return {
-            coaches: []
+            pageSizes: [5, 10, 15],
+            addPopupOptions: {
+                popupVisible: false
+            },
+            editPopupOptions: {
+                popupVisible: false
+            },
+            deletePopupOptions: {
+                popupVisible: false
+            }
         }
     },
     created() {
     },
-    methods: {      
+    computed: {
+        ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions"]),
+        ...mapFields(store, ["idToDelete"])
+    },
+    methods: {
+        ...mapActions(store, ["setPlayersList", "setTeams", "setPositions", "setDetails"]),
+        showAddPopup(){
+            this.addPopupOptions.popupVisible = true;
+        },      
+        onAddPopupClose(){
+            this.addPopupOptions.popupVisible = false;
+            this.setPlayersList();
+        },
+        showEditPopup(options){
+            this.setDetails(options.data.Id);
+            this.editPopupOptions.popupVisible = true;
+        },
+        onEditPopupClose(){
+            this.editPopupOptions.popupVisible = false;
+            this.setPlayersList();
+        },
+        showDeletePopup(data) {
+            this.deletePopupOptions.popupVisible = true;
+            this.idToDelete = data.value;
+        },
+        hideDeletePopup() {
+            this.deletePopupOptions.popupVisible = false;
+            this.idToDelete = null;
+        },
+        deleteTeam() {
+            this.deleteTeam()
+                .then(() => {
+                    this.setPlayersList();
+                });
+            this.deletePopupOptions.popupVisible = false;
+            this.showDeletedNotify();
+            this.idToDelete = null;
+        },
+        showDeletedNotify() {
+            this.$nextTick(() => {
+                notify("Usunięto", "warning", 500);
+            });
+        }          
     },
     mounted() {
+        this.setPlayersList();
+        this.setTeams();
+        this.setPositions();
     },
     components: {
         DxDataGrid,

@@ -10,10 +10,10 @@
       </div>
 
       <div class="py-4 px-3 mb-4 bg-light">
-        <div class="media d-flex align-items-center"><img src="./assets/avatar.png" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+        <div class="media d-flex align-items-center"><img v-bind:src="userData.UserAvatar" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm">
           <div class="media-body">
-            <h6 class="m-0">Jan Kowalski</h6>
-            <p class="font-weight-light text-muted mb-0">Trener</p>
+            <h6 class="m-0">{{ userData.FullName }}</h6>
+            <p class="font-weight-light text-muted mb-0">{{ userData.Function }}</p>
             <span><i class="fas fa-sign-out-alt"></i></span>
           </div>
         </div>
@@ -69,13 +69,17 @@
       </ul>
         <div>
           <div>
-            <img src="./assets/laclippers.png" width="65">
+            <img v-bind:src="userData.TeamBadge" width="65">
           </div>
-          <span>Los Angeles Clippers</span>
+          <span>{{ userData.TeamName }}</span>
         </div>  
     </div>
     <div class="container mt-3 pl-2">
       <router-view />
+    </div>
+    <div>
+      <IncomingTermsComponent>
+      <LeagueLeadersComponent>
     </div>
   </div>
 </template>
@@ -83,9 +87,13 @@
 <script>
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import IncomingTermsComponent from "./components/IncomingTermsComponent.vue"
+import LeagueLeadersComponent from "./components/LeagueLeadersComponent.vue"
+import store from "./store";
 export default {
   name: 'App',
-}
+  // to do gettery itd. do danych użytkownika
+};
 </script>
 
 <style>

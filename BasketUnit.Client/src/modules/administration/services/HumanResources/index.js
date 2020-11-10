@@ -13,6 +13,9 @@ class humanResourcesService {
     getTeamsToLookup() {
         return axios.get("/administration/humanResources/getTeamsToLookup");
     }
+    getPositionsToLookup() {
+        return axios.get("/administration/humanResources/getPositionsToLookup");
+    }
     setPlayerDetails(playerId) {
         return axios.get("/administration/humanResources/setPlayerDetails", playerId);
     }
@@ -30,6 +33,15 @@ class humanResourcesService {
     }
     editReferee(data) {
         return axios.get("/administration/humanResources/editReferee", data);
+    }
+    getPlayerDataToDetails(playerId) {
+        return axios.get("/administration/humanResources/getPlayerDataToDetails", playerId);
+    }
+    getLastPlayerStatistics(playerId) {
+        return axios.get("/administration/humanResources/getLastPlayerStatistics", playerId);
+    }
+    getAvarageStatsToChart(playerId) {
+        return axios.get("/administration/humanResources/getAvarageStatsToChart", playerId);
     }
 }
 
