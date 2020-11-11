@@ -1,93 +1,44 @@
 <template>
-    <form @submit.prevent="editPlayer">
+    <form @submit.prevent="editExcersise">
         <DxValidationGroup :ref="`validationGroup`">
+        <div class="row">
+            <div class="col-xs-6">
+                <div class="form-group row">
+                    <label class="col-xs-12">Nazwa</label>
+                    <div class="col-xs-12">
+                        <DxTextBox v-model="Name">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                        </DxTextBox>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="form-group row">
+                    <label class="col-xs-12">Opis</label>
+                    <div class="col-xs-12">
+                        <DxTextBox v-model="Description">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                        </DxTextBox>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             <div class="col-xs-12">
                 <div class="form-group row">
-                    <div class="file-upload">
-                        <img v-bind:src="'data:image/jpeg;base64,'+Avatar" />
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Imię</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="FirstName">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxTextBox>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwisko</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="LastName">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxTextBox>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Pozycja</label>
+                    <label class="col-xs-12">Rodzaj treningu</label>
                     <div class="col-xs-12">
                         <DxSelectBox 
-                            v-model="PositionId"
-                            :data-source="getPositions"
+                            v-model="WorkoutTypeId"
+                            :data-source="getWorkoutTypes"
                             value-expr="Value"
                             display-expr="Text"
                             :search-enabled="false"
                             placeholder=""/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Drużyna</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="TeamId"
-                            :data-source="getTeams"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Narodowość</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Nationality">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxTextBox>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Data urodzenia</label>
-                    <div class="col-xs-12">
-                        <DxDateBox v-model="BirthDate">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxDateBox>
                     </div>
                 </div>
             </div>
@@ -120,11 +71,12 @@ import {
 import { DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "HumanResourcesPlayerEditStore";
+const store = "WorkoutExcersiseEditStore";
 
 export default {
-    name: "playerEdit",
+    name: "excersiseEdit",
     created(){
+
     },
     data(){
         return {
@@ -132,20 +84,16 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getTeams", "getPositions"]),
+        ...mapGetters(store, ["getForm", "getWorkoutTypes"]),
         ...mapFields(store, [
             "editForm.Id",
-            "editForm.FirstName",
-            "editForm.LastName",
-            "editForm.TeamId",
-            "editForm.PositionId",
-            "editForm.BirthDate",
-            "editForm.Nationality",
-            "editForm.Avatar"
+            "editForm.Name",
+            "editForm.Description",
+            "editForm.WorkoutTypeId"
         ])
     },
     methods: {
-        ...mapActions(store, ["editPlayer", "setTeams", "setPositions"]),
+        ...mapActions(store, ["editExcersise", "setWorkoutTypes", "setDetails"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
@@ -165,9 +113,8 @@ export default {
         }  
     },
     mounted(){
-        //this.setDetails();
-        this.setTeams();
-        this.setPositions();
+        this.setWorkoutTypes();
+        this.setDetails();
     },
     destroyed() {
         this.resetForm();

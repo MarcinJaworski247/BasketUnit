@@ -1,27 +1,15 @@
 <template>
-    <form @submit.prevent="addPlayer">
+    <form @submit.prevent="editPlayer">
         <DxValidationGroup :ref="`validationGroup`">
-        <!-- <div class="row">
+        <div class="row">
             <div class="col-xs-12">
                 <div class="form-group row">
                     <div class="file-upload">
                         <img v-bind:src="'data:image/jpeg;base64,'+Avatar" />
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class="fileuploader-container">
-                        <DxFileUploader
-                            select-button-text="Wybierz zdjęcie"
-                            label-text="lub upuść tutaj"
-                            accept="image/*"
-                            upload-mode="useForm"
-                            :show-file-list="false"
-                            :multiple="false"
-                        />
-                    </div>
-                </div>
             </div>
-        </div> -->
+        </div>
         <div class="row">
             <div class="col-xs-6">
                 <div class="form-group row">
@@ -67,13 +55,8 @@
                 <div class="form-group row">
                     <label class="col-xs-12">Drużyna</label>
                     <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="TeamId"
-                            :data-source="getTeams"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
+                        <DxNumberBox
+                            v-model="PlayerNumber"/>
                     </div>
                 </div>
             </div>
@@ -132,12 +115,11 @@ import {
 import { DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "HumanResourcesPlayerStore";
+const store = "TeamsStore";
 
 export default {
-    name: "playerAdd",
+    name: "playerEdit",
     created(){
-
     },
     data(){
         return {
@@ -145,28 +127,29 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getTeams", "getPositions"]),
+        ...mapGetters(store, ["getForm", "getPositions"]),
         ...mapFields(store, [
-            "addForm.FirstName",
-            "addForm.LastName",
-            "addForm.TeamId",
-            "addForm.PositionId",
-            "addForm.BirthDate",
-            "addForm.Nationality",
-            "addForm.Avatar"
+            "editForm.Id",
+            "editForm.FirstName",
+            "editForm.LastName",
+            "editForm.PlayerNumber",
+            "editForm.PositionId",
+            "editForm.BirthDate",
+            "editForm.Nationality",
+            "editForm.Avatar"
         ])
     },
     methods: {
-        ...mapActions(store, ["addPlayer", "setTeams", "setPositions"]),
+        ...mapActions(store, ["editPlayer", "setPositions"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
-            this.$emit("closeAdd");
+            this.$emit("closeEdit");
             this.resetForm();
         },
         closePopupOnSave: function (e) {
             let validateResult = e.validationGroup.validate();
             if(validateResult.isValid) {
-                this.$emit("closeAdd");
+                this.$emit("closeEdit");
                 this.showSuccessNotify();
             }
         },
@@ -177,7 +160,7 @@ export default {
         }  
     },
     mounted(){
-        this.setTeams();
+        //this.setDetails();
         this.setPositions();
     },
     destroyed() {
