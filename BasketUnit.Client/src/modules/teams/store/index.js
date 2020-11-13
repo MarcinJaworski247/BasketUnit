@@ -15,7 +15,17 @@ const state = {
         Avatar: ''
     },
     playersList: [],
-    firstLineupPlayers: []
+    firstLineupPlayers: [],
+    pointGuard: null,
+    shootingGuard: null,
+    smallForward: null,
+    powerForward: null,
+    center: null,
+    pointGuardId: null,
+    shootingGuardId: null,
+    smallForwardId: null,
+    powerForwardId: null,
+    centerId: null
 }
 
 const getters = {
@@ -25,6 +35,31 @@ const getters = {
     },
     getFirstLineupPlayers: (state) => {
         return state.firstLineupPlayers;
+    },
+    getPointGuard: (state) => {
+        return state.playersList.filter(() => {
+            return state.playersList.Id == pointGuardId;
+        })
+    },
+    getShootingGuard: (state) => {
+        return state.playersList.filter(() => {
+            return state.playersList.Id == shootingGuardId;
+        })
+    },
+    getSmallForward: (state) => {
+        return state.playersList.filter(() => {
+            return state.playersList.Id == smallForwardId;
+        })
+    },
+    getPowerForward: (state) => {
+        return state.playersList.filter(() => {
+            return state.playersList.Id == powerForwardId;
+        })
+    },
+    getCenter: (state) => {
+        return state.playersList.filter(() => {
+            return state.playersList.Id == centerId;
+        })
     }
 }
 

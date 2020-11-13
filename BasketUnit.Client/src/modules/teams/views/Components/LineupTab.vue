@@ -111,15 +111,14 @@ import
     DxPager,
     DxPaging
 } from 'devextreme-vue';
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
 import notify from 'devextreme/ui/notify';
 import editForm from "./Components/EditPlayer.vue";
 const store = "TeamsStore";
 
 export default {
     name: "lineup",
-    props: {
-        playersList: Array
-    },
     data() {
         return {
             pageSizes: [5, 10, 15],
@@ -132,10 +131,10 @@ export default {
 
     },
     computed: {
-        
+        ...mapGetters(name, ["getPlayersList"])
     },
     methods: {
-        ...mapActions(store, ["setDetails"]),
+        ...mapActions(store, ["setPlayersList", "setDetails"]),
         showEditPopup(options){
             this.setDetails(options.data.Id);
             this.editPopupOptions.popupVisible = true;
@@ -146,7 +145,7 @@ export default {
         }
     },
     mounted() {
-
+        this.setPlayersList();
     },
     components: {
         DxDataGrid, 

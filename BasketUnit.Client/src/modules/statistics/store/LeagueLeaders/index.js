@@ -8,7 +8,18 @@ const state = {
     assistsLeaders: [],
     reboundsLeaders: [],
     blocksLeaders: [],
-    stealsLeaders: []
+    stealsLeaders: [],
+    // pointsLeaders: [
+    //     {
+    //         statisticsTitle: '',
+    //         fullName: '',
+    //         avarage: '',
+    //         statisticsType: '',
+    //         avatar: '',
+    //         team: '',
+    //         position: ''
+    //     }
+    // ]
 }
 
 const getters = {

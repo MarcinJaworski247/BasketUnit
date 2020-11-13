@@ -17,12 +17,12 @@
         </template>
         <template slot="tab1">
             <div class="container">
-                <LineupTab :playersList="getPlayersList" />
+                <LineupTab/>
             </div>
         </template>
         <template slot="tab2">
             <div class="container">
-                <FirstLineupTab :playersList="getPlayersList" :firstLineup="getFirstLineupPlayers"/>
+                <FirstLineupTab/>
             </div>
         </template>
     </DxTabPanel>
@@ -76,8 +76,7 @@ export default {
         ...mapActions(store, ["setPlayersList", "setFirstLineupPlayers"])
     },
     mounted(){
-        this.setPlayersList();
-        this.setFirstLineupPlayers();
+        
     },
     components: {
         DxButton,
