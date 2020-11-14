@@ -1,6 +1,5 @@
 import { getField, updateField } from 'vuex-map-fields';
-import service from "../../../services/Clubs";
-import router from "../../../router/index";
+import service from "../../../services/Clubs/index";
 
 const namespaced = true;
 

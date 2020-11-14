@@ -48,14 +48,13 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
-    DxNumberBox,
-    DxSelectBox
+    DxValidator
 } from 'devextreme-vue';
 import { DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
-const store = "WorkoutTypeStore";
+const store = "WorkoutsTypesStore";
 
 export default {
     name: "workoutTypeAdd",
@@ -103,9 +102,7 @@ export default {
         DxTextBox,
         DxButton,
         DxValidator,
-        DxNumberBox,
-        DxRequiredRule,
-        DxSelectBox
+        DxRequiredRule
     }
 };
 </script>

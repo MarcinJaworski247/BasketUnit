@@ -54,13 +54,10 @@ import {
   DxCommonSeriesSettings,
   DxValueAxis,
   DxTitle,
-  DxLegend,
-  DxBorder,
-  DxExport,
-  DxTooltip
 } from 'devextreme-vue/chart';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
+const store = "TeamStatisticsStore";
 export default {
     name: "statisticTeamTab",
     data() {
@@ -82,11 +79,7 @@ export default {
     DxSeries,
     DxCommonSeriesSettings,
     DxValueAxis,
-    DxTitle,
-    DxLegend,
-    DxBorder,
-    DxExport,
-    DxTooltip
+    DxTitle
     }
 }
 </script>

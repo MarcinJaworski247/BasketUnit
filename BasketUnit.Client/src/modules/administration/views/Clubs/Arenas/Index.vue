@@ -113,7 +113,7 @@ from 'devextreme-vue';
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-import addForm from "./Components/Add.vue";
+//import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationArenaStore";
 
@@ -188,7 +188,7 @@ export default {
         DxColumn,
         DxFilterRow,
         DxButton,
-        addForm,
+        //addForm,
         editForm
     }
 };

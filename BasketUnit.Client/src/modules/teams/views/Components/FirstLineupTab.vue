@@ -75,7 +75,7 @@ import
 } from 'devextreme-vue';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions, mapState } from "vuex";
-const store = "TeamsStore";
+const store = "TeamStore";
 export default {
     name: "firstLineup",
     data() {

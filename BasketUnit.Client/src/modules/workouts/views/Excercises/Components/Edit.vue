@@ -65,13 +65,13 @@ import {
     DxTextBox,
     DxButton,
     DxValidator,
-    DxNumberBox,
     DxSelectBox
 } from 'devextreme-vue';
 import { DxRequiredRule } from "devextreme-vue/validator";
+import notify from 'devextreme/ui/notify';
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "WorkoutExcersiseEditStore";
+const store = "WorkoutsExcercisesEditStore";
 
 export default {
     name: "excersiseEdit",
@@ -123,7 +123,6 @@ export default {
         DxTextBox,
         DxButton,
         DxValidator,
-        DxNumberBox,
         DxRequiredRule,
         DxSelectBox
     }

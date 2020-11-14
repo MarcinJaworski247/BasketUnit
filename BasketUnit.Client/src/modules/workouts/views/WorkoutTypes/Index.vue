@@ -129,7 +129,7 @@ import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
-const store = "WorkoutTypeStore";
+const store = "WorkoutsTypesStore";
 
 export default {
     name: "workoutTypes",

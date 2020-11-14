@@ -45,7 +45,7 @@ import
 } from 'devextreme-vue';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-const store = "TeamsStore";
+const store = "TeamStore";
 import LineupTab from "./Components/LineupTab";
 import FirstLineupTab from "./Components/FirstLineupTab";
 export default {

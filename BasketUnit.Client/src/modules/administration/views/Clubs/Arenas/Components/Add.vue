@@ -70,7 +70,7 @@ import { DxFileUploader } from 'devextreme-vue/file-uploader';
 import { DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "AdministrationArenatore";
+const store = "AdministrationArenaStore";
 
 export default {
     name: "arenaAdd",

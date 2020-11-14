@@ -38,27 +38,27 @@ const getters = {
     },
     getPointGuard: (state) => {
         return state.playersList.filter(() => {
-            return state.playersList.Id == pointGuardId;
+            return state.playersList.Id == state.pointGuardId;
         })
     },
     getShootingGuard: (state) => {
         return state.playersList.filter(() => {
-            return state.playersList.Id == shootingGuardId;
+            return state.playersList.Id == state.shootingGuardId;
         })
     },
     getSmallForward: (state) => {
         return state.playersList.filter(() => {
-            return state.playersList.Id == smallForwardId;
+            return state.playersList.Id == state.smallForwardId;
         })
     },
     getPowerForward: (state) => {
         return state.playersList.filter(() => {
-            return state.playersList.Id == powerForwardId;
+            return state.playersList.Id == state.powerForwardId;
         })
     },
     getCenter: (state) => {
         return state.playersList.filter(() => {
-            return state.playersList.Id == centerId;
+            return state.playersList.Id == state.centerId;
         })
     }
 }

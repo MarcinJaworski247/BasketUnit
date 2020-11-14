@@ -107,15 +107,13 @@ import
     DxDataGrid, 
     DxColumn, 
     DxFilterRow, 
-    DxButton,
     DxPager,
     DxPaging
 } from 'devextreme-vue';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-import notify from 'devextreme/ui/notify';
-import editForm from "./Components/EditPlayer.vue";
-const store = "TeamsStore";
+import editForm from "./EditPlayer.vue";
+const store = "TeamStore";
 
 export default {
     name: "lineup",
@@ -151,11 +149,9 @@ export default {
         DxDataGrid, 
         DxColumn, 
         DxFilterRow, 
-        DxButton,
         DxPager,
         DxPaging,
-        editForm,
-        notify
+        editForm
     }
 }
 </script>

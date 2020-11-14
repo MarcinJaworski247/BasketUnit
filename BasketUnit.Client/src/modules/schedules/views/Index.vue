@@ -27,10 +27,10 @@
 <script>
 import { DxScheduler, DxResource } from 'devextreme-vue/scheduler';
 import DataCell from '../components/DataCell';
-import ResourceCell from '../components/ResourceCell';
+//import ResourceCell from '../components/ResourceCell';
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "SchedulerStore";
+const store = "SchedulesStore";
 export default {
     name: "scheduler",
     data() {
@@ -53,7 +53,7 @@ export default {
         DxScheduler,
         DxResource,
         DataCell,
-        ResourceCell
+        //ResourceCell
     }
 };
 </script>

@@ -100,9 +100,9 @@ import {
     DxTextBox,
     DxButton,
     DxValidator,
-    DxNumberBox,
     DxSelectBox
 } from 'devextreme-vue';
+import notify from 'devextreme/ui/notify';
 import { DxFileUploader } from 'devextreme-vue/file-uploader';
 import { DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
@@ -160,7 +160,6 @@ export default {
         DxTextBox,
         DxButton,
         DxValidator,
-        DxNumberBox,
         DxRequiredRule,
         DxSelectBox
     }

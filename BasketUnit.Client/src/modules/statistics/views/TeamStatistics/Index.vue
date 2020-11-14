@@ -32,7 +32,7 @@
                 type="normal"
                 styling-mode="outlined"
                 text="Wróć"
-                @click="function() { $router.push({ name: 'dashboard' }) }"/>
+                @click="function() { $router.push({ name: 'statistics.index' }) }"/>
         </div>
 
     </div>
@@ -45,7 +45,7 @@ import
 } from 'devextreme-vue';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-const store = "TeamsStore";
+const store = "TeamStatisticsStore";
 import PlayerStatsTab from "./Components/PlayerStatsTab";
 import TeamStatsTab from "./Components/TeamStatsTab";
 export default {

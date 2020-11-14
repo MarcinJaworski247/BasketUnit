@@ -64,19 +64,16 @@ import {
   DxCommonSeriesSettings,
   DxValueAxis,
   DxTitle,
-  DxLegend,
-  DxBorder,
-  DxExport,
-  DxTooltip,
   DxSelectBox
 } from 'devextreme-vue/chart';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
+const store = "TeamStatisticsStore";
 export default {
     name: "statisticPlayerTab",
     data() {
         return {
-            chartTitle: 'Statystyki zawodnika: ' + $getSelectedPlayer.FullName
+            chartTitle: 'Statystyki zawodnika: '
         };
     },
     computed: {
@@ -95,10 +92,6 @@ export default {
         DxCommonSeriesSettings,
         DxValueAxis,
         DxTitle,
-        DxLegend,
-        DxBorder,
-        DxExport,
-        DxTooltip,
         DxSelectBox
     }
 }

@@ -1,7 +1,5 @@
-import { BIconPause } from 'bootstrap-vue';
-import { addLocale } from 'core-js';
 import { getField, updateField } from 'vuex-map-fields';
-import service from "../services/index.js";
+import service from "../../services/TeamStatistics/index.js";
 
 const namespaced = true;
 
@@ -50,7 +48,7 @@ const getters = {
     },
     getPlayersStats: (state) => {
         return state.playersStats.filter(() => {
-            return state.playerStats.Id == selectedPlayer.Id;
+            return state.playerStats.Id == state.selectedPlayer.Id;
         })
     },
     getSelectedPlayer: (state) => {
@@ -77,7 +75,7 @@ const mutations = {
     }
 }
 
-const acions = {
+const actions = {
     setSelectedPlayer: ({ commit }, data) => {
         commit("setSelectedPlayer", data);
     },

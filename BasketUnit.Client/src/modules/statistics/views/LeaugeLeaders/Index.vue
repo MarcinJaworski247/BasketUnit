@@ -1,15 +1,17 @@
 <template>
     <div class="content">
-        <LeagueLeaderTile :data="getPointsLeaders">
-        <LeagueLeaderTile :data="getAssistsLeaders">
-        <LeagueLeaderTile :data="getReboundsLeaders">
-        <LeagueLeaderTile :data="getBlocksLeaders">
-        <LeagueLeaderTile :data="getStealsLeaders">
+        <LeagueLeaderTile :data="getPointsLeaders"/>
+        <LeagueLeaderTile :data="getAssistsLeaders"/>
+        <LeagueLeaderTile :data="getReboundsLeaders"/>
+        <LeagueLeaderTile :data="getBlocksLeaders"/>
+        <LeagueLeaderTile :data="getStealsLeaders"/>
     </div>
 </template>
 <script>
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
 import LeagueLeaderTile from "./Components/LeagueLeaderTile";
-const store = "StatisticsLeagueLeadersStore";
+const store = "LeagueLeadersStore";
 
 export default {
     name: "leagueLeaders",

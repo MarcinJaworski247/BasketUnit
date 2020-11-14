@@ -1,6 +1,5 @@
 import { getField, updateField } from 'vuex-map-fields';
 import service from "../../../services/HumanResources/index";
-import router from "../../../router/index";
 
 const namespaced = true;
 
@@ -49,7 +48,7 @@ const mutations = {
 }
 
 const actions = {
-    setDetails: ({ commit }) => {
+    setDetails: ({ commit, rootState }) => {
         service.getPlayerDataToDetails(rootState.route.params.playerId)
             .then(response => {
                 commit("setDetails", response.data);
