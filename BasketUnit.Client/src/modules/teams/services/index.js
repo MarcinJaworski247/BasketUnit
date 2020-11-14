@@ -2,16 +2,16 @@ import axios from "../../../http-common";
 
 class teamsService {
     getPlayersList() {
-        return axios.get("/teams/getPlayersList");
+        return axios.get("/team/getPlayersList");
     }
     getFirstLineupPlayers() {
-        return axios.get("/teams/getFirstLineupPlayers");
+        return axios.get("/team/getFirstLineupPlayers");
     }
-    setPlayerDetails(playerId) {
-        return axios.get("/teams/setPlayerDetails", playerId);
+    getPlayerDetails(playerId) {
+        return axios.get("/team/setPlayerDetails", playerId);
     }
     editPlayer(data) {
-        return axios.post("/teams/editPlayer", data)
+        return axios.post("/team/editPlayer", data)
     }
 }
 

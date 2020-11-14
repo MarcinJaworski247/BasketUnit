@@ -13,8 +13,8 @@ class workoutsService {
     editExcersise(data) {
         return axios.post("/workouts/editExcersise", data);
     }
-    setExcersiseDetails(excersiseId) {
-        return axios.get("/workouts/setExcersiseDetails", excersiseId)
+    getExcersiseDetails(excersiseId) {
+        return axios.get("/workouts/getExcersiseDetails", excersiseId)
     }
     getWorkoutTypes() {
         return axios.get("/workouts/getWorkoutTypes");
@@ -25,8 +25,8 @@ class workoutsService {
     editWorkoutType(data) {
         return axios.post("/workout/editWorkoutType", data);
     }
-    setWorkoutTypeDetails(workoutTypeId) {
-        return axios.get("/workout/setWorkoutTypeDetails", workoutTypeId);
+    getWorkoutTypeDetails(workoutTypeId) {
+        return axios.get("/workout/getWorkoutTypeDetails", workoutTypeId);
     }
 }
 

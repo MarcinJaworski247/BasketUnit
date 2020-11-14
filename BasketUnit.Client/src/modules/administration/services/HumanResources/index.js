@@ -16,23 +16,23 @@ class humanResourcesService {
     getPositionsToLookup() {
         return axios.get("/administration/humanResources/getPositionsToLookup");
     }
-    setPlayerDetails(playerId) {
+    getPlayerDetails(playerId) {
         return axios.get("/administration/humanResources/setPlayerDetails", playerId);
     }
-    setCoachDetails(coachId) {
+    getCoachDetails(coachId) {
         return axios.get("/administration/humanResources/setCoachDetails", coachId);
     }
-    setRefereeDetails(refereeId) {
+    getRefereeDetails(refereeId) {
         return axios.get("/administration/humanResources/setRefereeDetails", refereeId);
     }
     editPlayer(data) {
-        return axios.get("/administration/humanResources/editPlayer", data);
+        return axios.post("/administration/humanResources/editPlayer", data);
     }
     editCoach(data) {
-        return axios.get("/administration/humanResources/editCoach", data);
+        return axios.post("/administration/humanResources/editCoach", data);
     }
     editReferee(data) {
-        return axios.get("/administration/humanResources/editReferee", data);
+        return axios.post("/administration/humanResources/editReferee", data);
     }
     getPlayerDataToDetails(playerId) {
         return axios.get("/administration/humanResources/getPlayerDataToDetails", playerId);
@@ -42,6 +42,15 @@ class humanResourcesService {
     }
     getAvarageStatsToChart(playerId) {
         return axios.get("/administration/humanResources/getAvarageStatsToChart", playerId);
+    }
+    addPlayer(data) {
+        return axios.post("/administration/humanResources/addPlayer", data);
+    }
+    addCoach(data) {
+        return axios.post("/administration/humanResources/addCoach", data);
+    }
+    addReferee(data) {
+        return axios.post("/administration/humanResources/addReferee", data);
     }
 }
 
