@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BasketUnit.WebAPI.Models.Teams
+namespace BasketUnit.WebAPI.Models
 {
     public class TeamLineup : AuditEntity
     {
