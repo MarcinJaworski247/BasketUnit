@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BasketUnit.WebAPI.Services;
+using BasketUnit.WebAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BasketUnit.WebAPI.Controllers.Team
@@ -12,14 +13,16 @@ namespace BasketUnit.WebAPI.Controllers.Team
     public class TeamController : ControllerBase
     {
         private readonly IPlayerService PlayerService;
-        public TeamController(IPlayerService playerService)
+        private readonly ITeamService TeamService;
+        public TeamController(IPlayerService playerService, ITeamService teamService)
         {
             this.PlayerService = playerService;
+            this.TeamService = teamService;
         }
         [HttpGet("getPlayersList")]
         public ActionResult GetPlayersList()
         {
-            var data = PlayerService.GetPlayersList();
+            var data = PlayerService.GetPlayers();
             return Ok(data);
         }
         [HttpGet("GetFirstLineupPlayers")]
@@ -31,7 +34,7 @@ namespace BasketUnit.WebAPI.Controllers.Team
         [HttpGet("getPlayerDetails")]
         public ActionResult GetPlayerDetails(int playerId)
         {
-            var data = PlayerService.GetPlayerDetails(playerId);
+            var data = PlayerService.SetPlayerDetails(playerId);
             return Ok(data);
         }
         [HttpPost("editPlayer")]

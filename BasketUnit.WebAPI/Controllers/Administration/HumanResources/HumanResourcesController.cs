@@ -4,6 +4,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BasketUnit.WebAPI.Services;
+using BasketUnit.WebAPI.ViewModels;
+using BasketUnit.WebAPI.Utils;
+using BasketUnit.WebAPI.Enums;
 
 namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
 {
@@ -12,9 +15,15 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
     public class HumanResourcesController : ControllerBase
     {
         private readonly IPlayerService PlayerService;
-        public HumanResourcesController(IPlayerService playerService)
+        private readonly ICoachService CoachService;
+        private readonly IRefereeService RefereeService;
+        private readonly ITeamService TeamService;
+        public HumanResourcesController(IPlayerService playerService, ICoachService coachService, IRefereeService refereeService, ITeamService teamService)
         {
             this.PlayerService = playerService;
+            this.CoachService = coachService;
+            this.RefereeService = refereeService;
+            this.TeamService = teamService;
         }
         [HttpGet("getPlayers")]
         public ActionResult GetPlayers()
@@ -25,43 +34,43 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
         [HttpGet("GetCoaches")]
         public ActionResult GetCoaches()
         {
-            var data = PlayerService.GetCoaches();
+            var data = CoachService.GetCoaches();
             return Ok(data);
         }
         [HttpGet("getReferees")]
         public ActionResult GetReferees()
         {
-            var data = PlayerService.GetReferees();
+            var data = RefereeService.GetReferees();
             return Ok(data);
         }
         [HttpGet("getTeamsToLookup")]
         public ActionResult GetTeamsToLookup()
         {
-            var data = PlayerService.GetTeamsToLookup();
+            var data = TeamService.GetTeamsToLookup();
             return Ok(data);
         }
         [HttpGet("getPositionsToLookup")]
         public ActionResult GetPositionsToLookup()
         {
-            var data = PlayerService.GetPositionsToLookup();
-            return Ok(data);
+            List<EnumModelBinder> positions = EnumHelpers.GetEnumBinderList<Position>();
+            return Ok(positions);
         }
         [HttpGet("getPlayerDetails")]
         public ActionResult GetPlayerDetails(int playerId)
         {
-            var data = PlayerService.GetPlayerDetails(playerId);
+            var data = PlayerService.SetPlayerDetails(playerId);
             return Ok(data);
         }
         [HttpGet("getCoachDetails")]
         public ActionResult GetCoachDetails(int coachId)
         {
-            var data = PlayerService.GetCoachDetails(coachId);
+            var data = CoachService.SetCoachDetails(coachId);
             return Ok(data);
         }
         [HttpGet("getRefereeDetails")]
         public ActionResult GetRefereeDetails(int refereeId)
         {
-            var data = PlayerService.GetRefereeDetails(refereeId);
+            var data = RefereeService.SetRefereeDetails(refereeId);
             return Ok(data);
         }
         [HttpPost("editPlayer")]
@@ -73,13 +82,13 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
         [HttpPost("editCoach")]
         public ActionResult EditCoach(EditCoachVM model)
         {
-            var data = PlayerService.EditCoach(model);
+            var data = CoachService.EditCoach(model);
             return Ok(data);
         }
         [HttpPost("editReferee")]
         public ActionResult EditReferee(EditRefereeVM model)
         {
-            var data = PlayerService.EditReferee(model);
+            var data = RefereeService.EditReferee(model);
             return Ok(data);
         }
         [HttpGet("getPlayerDataToDetails")]
@@ -109,14 +118,32 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
         [HttpPost("addCoach")]
         public ActionResult AddCoach(AddCoachVM model)
         {
-            var data = PlayerService.AddCoach(model);
+            var data = CoachService.AddCoach(model);
             return Ok(data);
         }
         [HttpPost("addReferee")]
         public ActionResult AddReferee(AddRefereeVM model)
         {
-            var data = PlayerService.AddReferee(model);
+            var data = RefereeService.AddReferee(model);
             return Ok(data);
+        }
+        [HttpPost("deletePlayer")]
+        public ActionResult DeletePlayer(int playerId)
+        {
+            PlayerService.DeletePlayer(playerId);
+            return Ok(true);
+        }
+        [HttpPost("deleteCoach")]
+        public ActionResult DeleteCoach(int coachId)
+        {
+            CoachService.DeleteCoach(coachId);
+            return Ok(true);
+        }
+        [HttpPost("deleteReferee")]
+        public ActionResult DeleteReferee(int refereeId)
+        {
+            RefereeService.DeleteReferee(refereeId);
+            return Ok(true);
         }
     }
 }

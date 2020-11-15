@@ -1,4 +1,6 @@
-﻿using System;
+﻿using BasketUnit.WebAPI.Models;
+using BasketUnit.WebAPI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,5 +9,11 @@ namespace BasketUnit.WebAPI.Services
 {
     public interface IPlayerService
     {
+        List<Player> GetPlayers();
+        DetailsPlayerVM SetPlayerDetails(int playerId);
+        EditPlayerVM EditPlayer(EditPlayerVM model);
+        Player AddPlayer(AddPlayerVM model);
+        void DeletePlayer(int playerId);
+        List<Player> GetFirstLineupPlayers();
     }
 }

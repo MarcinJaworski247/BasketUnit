@@ -1,4 +1,6 @@
 ﻿using BasketUnit.WebAPI.Models;
+using BasketUnit.WebAPI.Utils;
+using BasketUnit.WebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,5 +10,11 @@ namespace BasketUnit.WebAPI.Repositories
 {
     public interface IArenaRepository : IRepository<Arena>
     {
+        List<SelectModelBinder<int>> GetArenasToLookup();
+        List<Arena> GetArenas();
+        Arena AddArena(AddArenaVM model);
+        DetailsArenaVM SetArenaDetails(int arenaId);
+        EditArenaVM EditArena(EditArenaVM model);
+        void DeleteArena(int arenaId);
     }
 }

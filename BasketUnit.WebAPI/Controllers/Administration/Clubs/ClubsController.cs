@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BasketUnit.WebAPI.Services;
+using BasketUnit.WebAPI.Utils;
+using BasketUnit.WebAPI.ViewModels;
 
 namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
 {
@@ -12,27 +14,31 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
     public class ClubsController : ControllerBase
     {
         private readonly ITeamService TeamService;
-        public ClubsController(ITeamService teamService)
+        private readonly ICoachService CoachService;
+        private readonly IArenaService ArenaService;
+        public ClubsController(ITeamService teamService, ICoachService coachService, IArenaService arenaService)
         {
             this.TeamService = teamService;
+            this.CoachService = coachService;
+            this.ArenaService = arenaService;
         }
         [HttpGet("getCoachesToLookup")]
         public ActionResult GetCoachesToLookup()
         {
-            var data = TeamService.GetCoachesToLookup();
+            List<SelectModelBinder<int>> data = CoachService.GetCoachesToLookup();
             return Ok(data);
         }
         [HttpGet("getArenasToLookup")]
         public ActionResult GetArenasToLookup()
         {
-            var data = TeamService.GetArenasToLookup();
+            List<SelectModelBinder<int>> data = ArenaService.GetArenasToLookup();
             return Ok(data);
         }
         [HttpPost("addTeam")]
         public ActionResult AddTeam(AddTeamVM model)
         {
-            var data = TeamService.AddTeam(model);
-            return Ok(data);
+            var team = TeamService.AddTeam(model);
+            return Ok(team);
         }
         [HttpGet("setTeamDetails")]
         public ActionResult SetTeamDetails(int teamId)
@@ -55,20 +61,38 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
         [HttpGet("getArenas")]
         public ActionResult GetArenas()
         {
-            var data = TeamService.GetArenas();
+            var data = ArenaService.GetArenas();
             return Ok(data);
         }
         [HttpPost("editArena")]
         public ActionResult EditArena(EditArenaVM model)
         {
-            var data = TeamService.EditArena(model);
+            var data = ArenaService.EditArena(model);
             return Ok(data);
         }
         [HttpGet("setArenaDetails")]
         public ActionResult SetArenaDetails(int arenaId)
         {
-            var data = TeamService.SetArenaDetails(arenaId);
+            var data = ArenaService.SetArenaDetails(arenaId);
             return Ok(data);
+        }
+        [HttpPost("addArena")]
+        public ActionResult AddArena(AddArenaVM model)
+        {
+            var data = ArenaService.AddArena(model);
+            return Ok(data);
+        }
+        [HttpPost("deleteArena")]
+        public ActionResult DeleteArena(int arenaId)
+        {
+            ArenaService.DeleteArena(arenaId);
+            return Ok(true);
+        }
+        [HttpPost("deleteTeam")]
+        public ActionResult DeleteTeam(int teamId)
+        {
+            TeamService.DeleteTeam(teamId);
+            return Ok(true);
         }
     }
 }
