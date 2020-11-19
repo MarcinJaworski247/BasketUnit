@@ -16,5 +16,8 @@ namespace BasketUnit.WebAPI.Services
         List<Team> GetTeams();
         void DeleteTeam(int teamId);
         List<SelectModelBinder<int>> GetTeamsToLookup();
+        List<SelectModelBinder<int>> GetPlayersByPosition(int position);
+        EditPlayerVM GetFirstLineupPlayerByPosition(int position);
+        void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId);
     }
 }

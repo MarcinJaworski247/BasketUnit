@@ -62,12 +62,10 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
-    DxNumberBox,
-    DxSelectBox
+    DxNumberBox
 } from 'devextreme-vue';
-import { DxFileUploader } from 'devextreme-vue/file-uploader';
-import { DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 const store = "AdministrationArenaStore";
@@ -118,10 +116,10 @@ export default {
     components: {
         DxTextBox,
         DxButton,
-        DxValidator,
         DxNumberBox,
+        DxValidator,
         DxRequiredRule,
-        DxSelectBox
+        DxValidationGroup
     }
 };
 </script>

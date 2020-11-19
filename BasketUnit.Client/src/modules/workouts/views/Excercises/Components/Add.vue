@@ -64,10 +64,10 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
     DxSelectBox
 } from 'devextreme-vue';
-import { DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 import notify from 'devextreme/ui/notify';
@@ -120,9 +120,10 @@ export default {
     components: {
         DxTextBox,
         DxButton,
+        DxSelectBox,
         DxValidator,
         DxRequiredRule,
-        DxSelectBox
+        DxValidationGroup
     }
 };
 </script>

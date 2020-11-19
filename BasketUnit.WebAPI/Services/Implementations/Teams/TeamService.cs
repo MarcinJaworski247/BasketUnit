@@ -40,5 +40,17 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.TeamRepository.GetTeamsToLookup();
         }
+        public List<SelectModelBinder<int>> GetPlayersByPosition(int position)
+        {
+            return RepositoriesWrapper.TeamRepository.GetPlayersByPosition(position);
+        }
+        public EditPlayerVM GetFirstLineupPlayerByPosition(int position)
+        {
+            return RepositoriesWrapper.TeamRepository.GetFirstLineupPlayerByPosition(position);
+        }
+        public void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        {
+            RepositoriesWrapper.TeamRepository.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
+        }
     }
 }

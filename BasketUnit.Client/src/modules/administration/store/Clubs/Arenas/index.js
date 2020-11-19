@@ -36,7 +36,7 @@ const mutations = {
 }
 
 const actions = {
-    addTeam: ({ state }) => {
+    addArena: ({ state }) => {
         service.addArena(state.addForm);
     },
     setArenasList: ({ commit }) => {
@@ -44,7 +44,7 @@ const actions = {
             .then(response => {
                 commit("setArenasList", response.data);
             });
-    },
+    }
 }
 
 export default { state, getters, mutations, actions, namespaced };

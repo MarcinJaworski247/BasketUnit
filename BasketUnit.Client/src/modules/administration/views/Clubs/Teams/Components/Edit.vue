@@ -87,11 +87,11 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
     DxSelectBox
 } from 'devextreme-vue';
 import notify from 'devextreme/ui/notify';
-import { DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 const store = "AdministrationEditTeamStore";
@@ -148,6 +148,7 @@ export default {
         DxButton,
         DxValidator,
         DxRequiredRule,
+        DxValidationGroup,
         DxSelectBox
     }
 };

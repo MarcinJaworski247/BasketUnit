@@ -16,23 +16,23 @@ namespace BasketUnit.WebAPI.Controllers.Schedules
         {
             this.PlayerService = playerService;
         }
-        [HttpGet("getActivities")]
-        public ActionResult GetActivities()
-        {
-            var data = PlayerService.GetActivities();
-            return Ok(data);
-        }
-        [HttpGet("getExcercisesToLookup")]
-        public ActionResult GetExcercisesToLookup()
-        {
-            var data = PlayerService.GetExcercisesToLookup();
-            return Ok(data);
-        }
-        [HttpGet("getTeamsToLookup")]
-        public ActionResult etTeamsToLookup()
-        {
-            var data = PlayerService.GetTeamsToLookup();
-            return Ok(data);
-        }
+        //[HttpGet("getActivities")]
+        //public ActionResult GetActivities()
+        //{
+        //    var data = PlayerService.GetActivities();
+        //    return Ok(data);
+        //}
+        //[HttpGet("getExcercisesToLookup")]
+        //public ActionResult GetExcercisesToLookup()
+        //{
+        //    var data = PlayerService.GetExcercisesToLookup();
+        //    return Ok(data);
+        //}
+        //[HttpGet("getTeamsToLookup")]
+        //public ActionResult GetTeamsToLookup()
+        //{
+        //    var data = PlayerService.GetTeamsToLookup();
+        //    return Ok(data);
+        //}
     }
 }

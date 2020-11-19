@@ -99,14 +99,14 @@
 <script>
 import {
     DxTextBox,
-    DxButton,
-    DxValidator
+    DxButton
 } from 'devextreme-vue';
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import notify from 'devextreme/ui/notify';
-import { DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "HumanResourcesRefereeEditStore";
+const store = "AdministrationEditRefereeStore";
 
 export default {
     name: "refereeEdit",
@@ -158,7 +158,8 @@ export default {
         DxTextBox,
         DxButton,
         DxValidator,
-        DxRequiredRule
+        DxRequiredRule,
+        DxValidationGroup
     }
 };
 </script>

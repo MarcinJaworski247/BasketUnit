@@ -56,7 +56,7 @@ namespace BasketUnit.WebAPI.Context
             builder.ApplyConfiguration(new AppUserRoleConfiguration());
             builder.ApplyConfiguration(new FunctionalityAppRoleConfiguration());
             builder.ApplyConfiguration(new FunctionalityConfiguration());
-            //builder.ApplyConfiguration(new PersonConfiguration());
+            builder.ApplyConfiguration(new PersonConfiguration());
             #endregion
             #region Games
             builder.ApplyConfiguration(new GameConfiguration());

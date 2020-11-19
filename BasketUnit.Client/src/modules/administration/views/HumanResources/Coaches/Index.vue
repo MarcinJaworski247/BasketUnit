@@ -129,17 +129,24 @@
 </template>
 
 <script>
-import { 
+import 
+{ 
+    DxPopup,
+    DxButton
+} from 'devextreme-vue';
+import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow, 
-    DxButton } from 'devextreme-vue';
+    DxFilterRow,
+    DxPager,
+    DxPaging 
+  } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
-const store = "HumanResourcesCoachStore";
+const store = "AdministrationCoachStore";
 
 export default {
     name: "coaches",
@@ -208,10 +215,15 @@ export default {
         this.setTeams();
     },
     components: {
-        DxDataGrid,
-        DxColumn,
+        DxPopup,
+        DxButton,
+        DxDataGrid, 
+        DxColumn, 
         DxFilterRow,
-        DxButton
+        DxPager,
+        DxPaging,
+        editForm,
+        addForm
     }
 };
 </script>

@@ -165,19 +165,23 @@
 <script>
 import 
 { 
+    DxPopup,
+    DxButton,
+    DxLookup
+} from 'devextreme-vue';
+import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow, 
-    DxButton,
+    DxFilterRow,
     DxPager,
-    DxPaging
-} from 'devextreme-vue';
+    DxPaging 
+  } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
-const store = "HumanResourcesPlayerStore";
+const store = "AdministrationPlayerStore";
 
 export default {
     name: "players",
@@ -247,12 +251,16 @@ export default {
         this.setPositions();
     },
     components: {
-        DxDataGrid,
-        DxColumn,
-        DxFilterRow,
+        DxPopup,
         DxButton,
+        DxDataGrid, 
+        DxColumn, 
+        DxFilterRow,
         DxPager,
-        DxPaging
+        DxPaging,
+        editForm,
+        addForm,
+        DxLookup
     }
 };
 </script>

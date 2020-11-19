@@ -147,12 +147,19 @@
 </template>
 
 <script>
-import { 
+import 
+{ 
+    DxPopup,
+    DxButton,
+    DxLookup
+} from 'devextreme-vue';
+import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow, 
-    DxButton 
-} from "devextreme-vue";
+    DxFilterRow,
+    DxPager,
+    DxPaging 
+  } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
@@ -228,12 +235,16 @@ export default {
         this.setCoaches();
     },
     components: {
-        DxDataGrid,
-        DxColumn,
-        DxFilterRow,
+        DxPopup,
         DxButton,
+        DxDataGrid, 
+        DxColumn, 
+        DxFilterRow,
+        DxPager,
+        DxPaging,
+        editForm,
         addForm,
-        editForm
+        DxLookup
     }
 };
 </script>

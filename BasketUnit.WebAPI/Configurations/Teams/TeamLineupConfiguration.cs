@@ -1,4 +1,4 @@
-﻿using BasketUnit.WebAPI.Models.Teams;
+﻿using BasketUnit.WebAPI.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;

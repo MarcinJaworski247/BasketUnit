@@ -47,10 +47,10 @@
 <script>
 import {
     DxTextBox,
-    DxButton,
-    DxValidator
+    DxButton
 } from 'devextreme-vue';
-import { DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
@@ -75,7 +75,7 @@ export default {
         ])
     },
     methods: {
-        ...mapActions(store, ["editWorkoutType", "setDetails"]),
+        ...mapActions(store, ["editWorkoutType", "setWorkoutTypeDetails"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
@@ -95,7 +95,6 @@ export default {
         }  
     },
     mounted(){
-        this.setDetails();
     },
     destroyed() {
         this.resetForm();
@@ -104,7 +103,8 @@ export default {
         DxTextBox,
         DxButton,
         DxValidator,
-        DxRequiredRule
+        DxRequiredRule,
+        DxValidationGroup
     }
 };
 </script>

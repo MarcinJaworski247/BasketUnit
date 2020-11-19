@@ -5,9 +5,9 @@
     </div>
 
     <DxTabPanel
-        :height="auto"
-        animation-enabled="true"
-        swipe-enabled="false"
+        height="auto"
+        :animation-enabled=true
+        :swipe-enabled=false
         :items="tabs">
         <template #title="{ data: tabs }">
             <span>
@@ -26,21 +26,11 @@
             </div>
         </template>
     </DxTabPanel>
-
-    <div class="d-flex end-xs mt-5">
-        <DxButton
-            :use-submit-behavior="false"
-            type="normal"
-            styling-mode="outlined"
-            text="Wróć"
-            @click="function(){ $router.push({ name: 'workouts.index' }) }"/>
-    </div>
 </div>
 </template>
 <script>
 import 
 { 
-    DxButton,
     DxTabPanel
 } from 'devextreme-vue';
 import { mapFields } from "vuex-map-fields";
@@ -79,7 +69,6 @@ export default {
         
     },
     components: {
-        DxButton,
         DxTabPanel,
         LineupTab,
         FirstLineupTab

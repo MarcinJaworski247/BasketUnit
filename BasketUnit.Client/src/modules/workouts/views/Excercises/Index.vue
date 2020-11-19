@@ -126,13 +126,17 @@
 <script>
 import 
 { 
+    DxPopup,
+    DxButton,
+    DxLookup
+} from 'devextreme-vue';
+import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow, 
-    DxButton,
+    DxFilterRow,
     DxPager,
-    DxPaging
-} from 'devextreme-vue';
+    DxPaging 
+  } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
@@ -172,7 +176,7 @@ export default {
             this.setExcersisesList();
         },
         showEditPopup(options){
-            this.setDetails(options.data.Id);
+            this.setExcersiseDetails(options.data.Id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
@@ -207,12 +211,16 @@ export default {
         this.setWorkoutTypes();
     },
     components: {
-        DxDataGrid,
-        DxColumn,
+        DxPopup,
+        DxDataGrid, 
+        DxColumn, 
         DxFilterRow,
-        DxButton,
         DxPager,
-        DxPaging
+        DxPaging, 
+        DxButton,
+        DxLookup,
+        addForm,
+        editForm
     }
 };
 </script>

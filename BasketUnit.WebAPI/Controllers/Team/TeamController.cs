@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using BasketUnit.WebAPI.Services;
+using BasketUnit.WebAPI.Utils;
 using BasketUnit.WebAPI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
@@ -42,6 +43,24 @@ namespace BasketUnit.WebAPI.Controllers.Team
         {
             var data = PlayerService.EditPlayer(model);
             return Ok(data);
+        }
+        [HttpGet("getPlayersByPosition")]
+        public ActionResult GetPlayersByPosition(int position)
+        {
+            List<SelectModelBinder<int>> players = TeamService.GetPlayersByPosition(position);
+            return Ok(players);
+        }
+        [HttpGet("getFirstLineupPlayer")]
+        public ActionResult GetFirstLineupPlayer(int position)
+        {
+            var player = TeamService.GetFirstLineupPlayerByPosition(position);
+            return Ok(player);
+        }
+        [HttpPost("saveFirstLineup")]
+        public ActionResult SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        {
+            TeamService.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
+            return Ok(true);
         }
     }
 }

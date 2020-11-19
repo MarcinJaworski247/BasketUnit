@@ -36,7 +36,7 @@ export default {
     data() {
         return {
             currentDate: new Date(),
-            views: ['week', 'month', 'month'],
+            views: ['day', 'week'],
             groups: ['coachId']
         };
     },

@@ -113,14 +113,14 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
     DxSelectBox
 } from 'devextreme-vue';
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import notify from 'devextreme/ui/notify';
-import { DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
-const store = "HumanResourcesPlayerEditStore";
+const store = "AdministrationEditPlayerStore";
 
 export default {
     name: "playerEdit",
@@ -177,6 +177,7 @@ export default {
         DxButton,
         DxValidator,
         DxRequiredRule,
+        DxValidationGroup,
         DxSelectBox
     }
 };

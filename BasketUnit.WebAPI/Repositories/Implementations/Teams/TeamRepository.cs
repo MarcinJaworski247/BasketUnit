@@ -80,5 +80,62 @@ namespace BasketUnit.WebAPI.Repositories
             }).ToList();
             return result;
         }
+        public List<SelectModelBinder<int>> GetPlayersByPosition(int position)
+        {
+            List<Player> players = MainDatabaseContext.Players.Where(x => x.Position == (Enums.Position)position).ToList();
+            List<SelectModelBinder<int>> result = players.Select(x => new SelectModelBinder<int>()
+            {
+                Value = x.Id,
+                Text = x.FirstName + " " + x.LastName
+            }).ToList();
+            return result;
+        }
+        public EditPlayerVM GetFirstLineupPlayerByPosition(int position)
+        {
+            Player player = MainDatabaseContext.TeamFirstLineups.Where(x => x.Player.Position == (Enums.Position)position).Select(x => x.Player).FirstOrDefault();
+            EditPlayerVM editPlayer = new EditPlayerVM()
+            {
+                FirstName = player.FirstName,
+                LastName = player.LastName,
+                Number = player.Number,
+                Avatar = player.Avatar
+            };
+            return editPlayer;
+        }
+        public void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        {
+            // to do team  parameter
+            TeamFirstLineup pointGuard = new TeamFirstLineup
+            {
+                PlayerId = pointGuardId,
+                TeamId = 1
+            };
+            MainDatabaseContext.TeamFirstLineups.Add(pointGuard);
+            TeamFirstLineup shootingGuard = new TeamFirstLineup
+            {
+                PlayerId = shootingGuardId,
+                TeamId = 1
+            };
+            MainDatabaseContext.TeamFirstLineups.Add(shootingGuard);
+            TeamFirstLineup smallForward = new TeamFirstLineup
+            {
+                PlayerId = smallForwardId,
+                TeamId = 1
+            };
+            MainDatabaseContext.TeamFirstLineups.Add(smallForward);
+            TeamFirstLineup powerForward = new TeamFirstLineup
+            {
+                PlayerId = powerForwardId,
+                TeamId = 1
+            };
+            MainDatabaseContext.TeamFirstLineups.Add(powerForward);
+            TeamFirstLineup center = new TeamFirstLineup
+            {
+                PlayerId = centerId,
+                TeamId = 1
+            };
+            MainDatabaseContext.TeamFirstLineups.Add(center);
+            MainDatabaseContext.SaveChanges();
+        }
     }
 }

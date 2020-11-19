@@ -15,17 +15,52 @@ const state = {
         Avatar: ''
     },
     playersList: [],
-    firstLineupPlayers: [],
-    pointGuard: null,
-    shootingGuard: null,
-    smallForward: null,
-    powerForward: null,
-    center: null,
-    pointGuardId: null,
-    shootingGuardId: null,
-    smallForwardId: null,
-    powerForwardId: null,
-    centerId: null
+    firstLineupPayers: [],
+    positionsList: [],
+    firstLineup : {
+        pointGuard: {
+            FirstName: '',
+            LastName: '',
+            Avatar: [],
+            Number: null
+        },
+        shootingGuard: {
+            FirstName: '',
+            LastName: '',
+            Avatar: [],
+            Number: null
+        },
+        smallForward: {
+            FirstName: '',
+            LastName: '',
+            Avatar: [],
+            Number: null
+        },
+        powerForward: {
+            FirstName: '',
+            LastName: '',
+            Avatar: [],
+            Number: null
+        },
+        center: {
+            FirstName: '',
+            LastName: '',
+            Avatar: [],
+            Number: null
+        }
+    },
+    firstLineupToSave: {
+        pointGuardId: null,
+        shootingGuardId: null,
+        smallForwardId: null,
+        powerForwardId: null,
+        centerId: null
+    },
+    pointGuards: [],
+    shootingGuard: [],
+    smallForwards: [],
+    powerForwards: [],
+    centers: []
 }
 
 const getters = {
@@ -36,30 +71,23 @@ const getters = {
     getFirstLineupPlayers: (state) => {
         return state.firstLineupPlayers;
     },
-    getPointGuard: (state) => {
-        return state.playersList.filter(() => {
-            return state.playersList.Id == state.pointGuardId;
-        })
+    getPositionsToLookup: (state) => {
+        return state.positionsList;
     },
-    getShootingGuard: (state) => {
-        return state.playersList.filter(() => {
-            return state.playersList.Id == state.shootingGuardId;
-        })
+    getPointGuards: (state) => {
+        return state.pointGuards;
     },
-    getSmallForward: (state) => {
-        return state.playersList.filter(() => {
-            return state.playersList.Id == state.smallForwardId;
-        })
+    getShootingGuards: (state) => {
+        return state.shootingGuards;
     },
-    getPowerForward: (state) => {
-        return state.playersList.filter(() => {
-            return state.playersList.Id == state.powerForwardId;
-        })
+    getSmallForwards: (state) => {
+        return state.smallForwards;
     },
-    getCenter: (state) => {
-        return state.playersList.filter(() => {
-            return state.playersList.Id == state.centerId;
-        })
+    getPowerForwards: (state) => {
+        return state.powerForwards;
+    },
+    getCenters: (state) => {
+        return state.centers;
     }
 }
 
@@ -90,6 +118,54 @@ const mutations = {
         state.editForm.BirthDate = payload.Model.BirthDate,
         state.editForm.Nationality = payload.Model.Nationality,
         state.editForm.Avatar = payload.Model.Avatar
+    },
+    setPositionsToLookup: (state, payload) => {
+        state.positionsList = payload;
+    },
+    setPointGuards: (state, payload) => {
+        state.pointGuards = payload;
+    },
+    setShootingGuards: (state, payload) => {
+        state.shootingGuards = payload;
+    },
+    setSmallForwards: (state, payload) => {
+        state.smallForwards = payload;
+    },
+    setPowerForwards: (state, payload) => {
+        state.powerForwards = payload;
+    },
+    setCenters: (state, payload) => {
+        state.centers = payload;
+    },
+    setPointGuard: (state, payload) => {
+        state.firstLineup.pointGuard.FirstName = payload.Model.FirstName;
+        state.firstLineup.pointGuard.LastName = payload.Model.LastName;
+        state.firstLineup.pointGuard.Avatar = payload.Model.Avatar;
+        state.firstLineup.pointGuard.Number = payload.Model.Number;
+    },
+    setShootingGuard: (state, payload) => {
+        state.firstLineup.shootingGuard.FirstName = payload.Model.FirstName;
+        state.firstLineup.shootingGuard.LastName = payload.Model.LastName;
+        state.firstLineup.shootingGuard.Avatar = payload.Model.Avatar;
+        state.firstLineup.shootingGuard.Number = payload.Model.Number;
+    },
+    setSmallForward: (state, payload) => {
+        state.firstLineup.smallForward.FirstName = payload.Model.FirstName;
+        state.firstLineup.smallForward.LastName = payload.Model.LastName;
+        state.firstLineup.smallForward.Avatar = payload.Model.Avatar;
+        state.firstLineup.smallForward.Number = payload.Model.Number;
+    },
+    setPowerForward: (state, payload) => {
+        state.firstLineup.powerForward.FirstName = payload.Model.FirstName;
+        state.firstLineup.powerForward.LastName = payload.Model.LastName;
+        state.firstLineup.powerForward.Avatar = payload.Model.Avatar;
+        state.firstLineup.powerForward.Number = payload.Model.Number;
+    },
+    setCenter: (state, payload) => {
+        state.firstLineup.center.FirstName = payload.Model.FirstName;
+        state.firstLineup.center.LastName = payload.Model.LastName;
+        state.firstLineup.center.Avatar = payload.Model.Avatar;
+        state.firstLineup.center.Number = payload.Model.Number;
     }
 }
 
@@ -114,7 +190,75 @@ const actions = {
     },
     editPlayer: ({ state }) => {
         service.editPlayer(state.editForm);
-    } 
+    },
+    setPositionsToLookup: ({ commit }) => {
+        service.getPositionsToLookup()
+            .then(response => {
+                commit("setPositionsToLookup", response.data);
+            });
+    },
+    setPointGuards: ({ commit }) => {
+        service.getPlayersByPosition(0)
+            .then(response => {
+                commit("setPointGuards", response.data);
+            });
+    },
+    setShootingGuards: ({ commit }) => {
+        service.getPlayersByPosition(1)
+            .then(response => {
+                commit("setShootingGuards", response.data);
+            });
+    },
+    setSmallForwards: ({ commit }) => {
+        service.getPlayersByPosition(2)
+            .then(response => {
+                commit("setSmallForwards", response.data);
+            });
+    },
+    setPowerForwards: ({ commit }) => {
+        service.getPlayersByPosition(3)
+            .then(response => {
+                commit("setPowerForwards", response.data);
+            });
+    },
+    setCenters: ({ commit }) => {
+        service.getPlayersByPosition(4)
+            .then(response => {
+                commit("setCenters", response.data);
+            });
+    },
+    saveFirstLineup:({ state }) => {
+        service.saveFirstLineup(
+            state.firstLineupToSave.pointGuardId, 
+            state.firstLineupToSave.shootingGuardId,
+            state.firstLineupToSave.smallForwardId,
+            state.firstLineupToSave.powerForwardId,
+            state.firstLineupToSave.centerId
+            );
+    },
+    setFirstLineup: ({ commit }) => {
+        service.getFirstLineupPlayer(0)
+            .then(response => {
+                commit("setPointGuard", response.data);
+            });
+        service.getFirstLineupPlayer(1)
+            .then(response => {
+                commit("setShootingGuard", response.data);
+            });
+        service.getFirstLineupPlayer(2)
+            .then(response => {
+                commit("setSmallForward", response.data);
+            });
+        service.getFirstLineupPlayer(3)
+            .then(response => {
+                commit("setPowerForward", response.data);
+            });
+        service.getFirstLineupPlayer(4)
+            .then(response => {
+                commit("setCenter", response.data);
+            });
+    }
+
 }
 
 export default { state, getters, mutations, actions, namespaced };

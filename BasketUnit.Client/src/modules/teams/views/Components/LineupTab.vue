@@ -3,7 +3,7 @@
     <div class="printers">
         <DxDataGrid
         id="gridContainer"
-        :data-source="playersList"
+        :data-source="getPlayersList"
         :show-borders="true"
         key-expr="Id"
         :allow-column-reordering="true"
@@ -51,7 +51,7 @@
             alignment="left"
             caption="Pozycja">
             <DxLookup
-                :data-source="getPositions"
+                :data-source="getPositionsToLookup"
                 value-expr="Value"
                 display-expr="Text" />
         </DxColumn>
@@ -103,13 +103,11 @@
 </template>
 <script>
 import 
-{ 
-    DxDataGrid, 
-    DxColumn, 
-    DxFilterRow, 
-    DxPager,
-    DxPaging
+{  
+    DxPopup,
+    DxLookup
 } from 'devextreme-vue';
+import { DxDataGrid, DxColumn, DxFilterRow, DxPager, DxPaging } from "devextreme-vue/data-grid"; 
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 import editForm from "./EditPlayer.vue";
@@ -129,10 +127,10 @@ export default {
 
     },
     computed: {
-        ...mapGetters(name, ["getPlayersList"])
+        ...mapGetters(store, ["getPlayersList", "getPositionsToLookup"])
     },
     methods: {
-        ...mapActions(store, ["setPlayersList", "setDetails"]),
+        ...mapActions(store, ["setPlayersList", "setDetails", "setPositionsToLookup"]),
         showEditPopup(options){
             this.setDetails(options.data.Id);
             this.editPopupOptions.popupVisible = true;
@@ -144,6 +142,7 @@ export default {
     },
     mounted() {
         this.setPlayersList();
+        this.setPositionsToLookup();
     },
     components: {
         DxDataGrid, 
@@ -151,7 +150,9 @@ export default {
         DxFilterRow, 
         DxPager,
         DxPaging,
-        editForm
+        editForm,
+        DxPopup,
+        DxLookup
     }
 }
 </script>

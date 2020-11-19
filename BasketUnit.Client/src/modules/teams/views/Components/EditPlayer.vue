@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="editPlayer">
         <DxValidationGroup :ref="`validationGroup`">
-        <div class="row">
+        <div v-if="Avatar.length" class="row">
             <div class="col-xs-12">
                 <div class="form-group row">
                     <div class="file-upload">
@@ -43,7 +43,7 @@
                     <div class="col-xs-12">
                         <DxSelectBox 
                             v-model="PositionId"
-                            :data-source="getPositions"
+                            :data-source="getPositionsToLookup"
                             value-expr="Value"
                             display-expr="Text"
                             :search-enabled="false"
@@ -108,12 +108,13 @@
 import {
     DxTextBox,
     DxButton,
-    DxValidator,
     DxNumberBox,
-    DxSelectBox
+    DxSelectBox,
+    DxDateBox
 } from 'devextreme-vue';
-import { DxRequiredRule } from "devextreme-vue/validator";
+import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { mapGetters, mapActions, mapMutations } from "vuex";
+import { DxValidationGroup } from "devextreme-vue/validation-group";
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 const store = "TeamStore";
@@ -128,7 +129,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getPositions"]),
+        ...mapGetters(store, ["getForm", "getPositionsToLookup"]),
         ...mapFields(store, [
             "editForm.Id",
             "editForm.FirstName",
@@ -141,7 +142,7 @@ export default {
         ])
     },
     methods: {
-        ...mapActions(store, ["editPlayer", "setPositions"]),
+        ...mapActions(store, ["editPlayer", "setPositionsToLookup"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
@@ -162,7 +163,7 @@ export default {
     },
     mounted(){
         //this.setDetails();
-        this.setPositions();
+        this.setPositionsToLookup();
     },
     destroyed() {
         this.resetForm();
@@ -173,7 +174,9 @@ export default {
         DxValidator,
         DxNumberBox,
         DxRequiredRule,
-        DxSelectBox
+        DxSelectBox,
+        DxDateBox,
+        DxValidationGroup
     }
 };
 </script>
