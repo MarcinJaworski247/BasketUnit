@@ -11,12 +11,13 @@ const state = {
         TeamId: null,
         PositionId: null,
         BirthDate:  null,
-        Nationality: '',
+        NationalityId: null,
         Avatar: ''
     },
     teams: [],
     positions: [],
-    players: []
+    players: [],
+    nationalities: []
 }
 
 const getters = {
@@ -29,6 +30,9 @@ const getters = {
     },
     getPositions: (state) => {
         return state.positions;
+    },
+    getNationalities: (state) => {
+        return state.nationalities;
     }
 }
 
@@ -41,7 +45,7 @@ const mutations = {
         state.editForm.TeamId = null,
         state.editForm.PositionId = null,
         state.editForm.BirthDate = null,
-        state.editForm.Nationality = '',
+        state.editForm.NationalityId = null,
         state.editForm.Avatar = ''
     },
     setTeams: (state, payload) => {
@@ -60,8 +64,11 @@ const mutations = {
         state.editForm.TeamId = payload.Model.TeamId,
         state.editForm.PositionId = payload.Model.PositionId,
         state.editForm.BirthDate = payload.Model.BirthDate,
-        state.editForm.Nationality = payload.Model.Nationality,
+        state.editForm.NationalityId = payload.Model.NationalityId,
         state.editForm.Avatar = payload.Model.Avatar
+    },
+    setNationalities: (state, payload) = {
+        state.nationalities = payload;
     }
 }
 
@@ -85,6 +92,12 @@ const actions = {
         service.setPlayerDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
+            });
+    },
+    setNationalities: ({ commit }) => {
+        service.getNationalities()
+            .then(response => {
+                commit("setNationalities", response.data);
             });
     }
 }

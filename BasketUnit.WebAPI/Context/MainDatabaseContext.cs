@@ -22,6 +22,7 @@ namespace BasketUnit.WebAPI.Context
         public DbSet<Functionality> Functionalities { get; set; }
         public DbSet<FunctionalityAppRole> FunctionalityAppRoles { get; set; }
         public DbSet<Person> People { get; set; }
+        public DbSet<Nationality> Nationalities { get; set; }
         #endregion
         #region Games
         public DbSet<Game> Games { get; set; }
@@ -64,9 +65,9 @@ namespace BasketUnit.WebAPI.Context
             builder.ApplyConfiguration(new GameTeamsConfiguration());
             #endregion
             #region People
-            //builder.ApplyConfiguration(new CoachConfiguration());
-            //builder.ApplyConfiguration(new PlayerConfiguration());
-            //builder.ApplyConfiguration(new RefereeConfiguration());
+            builder.ApplyConfiguration(new CoachConfiguration());
+            builder.ApplyConfiguration(new PlayerConfiguration());
+            builder.ApplyConfiguration(new RefereeConfiguration());
             #endregion
             #region Stats
             builder.ApplyConfiguration(new StatsConfiguration());

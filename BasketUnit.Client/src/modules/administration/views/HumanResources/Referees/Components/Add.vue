@@ -70,11 +70,18 @@
                 <div class="form-group row">
                     <label class="col-xs-12">Narodowość</label>
                     <div class="col-xs-12">
-                        <DxTextBox v-model="Nationality">
+                        <DxSelectBox 
+                            v-model="NationalityId"
+                            :data-source="getNationalities"
+                            value-expr="Value"
+                            display-expr="Text"
+                            :search-enabled="true"
+                            palceholder="">
+
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
+                        </DxSelectBox>
                     </div>
                 </div>
             </div>
@@ -99,7 +106,9 @@
 <script>
 import {
     DxTextBox,
-    DxButton
+    DxButton,
+    DxDateBox,
+    DxSelectBox
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -119,7 +128,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm"]),
+        ...mapGetters(store, ["getForm", "getNationalities"]),
         ...mapFields(store, [
             "addForm.FirstName",
             "addForm.LastName",
@@ -132,15 +141,15 @@ export default {
     },
     methods: {
         ...mapActions(store, ["addReferee"]),
-        ...mapMutations(store, ["resetForm"]),
+        ...mapMutations(store, ["resetForm", "setNationalities"]),
         closePopup: function () {
-            this.$emit("closeEdit");
+            this.$emit("closeAdd");
             this.resetForm();
         },
         closePopupOnSave: function (e) {
             let validateResult = e.validationGroup.validate();
             if(validateResult.isValid) {
-                this.$emit("closeEdit");
+                this.$emit("closeAdd");
                 this.showSuccessNotify();
             }
         },
@@ -151,6 +160,7 @@ export default {
         }  
     },
     mounted(){
+        this.setNationalities();
     },
     destroyed() {
         this.resetForm();
@@ -160,7 +170,9 @@ export default {
         DxButton,
         DxValidator,
         DxRequiredRule,
-        DxValidationGroup
+        DxValidationGroup,
+        DxDateBox,
+        DxSelectBox
     }
 };
 </script>

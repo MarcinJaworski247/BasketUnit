@@ -38,7 +38,8 @@ namespace BasketUnit.WebAPI.Repositories
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 BirthDate = model.BirthDate,
-                ExperienceYears = model.ExperienceYears
+                ExperienceYears = model.ExperienceYears,
+                NationalityId = model.NationalityId
             };
             MainDatabaseContext.Coaches.Add(coach);
             MainDatabaseContext.SaveChanges();
@@ -55,7 +56,8 @@ namespace BasketUnit.WebAPI.Repositories
                 LastName = coach.LastName,
                 FullName = coach.FirstName + " " + coach.LastName,
                 ExperienceYears = coach.ExperienceYears,
-                BirthDate = coach.BirthDate
+                BirthDate = coach.BirthDate,
+                NationalityId = coach.NationalityId
             };
             return detailsCoachVM;
         }
@@ -67,6 +69,7 @@ namespace BasketUnit.WebAPI.Repositories
             coach.LastName = model.LastName;
             coach.BirthDate = model.BirthDate;
             coach.ExperienceYears = model.ExperienceYears;
+            coach.NationalityId = model.NationalityId;
 
             MainDatabaseContext.Coaches.Update(coach);
             MainDatabaseContext.SaveChanges();

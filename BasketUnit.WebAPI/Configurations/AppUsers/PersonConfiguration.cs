@@ -21,6 +21,11 @@ namespace BasketUnit.WebAPI.Configurations
                 .HasOne(x => x.ModifiedBy)
                 .WithMany()
                 .HasForeignKey(x => x.ModifiedById);
+
+            builder
+                .HasOne(x => x.Nationality)
+                .WithMany()
+                .HasForeignKey(x => x.NationalityId);
         }
     }
 }

@@ -12,5 +12,6 @@ namespace BasketUnit.WebAPI.ViewModels
         public string FullName { get; set; }
         public DateTime LicenseExpirationDate { get; set; }
         public DateTime BirthDate { get; set; }
+        public int NationalityId { get; set; }
     }
 }

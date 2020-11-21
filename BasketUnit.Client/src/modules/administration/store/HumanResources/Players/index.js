@@ -10,13 +10,14 @@ const state = {
         TeamId: null,
         PositionId: null,
         BirthDate:  null,
-        Nationality: '',
+        NationalityId: null,
         Avatar: ''
     },
     teams: [],
     positions: [],
     players: [],
-    idToDelete: null
+    idToDelete: null,
+    nationalities: []
 }
 
 const getters = {
@@ -32,6 +33,9 @@ const getters = {
     },
     getPlayersList: (state) => {
         return state.players;
+    },
+    getNationalities: (state) => {
+        return state.nationalities;
     }
 }
 
@@ -43,7 +47,7 @@ const mutations = {
         state.addForm.TeamId = null,
         state.addForm.PositionId = null,
         state.addForm.BirthDate = null,
-        state.addForm.Nationality = '',
+        state.addForm.NationalityId = null,
         state.addForm.Avatar = ''
     },
     setTeams: (state, payload) => {
@@ -54,6 +58,9 @@ const mutations = {
     },
     setPlayersList: (state, payload) => {
         state.players = payload;
+    },
+    setNationalities: (State, payload) => {
+        state.nationalities = payload;
     }
 }
 
@@ -77,6 +84,12 @@ const actions = {
         service.getPlayers()
             .then(response => {
                 commit("setPlayersList", response.data);
+            });
+    },
+    setNationalities: ({ commit }) => {
+        service.getNationalities()
+            .then(response => {
+                commit("setNationalities", response.data);
             });
     }
 }

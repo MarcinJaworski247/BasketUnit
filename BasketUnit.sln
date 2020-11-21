@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30413.136
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}") = "BasketUnit.Client", "BasketUnit.Client\BasketUnit.Client.njsproj", "{CA8CA883-FF4F-4636-AD00-428B8FA85D6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BasketUnit.WebAPI", "BasketUnit.WebAPI\BasketUnit.WebAPI.csproj", "{DD06339C-E1CC-48EC-922D-AA8A026C3A59}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BasketUnit.WebAPI", "BasketUnit.WebAPI\BasketUnit.WebAPI.csproj", "{DD06339C-E1CC-48EC-922D-AA8A026C3A59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -14,9 +14,7 @@ Global
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{CA8CA883-FF4F-4636-AD00-428B8FA85D6F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CA8CA883-FF4F-4636-AD00-428B8FA85D6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA8CA883-FF4F-4636-AD00-428B8FA85D6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CA8CA883-FF4F-4636-AD00-428B8FA85D6F}.Release|Any CPU.Build.0 = Release|Any CPU
 		{DD06339C-E1CC-48EC-922D-AA8A026C3A59}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DD06339C-E1CC-48EC-922D-AA8A026C3A59}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DD06339C-E1CC-48EC-922D-AA8A026C3A59}.Release|Any CPU.ActiveCfg = Release|Any CPU

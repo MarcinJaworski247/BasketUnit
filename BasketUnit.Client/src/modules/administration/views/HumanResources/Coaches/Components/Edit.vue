@@ -32,11 +32,17 @@
                 <div class="form-group row">
                     <label class="col-xs-12">Narodowość</label>
                     <div class="col-xs-12">
-                        <DxTextBox v-model="Nationality">
+                        <DxSelectBox 
+                            v-model="NationalityId"
+                            :data-source="getNationalities"
+                            value-expr="Value"
+                            display-expr="Teams"
+                            :search-enabled="true"
+                            placeholder="">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
+                        </DxSelectBox>
                     </div>
                 </div>
             </div>
@@ -90,7 +96,8 @@
 import {
     DxTextBox,
     DxButton,
-    DxSelectBox
+    DxSelectBox,
+    DxDateBox
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -109,7 +116,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getTeams"]),
+        ...mapGetters(store, ["getForm", "getTeams", "getNationalities"]),
         ...mapFields(store, [
             "editForm.Id",
             "editForm.FirstName",
@@ -120,7 +127,7 @@ export default {
         ])
     },
     methods: {
-        ...mapActions(store, ["editCoach", "setTeams"]),
+        ...mapActions(store, ["editCoach", "setTeams", "setNationalities"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
@@ -141,6 +148,7 @@ export default {
     },
     mounted(){
         this.setTeams();
+        this.setNationalities();
     },
     destroyed() {
         this.resetForm();
@@ -151,7 +159,8 @@ export default {
         DxValidator,
         DxRequiredRule,
         DxValidationGroup,
-        DxSelectBox
+        DxSelectBox,
+        DxDateBox
     }
 };
 </script>

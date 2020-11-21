@@ -64,6 +64,22 @@
     </div>
     </div>  
 
+    <!-- add popup -->
+    <DxPopup 
+        id="addPopup"
+        :visible.sync="addPopupOptions.popupVisible"
+        :drag-enabled="false"
+        :show-title="true"
+        :width="500"
+        height="auto"
+        class="popup"
+        title-template="titleTemplate">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Dodaj arenę</h3>
+        </div>
+        <addForm @closeAdd="onAddPopupClose"></addForm>
+    </DxPopup>
+
     <!-- edit popup -->
     <DxPopup
         id="editPopup"
@@ -119,7 +135,7 @@ import {
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-//import addForm from "./Components/Add.vue";
+import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationArenaStore";
 
@@ -153,7 +169,7 @@ export default {
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setTeamsList();
+            this.setArenasList();
         },
         showEditPopup(options){
             this.setDetails(options.data.Id);
@@ -161,7 +177,7 @@ export default {
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setTeamsList();
+            this.setArenasList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -198,7 +214,7 @@ export default {
         DxPager,
         DxPaging,
         editForm,
-        //addForm
+        addForm
     }
 };
 </script>

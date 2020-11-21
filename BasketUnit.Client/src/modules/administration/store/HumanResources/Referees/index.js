@@ -7,13 +7,14 @@ const state = {
     addForm: {
         FirstName: '',
         LastName: '',
-        Nationality: '',
+        NationalityId: null,
         BirthDate: null,
         PhoneNumber: '',
         EmailAddress: ''
     },
     referees: [],
-    idToDelete: null
+    idToDelete: null,
+    nationalities: []
 }
 
 const getters = {
@@ -23,6 +24,9 @@ const getters = {
     },
     getRefereesList: (state) => {
         return state.referees;
+    },
+    getNationalities: (state) => {
+        return state.nationalities;
     }
 }
 
@@ -31,14 +35,17 @@ const mutations = {
     resetForm: (state) => {
         state.addForm.FirstName = '',
         state.addForm.LastName = '',
-        state.addForm.Nationality = '',
+        state.addForm.NationalitId = null,
         state.addForm.BirthDate = null,
         state.addForm.PhoneNumber = ''
         state.addForm.EmailAddress = ''
     },
     setRefereesList: (state, payload) => {
         state.referees = payload;
-    }
+    },
+    setNationalities: (state, payload) => {
+        state.nationalities = payload;
+    } 
 }
 
 const actions = {
@@ -49,6 +56,12 @@ const actions = {
         service.getReferees()
             .then(response => {
                 commit("setRefereesList", response.data);
+            });
+    },
+    setNationalities: ({ commit }) => {
+        service.getNationalities()
+            .then(response => {
+                commit("setNationalities", response.data);
             });
     }
 }

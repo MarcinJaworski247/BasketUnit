@@ -52,6 +52,9 @@ class humanResourcesService {
     addReferee(data) {
         return axios.post("/administration/humanResources/addReferee", data);
     }
+    getNationalities(data) {
+        return axios.get("/administration/humanResources/getNationalities");
+    }
 }
 
 export default new humanResourcesService();

@@ -38,7 +38,8 @@ namespace BasketUnit.WebAPI.Repositories
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 BirthDate = model.BirthDate,
-                LicenseExpirationDate = model.LicenseExpirationDate
+                LicenseExpirationDate = model.LicenseExpirationDate,
+                NationalityId = model.NationalityId
             };
             MainDatabaseContext.Referees.Add(referee);
             MainDatabaseContext.SaveChanges();
@@ -55,7 +56,8 @@ namespace BasketUnit.WebAPI.Repositories
                 LastName = referee.LastName,
                 FullName = referee.FirstName + " " + referee.LastName,
                 LicenseExpirationDate = referee.LicenseExpirationDate,
-                BirthDate = referee.BirthDate
+                BirthDate = referee.BirthDate,
+                NationalityId = referee.NationalityId
             };
             return detailsRefereeVM;
         }
@@ -67,6 +69,7 @@ namespace BasketUnit.WebAPI.Repositories
             referee.LastName = model.LastName;
             referee.BirthDate = model.BirthDate;
             referee.LicenseExpirationDate = model.LicenseExpirationDate;
+            referee.NationalityId = model.NationalityId;
 
             MainDatabaseContext.Referees.Update(referee);
             MainDatabaseContext.SaveChanges();

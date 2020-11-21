@@ -319,6 +319,21 @@ namespace BasketUnit.WebAPI.Migrations
                     b.ToTable("GameTeams");
                 });
 
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.Nationality", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Nationalities");
+                });
+
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Person", b =>
                 {
                     b.Property<int>("Id")
@@ -360,11 +375,16 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("NationalityId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.HasIndex("CreatedById");
 
                     b.HasIndex("ModifiedById");
+
+                    b.HasIndex("NationalityId");
 
                     b.ToTable("People");
 
@@ -961,9 +981,17 @@ namespace BasketUnit.WebAPI.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedById");
 
+                    b.HasOne("BasketUnit.WebAPI.Models.Nationality", "Nationality")
+                        .WithMany()
+                        .HasForeignKey("NationalityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("CreatedBy");
 
                     b.Navigation("ModifiedBy");
+
+                    b.Navigation("Nationality");
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Stats", b =>

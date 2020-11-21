@@ -30,7 +30,8 @@ namespace BasketUnit.WebAPI.Repositories
                 BirthDate = model.BirthDate,
                 Position = (Position)model.PositionId,
                 Number = model.Number,
-                Avatar = model.Avatar
+                Avatar = model.Avatar,
+                NationalityId = model.NationalityId
             };
             MainDatabaseContext.Players.Add(player);
             MainDatabaseContext.SaveChanges();
@@ -49,7 +50,8 @@ namespace BasketUnit.WebAPI.Repositories
                 Avatar = player.Avatar,
                 Position = player.Position.ToString(),
                 Number = player.Number,
-                BirthDate = player.BirthDate
+                BirthDate = player.BirthDate,
+                NationalityId = player.NationalityId
             };
             return detailsPlayerVM;
         }
@@ -63,6 +65,7 @@ namespace BasketUnit.WebAPI.Repositories
             player.Position = model.Position;
             player.BirthDate = model.BirthDate;
             player.Number = model.Number;
+            player.NationalityId = model.NationalityId;
 
             MainDatabaseContext.Players.Update(player);
             MainDatabaseContext.SaveChanges();

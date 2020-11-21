@@ -139,7 +139,8 @@ import {
     DxColumn, 
     DxFilterRow,
     DxPager,
-    DxPaging 
+    DxPaging,
+    DxLookup 
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
@@ -223,7 +224,8 @@ export default {
         DxPager,
         DxPaging,
         editForm,
-        addForm
+        addForm,
+        DxLookup
     }
 };
 </script>

@@ -30,6 +30,7 @@ namespace BasketUnit.WebAPI.Repositories
         private TeamScheduleRepository _teamScheduleRepository;
         private WorkoutRepository _workoutRepository;
         private WorkoutTypeRepository _workoutTypeRepository;
+        private NationalityRepository _nationalityRepository;
 
         public RepositoriesWrapper(MainDatabaseContext context)
         {
@@ -56,6 +57,7 @@ namespace BasketUnit.WebAPI.Repositories
         public ITeamScheduleRepository TeamScheduleRepository => _teamScheduleRepository = _teamScheduleRepository ?? new TeamScheduleRepository(_context);
         public IWorkoutRepository WorkoutRepository => _workoutRepository = _workoutRepository ?? new WorkoutRepository(_context);
         public IWorkoutTypeRepository WorkoutTypeRepository => _workoutTypeRepository = _workoutTypeRepository ?? new WorkoutTypeRepository(_context);
+        public INationalityRepository NationalityRepository => _nationalityRepository = _nationalityRepository ?? new NationalityRepository(_context);
         public async Task<int> CommitAsync()
         {
             return await _context.SaveChangesAsync();

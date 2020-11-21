@@ -15,5 +15,6 @@ namespace BasketUnit.WebAPI.ViewModels
         public int Number { get; set; }
         public byte[] Avatar { get; set; }
         public DateTime BirthDate { get; set; }
+        public int NationalityId { get; set; }
     }
 }

@@ -13,5 +13,7 @@ namespace BasketUnit.WebAPI.Models
         public bool IsActive { get; set; }
         public string MobilePhoneNr { get; set; }
         public DateTime BirthDate { get; set; }
+        public int NationalityId { get; set; }
+        public virtual Nationality Nationality { get; set; }
     }
 }
