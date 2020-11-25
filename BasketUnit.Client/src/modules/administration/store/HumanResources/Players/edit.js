@@ -12,7 +12,8 @@ const state = {
         PositionId: null,
         BirthDate:  null,
         NationalityId: null,
-        Avatar: ''
+        Avatar: '',
+        PlayerNumber: null
     },
     teams: [],
     positions: [],
@@ -33,7 +34,10 @@ const getters = {
     },
     getNationalities: (state) => {
         return state.nationalities;
-    }
+    },
+    getPlayersList: (state) => {
+        return state.players;
+    },
 }
 
 const mutations = {
@@ -46,7 +50,8 @@ const mutations = {
         state.editForm.PositionId = null,
         state.editForm.BirthDate = null,
         state.editForm.NationalityId = null,
-        state.editForm.Avatar = ''
+        state.editForm.Avatar = '',
+        state.editForm.PlayerNumber = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -58,18 +63,19 @@ const mutations = {
         state.players = payload;
     },
     setDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id,
-        state.editForm.FirstName = payload.Model.FirstName,
-        state.editForm.LastName = payload.Model.LastName,
-        state.editForm.TeamId = payload.Model.TeamId,
-        state.editForm.PositionId = payload.Model.PositionId,
-        state.editForm.BirthDate = payload.Model.BirthDate,
-        state.editForm.NationalityId = payload.Model.NationalityId,
-        state.editForm.Avatar = payload.Model.Avatar
+        state.editForm.Id = payload.id,
+        state.editForm.FirstName = payload.firstName,
+        state.editForm.LastName = payload.lastName,
+        state.editForm.TeamId = payload.teamId,
+        state.editForm.PositionId = payload.positionId,
+        state.editForm.BirthDate = payload.birthDate,
+        state.editForm.NationalityId = payload.nationalityId,
+        state.editForm.Avatar = payload.avatar,
+        state.editForm.PlayerNumber = payload.number
     },
-    setNationalities: (state, payload) = {
-        state.nationalities = payload;
-    }
+    setNationalities: (state, payload) => {
+        state.nationalities = payload
+    },
 }
 
 const actions = {
@@ -85,21 +91,33 @@ const actions = {
                 commit("setPositions", response.data);
             });
     },
-    editPlayer: ({ state }) => {
-        service.editPlayer(state.editForm);
+    async editPlayer ({ state, commit, dispatch }) {
+        try {
+            await service.editPlayer(state.editForm);
+            dispatch("setPlayersList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setPlayerDetails: ({ commit }, id) => {
-        service.setPlayerDetails(id)
+        service.getPlayerDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
             });
     },
     setNationalities: ({ commit }) => {
-        service.getNationalities()
+        service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
             });
-    }
+    },
+    setPlayersList: ({ commit }) => {
+        service.getPlayers()
+            .then(response => {
+                commit("setPlayersList", response.data);
+            });
+    },
 }
 
 export default { state, getters, mutations, actions, namespaced };

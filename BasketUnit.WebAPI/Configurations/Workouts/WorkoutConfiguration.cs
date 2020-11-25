@@ -14,10 +14,12 @@ namespace BasketUnit.WebAPI.Configurations
         {
             builder
                 .HasOne(x => x.WorkoutType)
-                .WithMany(y => y.Workouts);
+                .WithMany(y => y.Workouts)
+                .HasForeignKey(x => x.WorkoutTypeId);
             builder
                 .HasMany(x => x.TeamScheduleActivities)
-                .WithOne(y => y.Workout);
+                .WithOne(y => y.Workout)
+                .HasForeignKey(x => x.TeamScheduleId);
         }
     }
 }

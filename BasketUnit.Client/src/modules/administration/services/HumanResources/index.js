@@ -17,13 +17,14 @@ class humanResourcesService {
         return axios.get("/administration/humanResources/getPositionsToLookup");
     }
     getPlayerDetails(playerId) {
-        return axios.get("/administration/humanResources/setPlayerDetails", playerId);
+        debugger
+        return axios.get(`/administration/humanResources/getPlayerDetails/${playerId}`);
     }
     getCoachDetails(coachId) {
-        return axios.get("/administration/humanResources/setCoachDetails", coachId);
+        return axios.get(`/administration/humanResources/getCoachDetails/${coachId}`);
     }
     getRefereeDetails(refereeId) {
-        return axios.get("/administration/humanResources/setRefereeDetails", refereeId);
+        return axios.get(`/administration/humanResources/getRefereeDetails/${refereeId}`);
     }
     editPlayer(data) {
         return axios.post("/administration/humanResources/editPlayer", data);
@@ -35,13 +36,13 @@ class humanResourcesService {
         return axios.post("/administration/humanResources/editReferee", data);
     }
     getPlayerDataToDetails(playerId) {
-        return axios.get("/administration/humanResources/getPlayerDataToDetails", playerId);
+        return axios.get(`/administration/humanResources/getPlayerDataToDetails/${playerId}`);
     }
     getLastPlayerStatistics(playerId) {
-        return axios.get("/administration/humanResources/getLastPlayerStatistics", playerId);
+        return axios.get(`/administration/humanResources/getLastPlayerStatistics/${playerId}`);
     }
     getAvarageStatsToChart(playerId) {
-        return axios.get("/administration/humanResources/getAvarageStatsToChart", playerId);
+        return axios.get(`/administration/humanResources/getAvarageStatsToChart/${playerId}`);
     }
     addPlayer(data) {
         return axios.post("/administration/humanResources/addPlayer", data);
@@ -52,8 +53,18 @@ class humanResourcesService {
     addReferee(data) {
         return axios.post("/administration/humanResources/addReferee", data);
     }
-    getNationalities(data) {
+    getNationalitiesToLookup() {
+        debugger
         return axios.get("/administration/humanResources/getNationalities");
+    }
+    deleteReferee(refereeId) {
+        return axios.get(`/administration/humanResources/deleteReferee/${refereeId}`);
+    }
+    deleteCoach(coachId) {
+        return axios.get(`/administration/humanResources/deleteCoach/${coachId}`);
+    }
+    deletePlayer(playerId) {
+        return axios.get(`/administration/humanResources/deletePlayer/${playerId}`);
     }
 }
 

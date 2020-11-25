@@ -15,7 +15,7 @@ namespace BasketUnit.WebAPI.Services
         {
             this.RepositoriesWrapper = repositoriesWrapper;
         }
-        public List<Player> GetPlayers()
+        public List<ListPlayersVM> GetPlayers()
         {
             return RepositoriesWrapper.PlayerRepository.GetPlayers();
         }

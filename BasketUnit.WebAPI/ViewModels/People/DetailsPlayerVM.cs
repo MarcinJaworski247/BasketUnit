@@ -15,9 +15,9 @@ namespace BasketUnit.WebAPI.ViewModels
         public string Position { get; set; }
         public int PositionId { get; set; }
         public byte[] Avatar { get; set; }
-        public int Number { get; set; }
+        public int PlayerNumber { get; set; }
         public string Team { get; set; }
-        public int TeamId { get; set; }
+        public int? TeamId { get; set; }
         public int NationalityId { get; set; }
     }
 }

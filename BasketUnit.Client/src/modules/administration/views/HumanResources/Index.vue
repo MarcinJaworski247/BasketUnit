@@ -1,93 +1,77 @@
 <template>
     <div class="content">
-        <div class="printers ml-4">
-            <div class="main-header mt-4 mb-2">
-                <h3 class="main-header-title">
-                    Human Resources
-                </h3>
-            </div>
-            <div class="mt-4">
-                <router-link :to="{ name: 'administration.humanResources.players' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>ZAWODNICY</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'administration.humanResources.coaches' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>TRENERZY</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'administration.humanResources.referees' }">
-                <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>SĘDZIOWIE</span>
-                        </div>
-                    </div>
-                </router-link>
-            </div>
-            <div class="d-flex end-xs mt-5">
-                <DxButton 
-                    text="Wstecz"
-                    type="default"
-                    styling-mode="outlined"
-                    @click="function() { $router.push({ name: 'administration.index' }) }"
-                />
-            </div>
-        </div>
+
+        <DxTabPanel
+            height="800"
+            width="1200"
+            :animation-enabled=true
+            :swipe-enabled=false
+            :items="tabs">
+            <template #title="{ data: tabs }">
+                <span>
+                    <i :class="tabs.icon"></i>
+                    {{ tabs.title }}
+                </span> 
+            </template>
+            <template slot="tab1">
+                <div class="container">
+                    <PlayersTab/>
+                </div>
+            </template>
+            <template slot="tab2">
+                <div class="container">
+                    <CoachesTab/>
+                </div>
+            </template>
+            <template slot="tab3">
+                <div class="container">
+                    <RefereesTab/>
+                </div>
+            </template>
+        </DxTabPanel>
+
     </div>
 </template>
 
 <script>
-import DxButton from 'devextreme-vue/button';
+import 
+{ 
+    DxTabPanel
+} from 'devextreme-vue';
+import PlayersTab from "./Players/Index";
+import CoachesTab from "./Coaches/Index";
+import RefereesTab from "./Referees/Index";
 export default {
-  components: {
-      DxButton
-  }
+    name: "humanResources",
+    data() {
+        return {
+            tabs: [
+                {
+                    title: "Zawodnicy",
+                    icon: "far fa-users",
+                    template: "tab1"
+                },
+                {
+                    title: "Trenerzy",
+                    icon: "far fa-users",
+                    template: "tab2"
+                },
+                {
+                    title: "Sędziowie",
+                    icon: "far fa-users",
+                    template: "tab3"
+                }
+            ]
+        };
+    },
+    components: {
+        DxTabPanel,
+        PlayersTab,
+        CoachesTab,
+        RefereesTab
+    }
 };
 </script>
 
 <style scoped>
-.tile{
-    width: 160px;
-    height: 160px;
-    border: 1px solid black;
-    margin-right: 16px;
-    border-radius: 2px;
-    float: left;
-}
-.tile:hover{
-    color: darkgrey;
-    border-color: darkgrey;
-    cursor: pointer;
-}
-.tile-image{
-    padding-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60px;
-    height: 60px;
-    font-size: 48px;
-}
-.tile-name{
-    margin-top: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    size: 16px;
-    font-weight: 700;
-    text-align: center;
-}
-
 </style>

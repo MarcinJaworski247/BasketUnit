@@ -10,7 +10,8 @@ const state = {
         LastName: '',
         TeamId: null,
         BirthDate:  null,
-        NationalityId: null
+        NationalityId: null,
+        ExperienceYears: null
     },
     teams: [],
     coaches: [],
@@ -39,7 +40,8 @@ const mutations = {
         state.editForm.LastName = '',
         state.editForm.TeamId = null,
         state.editForm.BirthDate = null,
-        state.editForm.NationalityId = null
+        state.editForm.NationalityId = null,
+        state.editForm.ExperienceYears = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -48,12 +50,13 @@ const mutations = {
         state.coaches = payload;
     },
     setDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id,
-        state.editForm.FirstName = payload.Model.FirstName,
-        state.editForm.LastName = payload.Model.LastName,
-        state.editForm.TeamId = payload.Model.TeamId,
-        state.editForm.BirthDate = payload.Model.BirthDate,
-        state.editForm.NationalityId = payload.Model.NationalityId
+        state.editForm.Id = payload.id,
+        state.editForm.FirstName = payload.firstName,
+        state.editForm.LastName = payload.lastName,
+        state.editForm.TeamId = payload.teamId,
+        state.editForm.BirthDate = payload.birthDate,
+        state.editForm.NationalityId = payload.nationalityId,
+        state.editForm.ExperienceYears = payload.experienceYears
     },
     setNationalities: (state, payload) => {
         state.nationalities = payload;
@@ -67,19 +70,31 @@ const actions = {
                 commit("setTeams", response.data);
             });
     },
-    editCoach: ({ state }) => {
-        service.editCoach(state.editForm);
+    async editCoach ({ state, commit, dispatch }) {
+        try {
+            await service.editCoach(state.editForm);
+            dispatch("setCoachesList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setCoachDetails: ({ commit }, id) => {
-        service.setCoachDetails(id)
+        service.getCoachDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
             });
     },
     setNationalities: ({ commit }) => {
-        service.getNationalities()
+        service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
+            });
+    },
+    setCoachesList: ({ commit }) => {
+        service.getCoaches()
+            .then(response => {
+                commit("setCoachesList", response.data);
             });
     }
 }

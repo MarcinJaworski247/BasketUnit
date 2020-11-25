@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketUnit.WebAPI.Migrations
 {
     [DbContext(typeof(MainDatabaseContext))]
-    [Migration("20201121212648_InitialCreate")]
+    [Migration("20201122205931_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -644,6 +644,9 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Property<int>("TeamScheduleId")
                         .HasColumnType("int");
 
+                    b.Property<int>("TeamScheduleId1")
+                        .HasColumnType("int");
+
                     b.Property<int?>("WorkoutId")
                         .HasColumnType("int");
 
@@ -657,7 +660,7 @@ namespace BasketUnit.WebAPI.Migrations
 
                     b.HasIndex("TeamScheduleId");
 
-                    b.HasIndex("WorkoutId");
+                    b.HasIndex("TeamScheduleId1");
 
                     b.ToTable("TeamScheduleActivities");
                 });
@@ -1153,15 +1156,17 @@ namespace BasketUnit.WebAPI.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedById");
 
-                    b.HasOne("BasketUnit.WebAPI.Models.TeamSchedule", "TeamSchedule")
+                    b.HasOne("BasketUnit.WebAPI.Models.Workout", "Workout")
                         .WithMany("TeamScheduleActivities")
                         .HasForeignKey("TeamScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BasketUnit.WebAPI.Models.Workout", "Workout")
+                    b.HasOne("BasketUnit.WebAPI.Models.TeamSchedule", "TeamSchedule")
                         .WithMany("TeamScheduleActivities")
-                        .HasForeignKey("WorkoutId");
+                        .HasForeignKey("TeamScheduleId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("CreatedBy");
 

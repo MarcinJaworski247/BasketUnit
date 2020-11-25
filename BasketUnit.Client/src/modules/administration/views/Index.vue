@@ -2,71 +2,70 @@
     <div class="content">
         <div class="printers ml-4">
             <div class="main-header mt-4 mb-2">
-                <h3 class="main-header-title">
-                    Administracja
-                </h3>
+                <h3 class="main-header-title"> Administracja </h3>
             </div>
-            <div class="mt-4">
-                <router-link :to="{ name: 'administration.humanResources.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>HUMAN RESOURCES</span>
-                        </div>
+
+            <DxTabPanel
+                height="800"
+                width="1200"
+                :animation-enabled=true
+                :swipe-enabled=false
+                :items="tabs">
+                <template #title="{ data: tabs }">
+                    <span>
+                        <i :class="tabs.icon"></i>
+                        {{ tabs.title }}
+                    </span> 
+                </template>
+                <template slot="tab1">
+                    <div class="container">
+                        <HumanResourcesTab/>
                     </div>
-                </router-link>
-                <router-link :to="{ name: 'administration.clubs.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>KLUBY</span>
-                        </div>
+                </template>
+                <template slot="tab2">
+                    <div class="container">
+                        <ClubsTab/>
                     </div>
-                </router-link>
-            </div>
+                </template>
+            </DxTabPanel>
+            
         </div>
     </div>
 </template>
 
 <script>
+import 
+{ 
+    DxTabPanel
+} from 'devextreme-vue';
+import HumanResourcesTab from "./HumanResources/Index";
+import ClubsTab from "./Clubs/Index";
 export default {
-    
+    name: "administration",
+    data() {
+        return {
+            tabs: [
+                {
+                    title: "Human Resources",
+                    icon: "far fa-users",
+                    template: "tab1"
+                },
+                {
+                    title: "Kluby",
+                    icon: "far fa-users",
+                    template: "tab2"
+                }
+            ]
+        };
+    },
+    components: {
+        DxTabPanel,
+        HumanResourcesTab,
+        ClubsTab
+    }
 }
 </script>
 
 <style scoped>
-.tile{
-    width: 160px;
-    height: 160px;
-    border: 1px solid black;
-    margin-right: 16px;
-    border-radius: 2px;
-    float: left;
-}
-.tile:hover{
-    color: darkgrey;
-    border-color: darkgrey;
-    cursor: pointer;
-}
-.tile-image{
-    padding-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60px;
-    height: 60px;
-    font-size: 48px;
-}
-.tile-name{
-    margin-top: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    size: 16px;
-    font-weight: 700;
-    text-align: center;
-}
 
 </style>

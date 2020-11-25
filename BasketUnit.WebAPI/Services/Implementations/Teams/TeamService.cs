@@ -52,5 +52,18 @@ namespace BasketUnit.WebAPI.Services
         {
             RepositoriesWrapper.TeamRepository.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
         }
+        public List<PlayerDetailsChartVM> GetDataToPlayerDetailsChart(int playerId)
+        {
+            List<Stats> playerStats = RepositoriesWrapper.StatsRepository.GetStatsByPlayer(playerId);
+            Team team = RepositoriesWrapper.TeamRepository.GetTeamByPlayer(playerId);
+            List<Player> restOfTeam = RepositoriesWrapper.TeamRepository.GetPlayersByTeam(team.Id);
+            List<Stats> teamStats = RepositoriesWrapper.StatsRepository.GetStatsByTeam(team.Id);
+
+            List<PlayerDetailsChartVM> playerDetailsChart = new List<PlayerDetailsChartVM>();
+
+
+
+            return playerDetailsChart;
+        }
     }
 }

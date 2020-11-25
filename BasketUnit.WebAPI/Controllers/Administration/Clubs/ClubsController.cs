@@ -40,7 +40,7 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
             var team = TeamService.AddTeam(model);
             return Ok(team);
         }
-        [HttpGet("setTeamDetails")]
+        [HttpGet("setTeamDetails/{teamId}")]
         public ActionResult SetTeamDetails(int teamId)
         {
             var data = TeamService.SetTeamDetails(teamId);
@@ -70,7 +70,7 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
             var data = ArenaService.EditArena(model);
             return Ok(data);
         }
-        [HttpGet("setArenaDetails")]
+        [HttpGet("setArenaDetails/{arenaId}")]
         public ActionResult SetArenaDetails(int arenaId)
         {
             var data = ArenaService.SetArenaDetails(arenaId);
@@ -82,13 +82,13 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
             var data = ArenaService.AddArena(model);
             return Ok(data);
         }
-        [HttpPost("deleteArena")]
+        [HttpPost("deleteArena/{arenaId}")]
         public ActionResult DeleteArena(int arenaId)
         {
             ArenaService.DeleteArena(arenaId);
             return Ok(true);
         }
-        [HttpPost("deleteTeam")]
+        [HttpPost("deleteTeam/{teamId}")]
         public ActionResult DeleteTeam(int teamId)
         {
             TeamService.DeleteTeam(teamId);

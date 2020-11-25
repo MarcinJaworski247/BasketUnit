@@ -10,7 +10,7 @@ const state = {
         City: '',
         CoachId: null,
         ArenaId: null,
-        Badge: ''
+        Badge: []
     },
     coaches: [],
     arenas: [],
@@ -27,6 +27,9 @@ const getters = {
     },
     getArenas: (state)  => {
         return state.arenas;
+    },
+    getTeamsList: (state) => {
+        return state.teams;
     }
 }
 
@@ -38,7 +41,7 @@ const mutations = {
         state.editForm.City = '',
         state.editForm.CoachId = null,
         state.editForm.ArenaId = null,
-        state.editForm.Badge = ''
+        state.editForm.Badge = []
     },
     setCoaches: (state, payload) => {
         state.coaches = payload;
@@ -47,18 +50,28 @@ const mutations = {
         state.arenas = payload;
     },
     setDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id;
-        state.editForm.Name = payload.Model.Name,
-        state.editForm.City = payload.Model.City,
-        state.editForm.CoachId = payload.Model.CoachId,
-        state.editForm.ArenaId = payload.Model.ArenaId,
-        state.editForm.Badge = payload.Model.Badge
+        debugger
+        state.editForm.Id = payload.id;
+        state.editForm.Name = payload.name,
+        state.editForm.City = payload.city,
+        state.editForm.CoachId = payload.coachId,
+        state.editForm.ArenaId = payload.arenaId,
+        state.editForm.Badge = payload.badge
+    },
+    setTeamsList: (state, payload) => {
+        state.teams = payload;
     }
 }
 
 const actions = {
-    editTeam: ({ state }) => {
-        service.editTeam(state.editForm);
+    async editTeam ({ state, commit, dispatch }) {
+        try {
+            await service.editTeam(state.editForm);
+            dispatch("setTeamsList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setCoaches: ({ commit }) => {
         service.getCoachesToLookup()
@@ -73,9 +86,16 @@ const actions = {
             });
     },
     setTeamDetails: ({ commit }, id) => {
+        debugger
         service.setTeamDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
+            });
+    },
+    setTeamsList: ({ commit }) => {
+        service.getTeams()
+            .then(response => {
+                commit("setTeamsList", response.data);
             });
     }
 }

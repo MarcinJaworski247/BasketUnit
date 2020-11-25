@@ -9,7 +9,7 @@ const state = {
         City: '',
         CoachId: null,
         ArenaId: null,
-        Badge: ''
+        Badge: []
     },
     coaches: [],
     arenas: [],
@@ -40,7 +40,7 @@ const mutations = {
         state.addForm.City = '',
         state.addForm.CoachId = null,
         state.addForm.ArenaId = null,
-        state.addForm.Badge = ''
+        state.addForm.Badge = []
     },
     setCoaches: (state, payload) => {
         state.coaches = payload;
@@ -54,8 +54,14 @@ const mutations = {
 }
 
 const actions = {
-    addTeam: ({ state }) => {
-        service.addTeam(state.addForm);
+    async addTeam ({ state, dispatch, commit }) {
+        try {
+            await service.addTeam(state.addForm);
+            dispatch("setTeamsList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setCoaches: ({ commit }) => {
         service.getCoachesToLookup()
@@ -74,6 +80,14 @@ const actions = {
             .then(response => {
                 commit("setTeamsList", response.data);
             });
+    },
+    async deleteTeam ({ state, dispatch }) {
+        try {
+            await service.deleteTeam(state.idToDelete);
+            dispatch("setTeamsList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

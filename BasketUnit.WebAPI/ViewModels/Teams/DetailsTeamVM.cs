@@ -14,5 +14,7 @@ namespace BasketUnit.WebAPI.ViewModels
         public string Arena { get; set; }
         public string CoachFullName { get; set; }
         public byte[] Badge { get; set; }
+        public int? CoachId { get; set; }
+        public int? ArenaId { get; set; }
     }
 }

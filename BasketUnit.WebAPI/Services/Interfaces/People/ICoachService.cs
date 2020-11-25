@@ -11,7 +11,7 @@ namespace BasketUnit.WebAPI.Services
     public interface ICoachService
     {
         List<SelectModelBinder<int>> GetCoachesToLookup();
-        List<Coach> GetCoaches();
+        List<ListCoachesVM> GetCoaches();
         DetailsCoachVM SetCoachDetails(int coachId);
         EditCoachVM EditCoach(EditCoachVM model);
         Coach AddCoach(AddCoachVM model);

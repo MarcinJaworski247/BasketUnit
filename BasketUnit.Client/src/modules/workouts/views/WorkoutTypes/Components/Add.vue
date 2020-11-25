@@ -1,36 +1,30 @@
 <template>
     <form @submit.prevent="addWorkoutType">
         <DxValidationGroup :ref="`validationGroup`">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwa</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Name">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-12">
+                    <label>Nazwa</label>
+                    <DxTextBox v-model="Name">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
             </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Opis</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Description">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxTextBox>
-                    </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Opis</label>
+                    <DxTextArea v-model="Description"/>
                 </div>
             </div>
         </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -47,7 +41,8 @@
 <script>
 import {
     DxTextBox,
-    DxButton
+    DxButton,
+    DxTextArea
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -74,11 +69,10 @@ export default {
         ])
     },
     methods: {
-        ...mapActions(store, ["addWorkoutTypeq"]),
+        ...mapActions(store, ["addWorkoutType"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeAdd");
-            this.resetForm();
         },
         closePopupOnSave: function (e) {
             let validateResult = e.validationGroup.validate();
@@ -103,7 +97,8 @@ export default {
         DxButton,
         DxValidator,
         DxRequiredRule,
-        DxValidationGroup
+        DxValidationGroup,
+        DxTextArea
     }
 };
 </script>

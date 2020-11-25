@@ -1,52 +1,44 @@
 <template>
     <form @submit.prevent="editExcersise">
         <DxValidationGroup :ref="`validationGroup`">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwa</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Name">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Nazwa</label>
+                    <DxTextBox v-model="Name">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Opis</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Description">
+                <div class="col-6">
+                    <label>Rodzaj treningu</label>
+                    <DxSelectBox 
+                        v-model="WorkoutTypeId"
+                        :data-source="getWorkoutTypes"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder="">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxSelectBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Opis</label>
+                    <DxTextArea v-model="Description"/>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group row">
-                    <label class="col-xs-12">Rodzaj treningu</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="WorkoutTypeId"
-                            :data-source="getWorkoutTypes"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -64,7 +56,8 @@
 import {
     DxTextBox,
     DxButton,
-    DxSelectBox
+    DxSelectBox,
+    DxTextArea
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -97,7 +90,6 @@ export default {
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
-            this.resetForm();
         },
         closePopupOnSave: function (e) {
             let validateResult = e.validationGroup.validate();
@@ -124,7 +116,8 @@ export default {
         DxSelectBox,
         DxValidator,
         DxRequiredRule,
-        DxValidationGroup
+        DxValidationGroup,
+        DxTextArea
     }
 };
 </script>

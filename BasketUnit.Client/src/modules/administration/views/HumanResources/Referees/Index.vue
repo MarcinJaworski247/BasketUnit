@@ -2,8 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Sędziowie
-        </h3>
+        <!-- <h3 class="main-header-title"> Sędziowie </h3> -->
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -16,7 +15,7 @@
         id="gridContainer"
         :data-source="getRefereesList"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
@@ -24,35 +23,38 @@
     >
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="FullName"
+            data-field="firstName"
             alignment="left"
-            caption="Imię i nazwisko"
-            data-type="string">
+            caption="Imię"
+            data-type="string"/>
+        <DxColumn 
+            data-field="lastName"
+            alignment="left"
+            caption="Nazwisko"
+            data-type="string"/>
+        <DxColumn 
+            data-field="nationalityId"
+            alignment="left"
+            caption="Narodowość">
+            <DxLookup
+                :data-source="getNationalities"
+                value-expr="value"
+                display-expr="text"/>
         </DxColumn>
         <DxColumn 
-            data-field="Nationality"
-            data-type="string"
-            alignment="left"
-            caption="Narodowość" />
-        <DxColumn 
-            data-field="BirthDate"
+            data-field="birthDate"
             data-type="date"
             alignment="center"
             caption="Data urodzenia" />
         <DxColumn 
-            data-field="EmailAddress"
+            data-field="licenseExpirationDate"
             data-type="date"
             alignment="center"
-            caption="Email" />
-        <DxColumn 
-            data-field="PhoneNumber"
-            data-type="date"
-            alignment="center"
-            caption="Nr. tel." />
+            caption="Data wygaśnięcia licencji" />
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="10" />
         <DxColumn 
-            data-field="Id"
+            data-field="id"
             alignment="center"
             caption=""
             cell-template="actionsCellTemplate"
@@ -60,18 +62,18 @@
             :allow-filtering="false"
             width="100" />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+            <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+            <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
     </DxDataGrid>
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
                 :use-submit-behavior="false"
                 type="normal"
                 styling-mode="outlined"
                 text="Wróć"
                 @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
-    </div>
+    </div> -->
     </div>
 
     <!-- add popup -->
@@ -123,7 +125,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteReferees()" />
+            @click="deleteRefereeMethod()" />
     </DxPopup>
 
 </div>
@@ -140,7 +142,8 @@ import {
     DxColumn, 
     DxFilterRow,
     DxPager,
-    DxPaging 
+    DxPaging,
+    DxLookup 
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
@@ -148,12 +151,13 @@ import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationRefereeStore";
+const editStore = "AdministrationEditRefereeStore";
 
 export default {
     name: "referees",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 20, 30],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -168,25 +172,24 @@ export default {
     created() {
     },
     computed: {
-        ...mapGetters(store, ["getRefereesList"]),
+        ...mapGetters(store, ["getRefereesList", "getNationalities"]),
         ...mapFields(store, ["idToDelete"])
     },
     methods: {
-        ...mapActions(store, ["setRefereesList", "setDetails"]),
+        ...mapActions(store, ["setRefereesList", "setNationalities", "deleteReferee"]),
+        ...mapActions(editStore, ["setRefereeDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setCoachesList();
         },
         showEditPopup(options){
-            this.setDetails(options.data.Id);
+            this.setRefereeDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setCoachesList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -196,11 +199,8 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteTeam() {
-            this.deleteTeam()
-                .then(() => {
-                    this.setCoachesList();
-                });
+        deleteReferee() {
+            this.deleteReferee()
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;
@@ -213,6 +213,7 @@ export default {
     },
     mounted() {
         this.setRefereesList();
+        this.setNationalities();
     },
     components: {
         DxPopup,
@@ -223,7 +224,8 @@ export default {
         DxPager,
         DxPaging,
         editForm,
-        addForm
+        addForm,
+        DxLookup
     }
 };
 </script>

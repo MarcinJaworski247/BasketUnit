@@ -62,5 +62,11 @@ namespace BasketUnit.WebAPI.Controllers.Team
             TeamService.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
             return Ok(true);
         }
+        [HttpGet("getDataToPlayerDetailsChart/{playerId}")]
+        public ActionResult GetDataToPlayerDetailsChart(int playerId)
+        {
+            var data = TeamService.GetDataToPlayerDetailsChart(playerId);
+            return Ok(data);
+        }
     }
 }

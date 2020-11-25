@@ -1,84 +1,68 @@
 <template>
     <form @submit.prevent="addCoach">
         <DxValidationGroup :ref="`validationGroup`">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Imię</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="FirstName">
+        
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Imię</label>
+                    <DxTextBox v-model="FirstName">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwisko</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="LastName">
+                <div class="col-6">
+                    <label>Nazwisko</label>
+                    <DxTextBox v-model="LastName">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
             </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Narodowość</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="Nationality"
+            <div class="row">
+                <div class="col-6">
+                    <label>Narodowość</label>
+                    <DxSelectBox 
+                            v-model="NationalityId"
                             :data-source="getNationalities"
-                            value-expr="Value"
-                            display-expr="Text"
+                            value-expr="value"
+                            display-expr="text"
                             :search-enabled="true"
                             placeholder="">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxSelectBox>
-                    </div>
+                    </DxSelectBox>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Drużyna</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="TeamId"
-                            :data-source="getTeams"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group row">
-                    <label class="col-xs-12">Data urodzenia</label>
-                    <div class="col-xs-12">
-                        <DxDateBox v-model="BirthDate">
+                <div class="col-6">
+                    <label>Lata doświadczenia</label>
+                    <DxNumberBox v-model="ExperienceYears">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxDateBox>
-                    </div>
+                    </DxNumberBox>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-12">
+                    <label>Data urodzenia</label>
+                    <DxDateBox v-model="BirthDate">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxDateBox>
+                </div>
+                
+                
+            </div>
         </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -97,7 +81,8 @@ import {
     DxTextBox,
     DxButton,
     DxSelectBox,
-    DxDateBox
+    DxDateBox,
+    DxNumberBox
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -123,7 +108,8 @@ export default {
             "addForm.LastName",
             "addForm.TeamId",
             "addForm.BirthDate",
-            "addForm.Nationality"
+            "addForm.NationalityId",
+            "addForm.ExperienceYears"
         ])
     },
     methods: {
@@ -160,7 +146,8 @@ export default {
         DxRequiredRule,
         DxValidationGroup,
         DxSelectBox,
-        DxDateBox
+        DxDateBox,
+        DxNumberBox
     }
 };
 </script>

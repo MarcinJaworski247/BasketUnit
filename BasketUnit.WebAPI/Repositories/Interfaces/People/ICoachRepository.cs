@@ -11,7 +11,7 @@ namespace BasketUnit.WebAPI.Repositories
     public interface ICoachRepository : IRepository<Coach>
     {
         List<SelectModelBinder<int>> GetCoachesToLookup();
-        List<Coach> GetCoaches();
+        List<ListCoachesVM> GetCoaches();
         Coach AddCoach(AddCoachVM model);
         DetailsCoachVM SetCoachDetails(int coachId);
         EditCoachVM EditCoach(EditCoachVM model);

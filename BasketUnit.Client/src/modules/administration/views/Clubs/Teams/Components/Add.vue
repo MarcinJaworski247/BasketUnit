@@ -1,87 +1,54 @@
 <template>
     <form @submit.prevent="addTeam">
         <DxValidationGroup :ref="`validationGroup`">
-        <!-- <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group row">
-                    <div class="file-upload">
-                        <img v-bind:src="'data:image/jpeg;base64,'+Badge" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="fileuploader-container">
-                        <DxFileUploader
-                            select-button-text="Wybierz zdjęcie"
-                            label-text="lub upuść tutaj"
-                            accept="image/*"
-                            upload-mode="useForm"
-                            :show-file-list="false"
-                            :multiple="false"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwa</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Name">
+        
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Miasto</label>
+                    <DxTextBox v-model="City">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Miasto</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="City">
+                <div class="col-6">
+                    <label>Nazwa</label>
+                    <DxTextBox v-model="Name">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label>Arena</label>
+                    <DxSelectBox 
+                        v-model="ArenaId"
+                        :data-source="getArenas"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder=""/>
+                </div>
+                <div class="col-6">
+                    <label>Trener</label>
+                    <DxSelectBox 
+                        v-model="CoachId"
+                        :data-source="getCoaches"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder=""/>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Arena</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="ArenaId"
-                            :data-source="getArenas"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Trener</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="CoachId"
-                            :data-source="getCoaches"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -103,7 +70,6 @@ import {
     DxSelectBox
 } from 'devextreme-vue';
 import notify from 'devextreme/ui/notify';
-import { DxFileUploader } from 'devextreme-vue/file-uploader';
 import { DxRequiredRule, DxCustomRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
 import { mapGetters, mapActions, mapMutations } from "vuex";

@@ -14,5 +14,6 @@ namespace BasketUnit.WebAPI.ViewModels
         public int? ExperienceYears { get; set; }
         public DateTime BirthDate { get; set; }
         public int NationalityId { get; set; }
+        public int? TeamId { get; set; }
     }
 }

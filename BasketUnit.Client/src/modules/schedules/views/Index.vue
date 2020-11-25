@@ -4,12 +4,13 @@
         :current-date="currentDate"
         :views="views"
         :groups="groups"
-        :height="600"
+        height="800"
+        width="1200"
         :show-all-day-panel="true"
         :first-day-of-week="1"
         :start-day-hour="8"
         :end-day-hour="22"
-        current-view="month"
+        current-view="day"
         data-cell-template="dataCellTemplate">
 
         <DxResource

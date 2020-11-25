@@ -2,8 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Zespoły
-        </h3>
+        <!-- <h3 class="main-header-title"> Zespoły </h3> -->
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -14,10 +13,11 @@
     </div>
     
     <DxDataGrid
-        id="gridContainer"
+        id="gridCOntainer"
         :data-source="getTeamsList"
+        :remote-operations="true"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
@@ -25,7 +25,7 @@
     >
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn
-            data-field="Badge"
+            data-field="badge"
             caption=""
             cell-template="badgeCellTemplate"
             :allow-search="false"
@@ -33,60 +33,59 @@
             alignment="center"
             width="100"/>
         <div slot="badgeCellTemplate" slot-scope="{ data }">
-            <img v-bind:src="data.Badge" />
+            <img v-bind:src="data.badge" />
         </div>
         <DxColumn 
-            data-field="Name"
-            alignment="left"
-            caption="Nazwa"
-            data-type="string"/>
-        <DxColumn 
-            data-field="City"
+            data-field="city"
             data-type="string"
             alignment="left"
             caption="Miasto" />
         <DxColumn 
-            data-field="ArenaId"
+            data-field="name"
+            alignment="left"
+            caption="Nazwa"
+            data-type="string"/>
+        <DxColumn 
+            data-field="arenaId"
             alignment="left"
             caption="Arena">
             <DxLookup
                 :data-source="getArenas"
-                value-expr="Value"
-                display-expr="Text" />
+                value-expr="value"
+                display-expr="text" />
         </DxColumn>
         <DxColumn 
-            data-field="Coach"
+            data-field="coachId"
             alignment="left"
             caption="Trener">
             <DxLookup
                 :data-source="getCoaches"
-                value-expr="Value"
-                display-expr="Text" />
+                value-expr="value"
+                display-expr="text" />
         </DxColumn>
         <DxColumn 
             alignment="center"
-            data-field="Id"
+            data-field="id"
             caption=""
-            cellTemplate="actionsCellTemplate"
+            cellTemplate="teamActionsCellTemplate"
             :allow-search="false"
             :allow-filtering="false"
             width=100 />
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
-        <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+        <DxPaging :page-size="10" />
+        <div slot="teamActionsCellTemplate" slot-scope="{ data }">
+            <DxButton @click="showEditPopupMethod(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" styling-mode="text" />
         </div>
     </DxDataGrid>
 
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
             :use-submit-behavior="false"
             type="normal"
             styling-mode="outlined"
             text="Wróć"
             @click="function(){ $router.push({ name: `administration.clubs.index` }) }" />
-    </div>
+    </div> -->
 
     </div>
 
@@ -140,7 +139,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteTeam()" />
+            @click="deleteTeamMethod()" />
     </DxPopup>
 
 </div>
@@ -150,15 +149,15 @@
 import 
 { 
     DxPopup,
-    DxButton,
-    DxLookup
+    DxButton
 } from 'devextreme-vue';
 import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
     DxPager,
-    DxPaging 
+    DxPaging,
+    DxLookup 
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
@@ -166,12 +165,13 @@ import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationTeamStore";
+const editStore = "AdministrationEditTeamStore";
 
 export default {
     name: "teams",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 20, 30],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -187,24 +187,24 @@ export default {
     },
     computed: {
         ...mapGetters(store, ["getTeamsList", "getArenas", "getCoaches"]),
-        ...mapFields(store, ["idToDelete"])
+        ...mapFields(store, ["idToDelete", "arenas"])
     },
     methods: {
-        ...mapActions(store, ["setTeamsList", "setArenas", "setCoaches"]),
+        ...mapActions(store, ["setTeamsList", "setArenas", "setCoaches", "deleteTeam"]),
+        ...mapActions(editStore, ["setTeamDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setTeamsList();
         },
-        showEditPopup(options){
-            this.setDetails(options.data.Id);
+        showEditPopupMethod(options){
+            debugger
+            this.setTeamDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setTeamsList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -215,10 +215,7 @@ export default {
             this.idToDelete = null;
         },
         deleteTeam() {
-            this.deleteTeam()
-                .then(() => {
-                    this.setTeamsList();
-                });
+            this.deleteTeam();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;

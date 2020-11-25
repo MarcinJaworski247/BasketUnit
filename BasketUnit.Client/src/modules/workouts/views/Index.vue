@@ -1,45 +1,71 @@
 <template>
     <div class="content">
-        <div class="printers ml-4">
-            <div class="main-header mt-4 mb-2">
-                <h3 class="main-header-title">
-                    Treningi
-                </h3>
+            <div class="main-header mt-1 mb-2">
+                <h3 class="main-header-title"> Treningi </h3>
             </div>
-            <div class="mt-4">
-                <router-link :to="{ name: 'workouts.workoutTypes.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>RODZAJE TRENINGÓW</span>
-                        </div>
+
+            <DxTabPanel
+                height="800"
+                width="1200"
+                :animation-enabled=true
+                :swipe-enabled=false
+                :items="tabs">
+                <template #title="{ data: tabs }">
+                    <span>
+                        <i :class="tabs.icon"></i>
+                        {{ tabs.title }}
+                    </span> 
+                </template>
+                <template slot="tab1">
+                    <div class="container">
+                        <WorkoutTypesTab/>
                     </div>
-                </router-link>
-                <router-link :to="{ name: 'workouts.excercises.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>ĆWICZENIA</span>
-                        </div>
+                </template>
+                <template slot="tab2">
+                    <div class="container">
+                        <ExcercisesTab/>
                     </div>
-                </router-link>
-            </div>
-        </div>
+                </template>
+            </DxTabPanel>
+            
     </div>
 </template>
 
 <script>
+import 
+{ 
+    DxTabPanel
+} from 'devextreme-vue';
+import WorkoutTypesTab from "./WorkoutTypes/Index";
+import ExcercisesTab from "./Excercises/Index";
 export default {
-    
+    name: "workouts",
+    data() {
+        return {
+            tabs: [
+                {
+                    title: "Rodzaje treningów",
+                    icon: "far fa-dumbbell",
+                    template: "tab1"
+                },
+                {
+                    title: "Ćwiczenia",
+                    icon: "far fa-running",
+                    template: "tab2"
+                }
+            ]
+        };
+    },
+    components: {
+        DxTabPanel,
+        WorkoutTypesTab,
+        ExcercisesTab
+    }
 }
 </script>
 
 <style scoped>
-.tile{
+/* .tile{
     width: 160px;
     height: 160px;
     border: 1px solid black;
@@ -67,6 +93,6 @@ export default {
     size: 16px;
     font-weight: 700;
     text-align: center;
-}
+} */
 
 </style>

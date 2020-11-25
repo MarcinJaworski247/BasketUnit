@@ -82,25 +82,17 @@
     <div class="container mt-3 pl-2">
       <router-view />
     </div>
-    <div>
-      <!-- <IncomingTermsComponent/>
-      <LeagueLeadersComponent/> -->
-    </div>
   </div>
 </template>
 
 <script>
-import 'bootstrap/dist/css/bootstrap.css'
-import 'bootstrap-vue/dist/bootstrap-vue.css'
-import IncomingTermsComponent from "./components/IncomingTermsComponent.vue"
-import LeagueLeadersComponent from "./components/LeagueLeadersComponent.vue"
-import store from "./store";
+
 export default {
   name: 'App'
 };
 </script>
 
-<style>
+<style scoped>
 
 .vertical-nav {
   min-width: 200px;

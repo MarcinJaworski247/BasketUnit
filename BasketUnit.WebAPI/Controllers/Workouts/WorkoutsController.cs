@@ -43,7 +43,7 @@ namespace BasketUnit.WebAPI.Controllers.Workouts
             var data = WorkoutService.EditWorkout(model);
             return Ok(data);
         }
-        [HttpGet("getExcersiseDetails")]
+        [HttpGet("getExcersiseDetails/{workoutId}")]
         public ActionResult GetExcersiseDetails(int workoutId)
         {
             var data = WorkoutService.SetWorkoutDetails(workoutId);
@@ -67,19 +67,19 @@ namespace BasketUnit.WebAPI.Controllers.Workouts
             var data = WorkoutTypeService.EditWorkoutType(model);
             return Ok(data);
         }
-        [HttpGet("GetWorkoutTypeDetails")]
+        [HttpGet("getWorkoutTypeDetails/{workoutTypeId}")]
         public ActionResult GetWorkoutTypeDetails(int workoutTypeId)
         {
             var data = WorkoutTypeService.SetWorkoutTypeDetails(workoutTypeId);
             return Ok(data);
         }
-        [HttpPost("deleteWorkout")]
+        [HttpPost("deleteWorkout/{workoutId}")]
         public ActionResult DeleteWorkout(int workoutId)
         {
             WorkoutService.DeleteWorkout(workoutId);
             return Ok(true);
         }
-        [HttpPost("deleteWorkoutType")]
+        [HttpPost("deleteWorkoutType/{workoutTypeId}")]
         public ActionResult DeleteWorkoutType(int workoutTypeId)
         {
             WorkoutTypeService.DeleteWorkoutType(workoutTypeId);

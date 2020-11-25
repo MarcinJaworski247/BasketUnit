@@ -2,7 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Zawodnicy </h3>
+        <!-- <h3 class="main-header-title"> Zawodnicy </h3> -->
         <DxButton
             :use-submit-behavior="false"
             type="default"
@@ -15,15 +15,14 @@
         id="gridContainer"
         :data-source="getPlayersList"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true"
-    >
+        show-filter-row="true">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="Avatar"
+            data-field="avatar"
             caption=""
             cell-template="avatarCellTemplate"
             :allow-search="false"
@@ -32,50 +31,54 @@
             width="100"
         />
         <div slot="avatarCellTemplate" slot-scope="{ data }">
-            <img v-bind:src="data.Avatar" />
+            <img v-bind:src="data.avatar" />
         </div>
         <DxColumn 
-            data-field="FullName"
+            data-field="fullName"
             alignment="left"
             caption="Imię i nazwisko"
-            data-type="string"
-            cellTemplate="nameHyperlinkTemplate" />
-        <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
+            data-type="string" />
+            <!-- cellTemplate="nameHyperlinkTemplate" /> -->
+        <!-- <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
             <router-link
                 :to="{ name: 'administration.humanResources.players.details', params: { id: data.value } }">
-                {{ data.Value }}
+                {{ data.value }}
             </router-link>
-        </div>
+        </div> -->
         <DxColumn 
-            data-field="Nationality"
-            data-type="string"
+            data-field="nationalityId"
             alignment="left"
-            caption="Narodowość" />
+            caption="Narodowość">
+            <DxLookup
+                :data-source="getNationalities"
+                value-expr="value"
+                display-expr="text"/>
+        </DxColumn>
         <DxColumn 
-            data-field="BirthDate"
+            data-field="birthDate"
             data-type="date"
             alignment="center"
             caption="Data urodzenia" />
         <DxColumn 
-            data-field="PositionId"
+            data-field="positionId"
             alignment="left"
             caption="Pozycja">
             <DxLookup
                 :data-source="getPositions"
-                value-expr="Value"
-                display-expr="Text" />
+                value-expr="value"
+                display-expr="text" />
         </DxColumn>
         <DxColumn 
-            data-field="Team"
+            data-field="teamId"
             alignment="left"
             caption="Drużyna">
             <DxLookup
                 :data-source="getTeams"
-                value-expr="Value"
-                display-expr="Text" />
+                value-expr="value"
+                display-expr="text" />
         </DxColumn>
         <DxColumn 
-            data-field="Id"
+            data-field="id"
             alignment="center"
             caption=""
             cell-template="actionsCellTemplate"
@@ -84,27 +87,26 @@
             width="100"
         />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <router-link
+            <!-- <router-link
                 class="datagrid-btn"
-                :to="{ name: 'administration.humanResources.players.details', params: { id: data.value } }"
-            >
+                :to="{ name: 'administration.humanResources.players.details', params: { id: data.value } }">
                 <i hint="Szczegóły" class="fas fa-chevron-right"></i>
-            </router-link>
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+            </router-link> -->
+            <DxButton @click="showPlayerEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+            <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="10" />
     </DxDataGrid>
 
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
             :use-submit-behavior="false"
             type="normal"
             styling-mode="outlined"
             text="Wróć"
             @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
-    </div>
+    </div> -->
     </div>    
 
     <!-- add popup -->
@@ -156,7 +158,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteTeam()" />
+            @click="deletePlayerMethod()" />
     </DxPopup>
 
 </div>
@@ -166,15 +168,15 @@
 import 
 { 
     DxPopup,
-    DxButton,
-    DxLookup
+    DxButton
 } from 'devextreme-vue';
 import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
     DxPager,
-    DxPaging 
+    DxPaging,
+    DxLookup 
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
@@ -182,12 +184,13 @@ import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationPlayerStore";
+const editStore = "AdministrationEditPlayerStore";
 
 export default {
     name: "players",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 20, 30],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -202,25 +205,24 @@ export default {
     created() {
     },
     computed: {
-        ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions"]),
+        ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions", "getNationalities"]),
         ...mapFields(store, ["idToDelete"])
     },
     methods: {
-        ...mapActions(store, ["setPlayersList", "setTeams", "setPositions", "setDetails"]),
+        ...mapActions(store, ["setPlayersList", "setTeams", "setPositions", "setNationalities", "deletePlayer"]),
+        ...mapActions(editStore, ["setPlayerDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setPlayersList();
         },
-        showEditPopup(options){
-            this.setDetails(options.data.Id);
+        showPlayerEditPopup(options){
+            this.setPlayerDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setPlayersList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -230,11 +232,8 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteTeam() {
-            this.deleteTeam()
-                .then(() => {
-                    this.setPlayersList();
-                });
+        deletePlayerMethod() {
+            this.deletePlayer();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;
@@ -249,6 +248,7 @@ export default {
         this.setPlayersList();
         this.setTeams();
         this.setPositions();
+        this.setNationalities();
     },
     components: {
         DxPopup,

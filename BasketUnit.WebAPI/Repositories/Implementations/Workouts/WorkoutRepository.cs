@@ -47,13 +47,14 @@ namespace BasketUnit.WebAPI.Repositories
         public DetailsWorkoutVM SetWorkoutDetails(int workoutId)
         {
             Workout workout = MainDatabaseContext.Workouts.Where(x => x.Id == workoutId).FirstOrDefault();
+            WorkoutType workoutType = MainDatabaseContext.WorkoutTypes.Where(x => x.Id == workout.WorkoutTypeId).FirstOrDefault();
             DetailsWorkoutVM detailsWorkoutVM = new DetailsWorkoutVM
             {
                 Id = workout.Id,
                 Name = workout.Name,
                 Description = workout.Description,
                 WorkoutTypeId = workout.WorkoutTypeId,
-                WorkoutType = workout.WorkoutType.Name
+                WorkoutType = workoutType.Name
             };
             return detailsWorkoutVM;
         }

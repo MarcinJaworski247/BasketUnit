@@ -68,6 +68,8 @@ namespace BasketUnit.WebAPI.Repositories
         public void DeleteWorkoutType(int workoutTypeId)
         {
             WorkoutType workoutType = MainDatabaseContext.WorkoutTypes.Where(x => x.Id == workoutTypeId).FirstOrDefault();
+            List<Workout> workouts = MainDatabaseContext.Workouts.Where(x => x.WorkoutTypeId == workoutTypeId).ToList();
+            MainDatabaseContext.Workouts.RemoveRange(workouts);
             MainDatabaseContext.WorkoutTypes.Remove(workoutType);
             MainDatabaseContext.SaveChanges();
         }

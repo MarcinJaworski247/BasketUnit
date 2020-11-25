@@ -9,7 +9,8 @@ const state = {
         LastName: '',
         TeamId: null,
         BirthDate:  null,
-        NationalityId: null
+        NationalityId: null,
+        ExperienceYears: null
     },
     teams: [],
     coaches: [],
@@ -28,7 +29,7 @@ const getters = {
     getCoachesList: (state) => {
         return state.coaches;
     },
-    getNationalitiesList: (state)  => {
+    getNationalities: (state)  => {
         return state.nationalities;
     }
 }
@@ -40,7 +41,8 @@ const mutations = {
         state.addForm.LastName = '',
         state.addForm.TeamId = null,
         state.addForm.BirthDate = null,
-        state.addForm.NationalityId = null
+        state.addForm.NationalityId = null,
+        state.addForm.ExperienceYears = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -48,14 +50,20 @@ const mutations = {
     setCoachesList: (state, payload) => {
         state.coaches = payload;
     },
-    setNationalitiesList: (state, payload) => {
+    setNationalities: (state, payload) => {
         state.nationalities = payload;
     }
 }
 
 const actions = {
-    addCoach: ({ state }) => {
-        service.addCoach(state.addForm);
+    async addCoach ({ state, dispatch, commit }) {
+        try {
+            await service.addCoach(state.addForm);
+            dispatch("setCoachesList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setTeams: ({ commit }) => {
         service.getTeamsToLookup()
@@ -69,10 +77,10 @@ const actions = {
                 commit("setCoachesList", response.data);
             });
     },
-    setNationalitiesList: ({ commit }) => {
-        service.getNationalities()
+    setNationalities: ({ commit }) => {
+        service.getNationalitiesToLookup()
             .then(response => {
-                commit("setNationalitiesList", response.data);
+                commit("setNationalities", response.data);
             });
     }
 }

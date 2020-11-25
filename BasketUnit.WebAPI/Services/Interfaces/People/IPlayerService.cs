@@ -9,7 +9,7 @@ namespace BasketUnit.WebAPI.Services
 {
     public interface IPlayerService
     {
-        List<Player> GetPlayers();
+        List<ListPlayersVM> GetPlayers();
         DetailsPlayerVM SetPlayerDetails(int playerId);
         EditPlayerVM EditPlayer(EditPlayerVM model);
         Player AddPlayer(AddPlayerVM model);

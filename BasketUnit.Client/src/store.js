@@ -31,6 +31,7 @@ import LeagueLeadersStore from './modules/statistics/store/LeagueLeaders/index.j
 
 // Team
 import TeamStore from './modules/teams/store/index.js'
+import TeamPlayerDetailsStore from './modules/teams/store/details.js'
 
 // Workouts
 import WorkoutsExcercisesStore from './modules/workouts/store/Excercises/index.js'
@@ -60,6 +61,7 @@ export default new Vuex.Store({
         WorkoutsExcercisesStore,
         WorkoutsExcercisesEditStore, 
         WorkoutsTypesStore, 
-        WorkoutsTypesEditStore
+        WorkoutsTypesEditStore,
+        TeamPlayerDetailsStore
     }
 });

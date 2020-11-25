@@ -2,7 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Rodzaje treningów </h3>
+        <!-- <h3 class="main-header-title"> Rodzaje treningów </h3> -->
         <DxButton
             :use-submit-behavior="false"
             type="default"
@@ -15,25 +15,24 @@
         id="gridContainer"
         :data-source="getWorkoutTypesList"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true"
-    >
+        show-filter-row="true">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="Name"
+            data-field="name"
             alignment="left"
             caption="Nazwa"
             data-type="string" />
         <DxColumn 
-            data-field="Description"
+            data-field="description"
             data-type="string"
             alignment="left"
             caption="Opis" />
         <DxColumn 
-            data-field="Id"
+            data-field="id"
             alignment="center"
             caption=""
             cell-template="actionsCellTemplate"
@@ -42,21 +41,21 @@
             width="100"
         />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+            <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+            <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="15" />
     </DxDataGrid>
 
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
             :use-submit-behavior="false"
             type="normal"
             styling-mode="outlined"
             text="Wróć"
             @click="function(){ $router.push({ name: 'workouts.index' }) }"/>
-    </div>
+    </div> -->
     </div>    
 
     <!-- add popup -->
@@ -108,7 +107,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteWorkoutType()" />
+            @click="deleteWorkoutTypeMethod()" />
     </DxPopup>
 
 </div>
@@ -133,12 +132,13 @@ import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "WorkoutsTypesStore";
+const editStore = "WorkoutsTypesEditStore";
 
 export default {
     name: "workoutTypes",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 15, 20],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -157,21 +157,20 @@ export default {
         ...mapFields(store, ["idToDelete"])
     },
     methods: {
-        ...mapActions(store, ["setWorkoutTypesList", "setDetails"]),
+        ...mapActions(store, ["setWorkoutTypesList", "deleteWorkoutType"]),
+        ...mapActions(editStore, ["setWorkoutTypeDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setWorkoutTypesList();
         },
         showEditPopup(options){
-            this.setWorkoutTypeDetails(options.data.Id);
+            this.setWorkoutTypeDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setWorkoutTypesList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -181,11 +180,8 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteWorkoutType() {
-            this.deleteWorkoutType()
-                .then(() => {
-                    this.setWorkoutTypesList();
-                });
+        deleteWorkoutTypeMethod() {
+            this.deleteWorkoutType();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;

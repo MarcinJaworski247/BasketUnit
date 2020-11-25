@@ -9,8 +9,7 @@ const state = {
         LastName: '',
         NationalityId: null,
         BirthDate: null,
-        PhoneNumber: '',
-        EmailAddress: ''
+        LicenseExpirationDate: null
     },
     referees: [],
     nationalities: []
@@ -23,7 +22,7 @@ const getters = {
     },
     getNationalities: (state) => {
         return state.nationalities;
-    }
+    },
 }
 
 const mutations = {
@@ -33,41 +32,46 @@ const mutations = {
         state.editForm.LastName = '',
         state.editForm.NationalityId = null,
         state.editForm.BirthDate = null,
-        state.editForm.PhoneNumber = ''
-        state.editForm.EmailAddress = ''
+        state.editForm.LicenseExparationDate = null
     },
     setRefereesList: (state, payload) => {
         state.referees = payload;
     },
     setDetails: (state, payload) => {
-        state.editForm.FirstName = payload.Model.FirstName,
-        state.editForm.LastName = payload.Model.LastName,
-        state.editForm.NationalityId = payload.Model.NationalityId,
-        state.editForm.BirthDate = payload.Model.BirthDate,
-        state.editForm.PhoneNumber = payload.Model.PhoneNumber,
-        state.editForm.EmailAddress = payload.Model.EmailAddress
+        debugger
+        state.editForm.FirstName = payload.firstName,
+        state.editForm.LastName = payload.lastName,
+        state.editForm.NationalityId = payload.nationalityId,
+        state.editForm.BirthDate = payload.birthDate,
+        state.editForm.LicenseExpirationDate = payload.licenseExpirationDate
     },
     setNationalities: (state, payload) => {
-        state.nationalities = payload;
-    }
+        state.nationalities = payload
+    },
 }
 
 const actions = {
-    editReferee: ({ state }) => {
-        service.editReferee(state.editForm);
+    async editReferee ({ state, commit, dispatch }) {
+        try {
+            await service.editReferee(state.editForm);
+            dispatch("setRefereesList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setRefereeDetails: ({ commit }, id) => {
-        service.setRefereeDetails(id)
+        service.getRefereeDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
             });
     },
     setNationalities: ({ commit }) => {
-        service.getNationalities()
+        service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
             });
-    }
+    },
 }
 
 export default { state, getters, mutations, actions, namespaced };

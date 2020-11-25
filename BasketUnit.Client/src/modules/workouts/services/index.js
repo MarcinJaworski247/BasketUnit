@@ -14,7 +14,7 @@ class workoutsService {
         return axios.post("/workouts/editExcersise", data);
     }
     getExcersiseDetails(excersiseId) {
-        return axios.get("/workouts/getExcersiseDetails", excersiseId)
+        return axios.get(`/workouts/getExcersiseDetails/${excersiseId}`)
     }
     getWorkoutTypes() {
         return axios.get("/workouts/getWorkoutTypes");
@@ -23,10 +23,16 @@ class workoutsService {
         return axios.post("/workouts/addWorkoutType", data);
     }
     editWorkoutType(data) {
-        return axios.post("/workout/editWorkoutType", data);
+        return axios.post("/workouts/editWorkoutType", data);
     }
     getWorkoutTypeDetails(workoutTypeId) {
-        return axios.get("/workout/getWorkoutTypeDetails", workoutTypeId);
+        return axios.get(`/workouts/getWorkoutTypeDetails/${workoutTypeId}`);
+    }
+    deleteWorkoutType(workoutTypeId) {
+        return axios.post(`/workouts/deleteWorkoutType/${workoutTypeId}`);
+    }
+    deleteExcercise(workoutId) {
+        return axios.post(`/workouts/deleteWorkout/${workoutId}`);
     }
 }
 

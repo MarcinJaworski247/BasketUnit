@@ -1,51 +1,63 @@
 <template>
     <div class="content">
-        <div class="printers ml-4">
-            <div class="main-header mt-4 mb-2">
-                <h3 class="main-header-title">
-                    Drużyny
-                </h3>
-            </div>
-            <div class="mt-4">
-                <router-link :to="{ name: 'administration.clubs.teams' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>DANE ZESPOŁÓW</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'administration.clubs.arenas' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>ARENY</span>
-                        </div>
-                    </div>
-                </router-link>
-            </div>
-            <div class="d-flex end-xs mt-5">
-                <DxButton 
-                    text="Wstecz"
-                    type="default"
-                    styling-mode="outlined"
-                    @click="function() { $router.push({ name: 'administration.index' }) }"
-                />
-            </div>
-        </div>
+        
+        <DxTabPanel
+            height="800"
+            width="1200"
+            :animation-enabled=true
+            :swipe-enabled=false
+            :items="tabs">
+            <template #title="{ data: tabs }">
+                <span>
+                    <i :class="tabs.icon"></i>
+                    {{ tabs.title }}
+                </span> 
+            </template>
+            <template slot="tab1">
+                <div class="container">
+                    <TeamsTab/>
+                </div>
+            </template>
+            <template slot="tab2">
+                <div class="container">
+                    <ArenasTab/>
+                </div>
+            </template>
+        </DxTabPanel>
+
     </div>
 </template>
 
 <script>
-import DxButton from 'devextreme-vue/button';
+import 
+{ 
+    DxTabPanel
+} from 'devextreme-vue';
+import TeamsTab from "./Teams/Index";
+import ArenasTab from "./Arenas/Index";
 export default {
-  components: {
-      DxButton
-  }
+    name: "clubs",
+    data() {
+        return {
+            tabs: [
+                {
+                    title: "Drużyny",
+                    icon: "far fa-users",
+                    template: "tab1"
+                },
+                {
+                    title: "Areny",
+                    icon: "far fa-warehouse",
+                    template: "tab2"
+                }
+            ]
+        };
+    },
+    components: {
+      TeamsTab,
+      ArenasTab,
+      DxTabPanel,
+    }
 };
 </script>
 
@@ -57,6 +69,7 @@ export default {
     margin-right: 16px;
     border-radius: 2px;
     float: left;
+    border-radius: 2px;
 }
 .tile:hover{
     color: darkgrey;

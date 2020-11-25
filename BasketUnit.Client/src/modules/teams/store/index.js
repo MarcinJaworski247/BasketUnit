@@ -11,8 +11,8 @@ const state = {
         PlayerNumber: null,
         PositionId: null,
         BirthDate:  null,
-        Nationality: '',
-        Avatar: ''
+        NationalityId: '',
+        Avatar: []
     },
     playersList: [],
     firstLineupPayers: [],
@@ -60,7 +60,8 @@ const state = {
     shootingGuard: [],
     smallForwards: [],
     powerForwards: [],
-    centers: []
+    centers: [],
+    nationalities: []
 }
 
 const getters = {
@@ -88,6 +89,9 @@ const getters = {
     },
     getCenters: (state) => {
         return state.centers;
+    },
+    getNationalities: (state) => {
+        return state.nationalities;
     }
 }
 
@@ -106,18 +110,18 @@ const mutations = {
         state.editForm.PlayerNumber = null,
         state.editForm.PositionId = null,
         state.editForm.BirthDate = null,
-        state.editForm.Nationality = '',
-        state.editForm.Avatar = ''
+        state.editForm.NationalityId = null,
+        state.editForm.Avatar = []
     },
     setDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id,
-        state.editForm.FirstName = payload.Model.FirstName,
-        state.editForm.LastName = payload.Model.LastName,
-        state.editForm.PlayerNumber = payload.Model.PlayerNumber,
-        state.editForm.PositionId = payload.Model.PositionId,
-        state.editForm.BirthDate = payload.Model.BirthDate,
-        state.editForm.Nationality = payload.Model.Nationality,
-        state.editForm.Avatar = payload.Model.Avatar
+        state.editForm.Id = payload.id,
+        state.editForm.FirstName = payload.firstName,
+        state.editForm.LastName = payload.lastName,
+        state.editForm.PlayerNumber = payload.playerNumber,
+        state.editForm.PositionId = payload.positionId,
+        state.editForm.BirthDate = payload.birthDate,
+        state.editForm.NationalityId = payload.nationalityId,
+        state.editForm.Avatar = payload.avatar
     },
     setPositionsToLookup: (state, payload) => {
         state.positionsList = payload;
@@ -166,6 +170,9 @@ const mutations = {
         state.firstLineup.center.LastName = payload.Model.LastName;
         state.firstLineup.center.Avatar = payload.Model.Avatar;
         state.firstLineup.center.Number = payload.Model.Number;
+    },
+    setNationalities: (state, payload) => {
+        state.nationalities = payload;
     }
 }
 
@@ -257,8 +264,13 @@ const actions = {
             .then(response => {
                 commit("setCenter", response.data);
             });
-    }
-
+    },
+    setNationalities: ({ commit }) => {
+        service.getNationalitiesToLookup()
+            .then(response => {
+                commit("setNationalities", response.data);
+            });
+    },
 }
 
 export default { state, getters, mutations, actions, namespaced };

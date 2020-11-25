@@ -1,119 +1,91 @@
 <template>
     <form @submit.prevent="addPlayer">
         <DxValidationGroup :ref="`validationGroup`">
-        <!-- <div class="row">
-            <div class="col-xs-12">
-                <div class="form-group row">
-                    <div class="file-upload">
-                        <img v-bind:src="'data:image/jpeg;base64,'+Avatar" />
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class="fileuploader-container">
-                        <DxFileUploader
-                            select-button-text="Wybierz zdjęcie"
-                            label-text="lub upuść tutaj"
-                            accept="image/*"
-                            upload-mode="useForm"
-                            :show-file-list="false"
-                            :multiple="false"
-                        />
-                    </div>
-                </div>
-            </div>
-        </div> -->
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Imię</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="FirstName">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Imię</label>
+                    <DxTextBox v-model="FirstName">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
                 </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwisko</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="LastName">
+                <div class="col-6">
+                    <label>Nazwisko</label>
+                    <DxTextBox v-model="LastName">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Data urodzenia</label>
+                    <DxDateBox v-model="BirthDate">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxDateBox>
+                </div>
+                <div class="col-4">
+                    <label>Narodowość</label>
+                    <DxSelectBox 
+                        v-model="NationalityId"
+                        :data-source="getNationalities"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder="">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxSelectBox>
+                </div>
+                <div class="col-4">
+                    <label>Numer</label>
+                    <DxNumberBox v-model="PlayerNumber">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxNumberBox>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <label>Drużyna</label>
+                    <DxSelectBox 
+                        v-model="TeamId"
+                        :data-source="getTeams"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder="">
+                    </DxSelectBox>
+                </div>
+                <div class="col-6">
+                    <label>Pozycja</label>
+                    <DxSelectBox 
+                        v-model="PositionId"
+                        :data-source="getPositions"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder="">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxSelectBox>
                 </div>
             </div>
         </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Pozycja</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="PositionId"
-                            :data-source="getPositions"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Drużyna</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="TeamId"
-                            :data-source="getTeams"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="false"
-                            placeholder=""/>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Narodowość</label>
-                    <div class="col-xs-12">
-                        <DxSelectBox 
-                            v-model="NationalityId"
-                            :data-source="getNationalities"
-                            value-expr="Value"
-                            display-expr="Text"
-                            :search-enabled="true"
-                            palceholder="">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxSelectBox>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Data urodzenia</label>
-                    <div class="col-xs-12">
-                        <DxDateBox v-model="BirthDate">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxDateBox>
-                    </div>
-                </div>
-            </div>
-        </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -159,8 +131,9 @@ export default {
             "addForm.TeamId",
             "addForm.PositionId",
             "addForm.BirthDate",
-            "addForm.Nationality",
-            "addForm.Avatar"
+            "addForm.NationalityId",
+            "addForm.Avatar",
+            "addForm.PlayerNumber"
         ])
     },
     methods: {

@@ -11,7 +11,8 @@ const state = {
         PositionId: null,
         BirthDate:  null,
         NationalityId: null,
-        Avatar: ''
+        Avatar: '',
+        PlayerNumber: null
     },
     teams: [],
     positions: [],
@@ -48,7 +49,8 @@ const mutations = {
         state.addForm.PositionId = null,
         state.addForm.BirthDate = null,
         state.addForm.NationalityId = null,
-        state.addForm.Avatar = ''
+        state.addForm.Avatar = '',
+        state.addForm.PlayerNumber = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -59,14 +61,20 @@ const mutations = {
     setPlayersList: (state, payload) => {
         state.players = payload;
     },
-    setNationalities: (State, payload) => {
+    setNationalities: (state, payload) => {
         state.nationalities = payload;
     }
 }
 
 const actions = {
-    addPlayer: ({ state }) => {
-        service.addPlayer(state.addForm);
+    async addPlayer ({ state, dispatch, commit }) {
+        try {
+            await service.addPlayer(state.addForm);
+            dispatch("setPlayersList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setTeams: ({ commit }) => {
         service.getTeamsToLookup()
@@ -87,10 +95,18 @@ const actions = {
             });
     },
     setNationalities: ({ commit }) => {
-        service.getNationalities()
+        service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
             });
+    },
+    async deletePlayer ({ state, dispatch }) {
+        try {
+            await service.deletePlayer(state.idToDelete);
+            dispatch("setPlayersList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

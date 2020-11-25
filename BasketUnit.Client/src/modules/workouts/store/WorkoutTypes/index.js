@@ -34,14 +34,29 @@ const mutations = {
 }
 
 const actions = {
-    addWorkoutType: ({ state }) => {
-        service.addWorkoutType(state.addForm);
+    async addWorkoutType ({ state, dispatch, commit }) {
+        try {
+            await service.addWorkoutType(state.addForm).then(() => {
+                dispatch("setWorkoutTypesList");
+            });
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        } 
     },
     setWorkoutTypesList: ({ commit }) => {
         service.getWorkoutTypes()
             .then(response => {
                 commit("setWorkoutTypesList", response.data);
             });
+    },
+    async deleteWorkoutType ({ state, dispatch }) {
+        try {
+            await service.deleteWorkoutType(state.idToDelete);
+            dispatch("setWorkoutTypesList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

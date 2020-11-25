@@ -651,6 +651,7 @@ namespace BasketUnit.WebAPI.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TeamScheduleId = table.Column<int>(type: "int", nullable: false),
+                    TeamScheduleId1 = table.Column<int>(type: "int", nullable: false),
                     WorkoutId = table.Column<int>(type: "int", nullable: true),
                     GameId = table.Column<int>(type: "int", nullable: true),
                     StartDate = table.Column<DateTime>(type: "datetime2", nullable: false),
@@ -683,17 +684,17 @@ namespace BasketUnit.WebAPI.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TeamScheduleActivities_TeamSchedules_TeamScheduleId",
-                        column: x => x.TeamScheduleId,
+                        name: "FK_TeamScheduleActivities_TeamSchedules_TeamScheduleId1",
+                        column: x => x.TeamScheduleId1,
                         principalTable: "TeamSchedules",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TeamScheduleActivities_Workouts_WorkoutId",
-                        column: x => x.WorkoutId,
+                        name: "FK_TeamScheduleActivities_Workouts_TeamScheduleId",
+                        column: x => x.TeamScheduleId,
                         principalTable: "Workouts",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
@@ -942,9 +943,9 @@ namespace BasketUnit.WebAPI.Migrations
                 column: "TeamScheduleId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TeamScheduleActivities_WorkoutId",
+                name: "IX_TeamScheduleActivities_TeamScheduleId1",
                 table: "TeamScheduleActivities",
-                column: "WorkoutId");
+                column: "TeamScheduleId1");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TeamSchedules_CreatedById",

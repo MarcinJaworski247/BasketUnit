@@ -2,8 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Areny
-        </h3>
+        <!-- <h3 class="main-header-title"> Areny </h3> -->
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -16,52 +15,51 @@
         id="gridContainer"
         :data-source="getArenasList"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true"
-    >
+        show-filter-row="true">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="Name"
+            data-field="name"
             alignment="left"
             caption="Nazwa"
             data-type="string">
         </DxColumn>
         <DxColumn 
-            data-field="Team"
-            data-type="string"
-            alignment="left"
-            caption="Drużyna" />
-        <DxColumn 
-            data-field="Address"
+            data-field="address"
             data-type="string"
             alignment="left"
             caption="Adres" />
+        <DxColumn
+            data-field="capacity"
+            data-type="number"
+            alignment="center"
+            caption="Pojemność" />
         <DxColumn 
             alignment="center"
-            data-field="Id"
+            data-field="id"
             caption=""
             cellTemplate="actionsCellTemplate"
             :allow-search="false"
             :allow-filtering="false"
             width=100 />
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="10" />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class=" ml-3 fas fa-trash" />
+            <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+            <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
     </DxDataGrid>
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
                 :use-submit-behavior="false"
                 type="normal"
                 styling-mode="outlined"
                 text="Wróć"
                 @click="function(){ $router.push({ name: 'administration.clubs.index' }) }"/>
-    </div>
+    </div> -->
     </div>  
 
     <!-- add popup -->
@@ -113,7 +111,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteArena()" />
+            @click="deleteArenaMethod()" />
     </DxPopup>
 
 </div>
@@ -138,12 +136,13 @@ import { mapGetters, mapActions } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "AdministrationArenaStore";
+const editStore = "AdministrationEditArenaStore";
 
 export default {
     name: "arenas",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 15, 20],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -156,6 +155,7 @@ export default {
         }
     },
     created() {
+        this.setArenasList();
     },
     computed: {
         ...mapGetters(store, ["getArenasList"]),
@@ -163,21 +163,20 @@ export default {
     },
     methods: {
         
-        ...mapActions(store, ["setArenasList"]),
+        ...mapActions(store, ["setArenasList", "deleteArena"]),
+        ...mapActions(editStore, ["setArenaDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setArenasList();
         },
         showEditPopup(options){
-            this.setDetails(options.data.Id);
+            this.setArenaDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setArenasList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -187,11 +186,8 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteTeam() {
-            this.deleteTeam()
-                .then(() => {
-                    this.setArenasList();
-                });
+        deleteArenaMethod() {
+            this.deleteArena();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;
@@ -203,7 +199,7 @@ export default {
         }      
     },
     mounted() {
-        this.setArenasList();
+        
     },
     components: {
         DxPopup,

@@ -18,12 +18,14 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
         private readonly ICoachService CoachService;
         private readonly IRefereeService RefereeService;
         private readonly ITeamService TeamService;
-        public HumanResourcesController(IPlayerService playerService, ICoachService coachService, IRefereeService refereeService, ITeamService teamService)
+        private readonly INationalityService NationalityService;
+        public HumanResourcesController(IPlayerService playerService, ICoachService coachService, IRefereeService refereeService, ITeamService teamService, INationalityService nationalityService)
         {
             this.PlayerService = playerService;
             this.CoachService = coachService;
             this.RefereeService = refereeService;
             this.TeamService = teamService;
+            this.NationalityService = nationalityService;
         }
         [HttpGet("getPlayers")]
         public ActionResult GetPlayers()
@@ -55,19 +57,19 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
             List<EnumModelBinder> positions = EnumHelpers.GetEnumBinderList<Position>();
             return Ok(positions);
         }
-        [HttpGet("getPlayerDetails")]
+        [HttpGet("getPlayerDetails/{playerId}")]
         public ActionResult GetPlayerDetails(int playerId)
         {
             var data = PlayerService.SetPlayerDetails(playerId);
             return Ok(data);
         }
-        [HttpGet("getCoachDetails")]
+        [HttpGet("getCoachDetails/{coachId}")]
         public ActionResult GetCoachDetails(int coachId)
         {
             var data = CoachService.SetCoachDetails(coachId);
             return Ok(data);
         }
-        [HttpGet("getRefereeDetails")]
+        [HttpGet("getRefereeDetails/{refereeId}")]
         public ActionResult GetRefereeDetails(int refereeId)
         {
             var data = RefereeService.SetRefereeDetails(refereeId);
@@ -127,23 +129,29 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
             var data = RefereeService.AddReferee(model);
             return Ok(data);
         }
-        [HttpPost("deletePlayer")]
+        [HttpPost("deletePlayer/{playerId}")]
         public ActionResult DeletePlayer(int playerId)
         {
             PlayerService.DeletePlayer(playerId);
             return Ok(true);
         }
-        [HttpPost("deleteCoach")]
+        [HttpPost("deleteCoach/{coachId}")]
         public ActionResult DeleteCoach(int coachId)
         {
             CoachService.DeleteCoach(coachId);
             return Ok(true);
         }
-        [HttpPost("deleteReferee")]
+        [HttpPost("deleteReferee/{refereeId}")]
         public ActionResult DeleteReferee(int refereeId)
         {
             RefereeService.DeleteReferee(refereeId);
             return Ok(true);
+        }
+        [HttpGet("getNationalities")]
+        public ActionResult GetNationalities()
+        {
+            var data = NationalityService.GetNationalitiesToLookup();
+            return Ok(data);
         }
     }
 }

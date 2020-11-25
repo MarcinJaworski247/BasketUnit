@@ -43,8 +43,14 @@ const mutations = {
 }
 
 const actions = {
-    addExcersise: ({ state }) => {
-        service.addExcersise(state.addForm);
+    async addExcersise ({ state, dispatch, commit }) {
+        try {
+            await service.addExcersise(state.addForm)
+            dispatch("setExcersisesList")
+            commit("resetForm");
+        } catch (err) {
+            console.log(err)
+        }
     },
     setExcersisesList: ({ commit }) => {
         service.getExcersises()
@@ -57,6 +63,14 @@ const actions = {
             .then(response => {
                 commit("setWorkoutTypes", response.data);
             });
+    },
+    async deleteExcercise ({ state, dispatch }) {
+        try {
+            await service.deleteExcercise(state.idToDelete);
+            dispatch("setExcersisesList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

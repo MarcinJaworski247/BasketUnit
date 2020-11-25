@@ -1,50 +1,42 @@
 <template>
     <form @submit.prevent="editArena">
         <DxValidationGroup :ref="`validationGroup`">
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Nazwa</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Name">
+
+        <div class="form-group">
+            <div class="row">
+                <div class="col-6">
+                    <label>Nazwa</label>
+                    <DxTextBox v-model="Name">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
+                    </DxTextBox>
+                </div>
+                <div class="col-6">
+                    <label>Pojemność</label>
+                    <DxNumberBox v-model="Capacity">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxNumberBox>
                 </div>
             </div>
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Adres</label>
-                    <div class="col-xs-12">
-                        <DxTextBox v-model="Address">
+            <div class="row">
+                <div class="col-12">
+                    <label>Adres</label>
+                    <DxTextArea v-model="Address">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
-                        </DxTextBox>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-xs-6">
-                <div class="form-group row">
-                    <label class="col-xs-12">Pojemność</label>
-                    <div class="col-xs-12">
-                        <DxNumberBox v-model="Capacity">
-                        <DxValidator>
-                            <DxRequiredRule message="Pole jest wymagane"/>
-                        </DxValidator>
-                        </DxNumberBox>
-                    </div>
+                    </DxTextArea>
                 </div>
             </div>
         </div>
+
         <div class="popup-bottom">
             <DxButton 
                 :use-submit-behavior="false"
-                styling-mode="text"
+                styling-mode="outlined"
                 type="normal"
                 text="Anuluj"
                 @click="closePopup" />
@@ -62,7 +54,8 @@
 import {
     DxTextBox,
     DxButton,
-    DxNumberBox
+    DxNumberBox,
+    DxTextArea
 } from 'devextreme-vue';
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
@@ -94,7 +87,6 @@ export default {
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
-            this.resetForm();
         },
         closePopupOnSave: function (e) {
             let validateResult = e.validationGroup.validate();
@@ -120,7 +112,8 @@ export default {
         DxNumberBox,
         DxValidator,
         DxRequiredRule,
-        DxValidationGroup
+        DxValidationGroup,
+        DxTextArea
     }
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
 <div class="container">
-    <div class="row mt-2">
+    <div class="row mt-4 mb-2">
     <div class="col-xs-6 mr-4">
         <label>Point Guard</label>
         <DxSelectBox
@@ -33,32 +33,38 @@
             value-expr="Value"
             display-expr="Text"/>
     </div>
-    <div class="col-xs-6 ml-4">
-        <div>
-            <div style="border: 1px solid black; height: 100px; width: 100px;" class="mb-2">
-                {{ firstLineup.pointGuard.FirstName }} {{ firstLineup.pointGuard.LastName }}
-                {{ firstLineup.pointGuard.Number }}
-                <img v-if="firstLineup.pointGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.pointGuard.Avatar" /> 
+    <div class="col-xs-6 ml-4 court-wrapper" style="display: flex;">
+        <div class="ml-4">
+            <div class="row mt-4">
+                <div class="tile-border">
+                    {{ firstLineup.pointGuard.FirstName }} {{ firstLineup.pointGuard.LastName }}
+                    {{ firstLineup.pointGuard.Number }}
+                    <img v-if="firstLineup.pointGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.pointGuard.Avatar" /> 
+                </div>
+                <div class="tile-border">
+                    {{ firstLineup.shootingGuard.FirstName }} {{ firstLineup.shootingGuard.LastName }}
+                    {{ firstLineup.shootingGuard.Number }}
+                    <img v-if="firstLineup.shootingGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.shootingGuard.Avatar" /> 
+                </div>
             </div>
-            <div style="border: 1px solid black; height: 100px; width: 100px;" class="mb-2">
-                {{ firstLineup.shootingGuard.FirstName }} {{ firstLineup.shootingGuard.LastName }}
-                {{ firstLineup.shootingGuard.Number }}
-                <img v-if="firstLineup.shootingGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.shootingGuard.Avatar" /> 
+            <div class="row mt-4">
+                <div class="tile-border">
+                    {{ firstLineup.smallForward.FirstName }} {{ firstLineup.smallForward.LastName }}
+                    {{ firstLineup.smallForward.Number }}
+                    <img v-if="firstLineup.smallForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.smallForward.Avatar" /> 
+                </div>
+                <div class="tile-border">
+                    {{ firstLineup.powerForward.FirstName }} {{ firstLineup.powerForward.LastName }}
+                    {{ firstLineup.powerForward.Number }}
+                    <img v-if="firstLineup.powerForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.powerForward.Avatar" /> 
+                </div>
             </div>
-            <div style="border: 1px solid black; height: 100px; width: 100px;" class="mb-2">
-                {{ firstLineup.smallForward.FirstName }} {{ firstLineup.smallForward.LastName }}
-                {{ firstLineup.smallForward.Number }}
-                <img v-if="firstLineup.smallForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.smallForward.Avatar" /> 
-            </div>
-            <div style="border: 1px solid black; height: 100px; width: 100px;" class="mb-2">
-                {{ firstLineup.powerForward.FirstName }} {{ firstLineup.powerForward.LastName }}
-                {{ firstLineup.powerForward.Number }}
-                <img v-if="firstLineup.powerForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.powerForward.Avatar" /> 
-            </div>
-            <div style="border: 1px solid black; height: 100px; width: 100px;" class="mb-2">
-                {{ firstLineup.center.FirstName }} {{ firstLineup.center.LastName }} 
-                {{ firstLineup.center.Number }}
-                <img v-if="firstLineup.center.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.center.Avatar" /> 
+            <div class="row mt-4">
+                <div class="tile-border">
+                    {{ firstLineup.center.FirstName }} {{ firstLineup.center.LastName }} 
+                    {{ firstLineup.center.Number }}
+                    <img v-if="firstLineup.center.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.center.Avatar" /> 
+                </div>
             </div>
         </div>
     </div>
@@ -163,3 +169,16 @@ export default {
 
 }
 </script>
+<style scoped>
+.court-wrapper {
+    border: 1px solid black;
+    width: 800px;
+    height: 600px;
+}
+.tile-border {
+    border: 1px solid black; 
+    height: 100px; 
+    width: 100px;
+    border-radius: 3px;;
+}
+</style>

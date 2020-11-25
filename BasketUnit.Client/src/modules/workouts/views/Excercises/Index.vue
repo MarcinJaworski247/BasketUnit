@@ -2,7 +2,7 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Ćwiczenia </h3>
+        <!-- <h3 class="main-header-title"> Ćwiczenia </h3> -->
         <DxButton
             :use-submit-behavior="false"
             type="default"
@@ -15,34 +15,33 @@
         id="gridContainer"
         :data-source="getExcersisesList"
         :show-borders="true"
-        key-expr="Id"
+        key-expr="id"
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true"
-    >
+        show-filter-row="true">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
-            data-field="Name"
+            data-field="name"
             alignment="left"
             caption="Nazwa"
             data-type="string" />
         <DxColumn 
-            data-field="Description"
+            data-field="description"
             data-type="string"
             alignment="left"
             caption="Opis" />
         <DxColumn 
-            data-field="WorkoutTypeId"
+            data-field="workoutTypeId"
             alignment="left"
             caption="Rodzaj treningu">
             <DxLookup
                 :data-source="getWorkoutTypes"
-                value-expr="Value"
-                display-expr="Text" />
+                value-expr="value"
+                display-expr="text" />
         </DxColumn>
         <DxColumn 
-            data-field="Id"
+            data-field="id"
             alignment="center"
             caption=""
             cell-template="actionsCellTemplate"
@@ -51,21 +50,21 @@
             width="100"
         />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <span @click="showEditPopup(data)" title="Edytuj" class="fas fa-pen" />
-            <span @click="showDeletePopup(data)" title="Usuń" class="ml-3 fas fa-trash" />
+            <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+            <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
         <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="15" />
     </DxDataGrid>
 
-    <div class="d-flex end-xs mt-5">
+    <!-- <div class="d-flex end-xs mt-5">
         <DxButton
             :use-submit-behavior="false"
             type="normal"
             styling-mode="outlined"
             text="Wróć"
             @click="function(){ $router.push({ name: 'workouts.index' }) }"/>
-    </div>
+    </div> -->
     </div>    
 
     <!-- add popup -->
@@ -117,7 +116,7 @@
             text="Usuń"
             type="danger"
             styling-mode="outlined"
-            @click="deleteExcersise()" />
+            @click="deleteExcersiseMethod()" />
     </DxPopup>
 
 </div>
@@ -127,28 +126,29 @@
 import 
 { 
     DxPopup,
-    DxButton,
-    DxLookup
+    DxButton
 } from 'devextreme-vue';
 import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
     DxPager,
-    DxPaging 
+    DxPaging,    
+    DxLookup
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
 import { mapFields } from "vuex-map-fields";
-import { mapGetters, mapActions } from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 import addForm from "./Components/Add.vue";
 import editForm from "./Components/Edit.vue";
 const store = "WorkoutsExcercisesStore";
+const editStore = "WorkoutsExcercisesEditStore";
 
 export default {
     name: "excersises",
     data() {
         return {
-            pageSizes: [5, 10, 15],
+            pageSizes: [10, 15, 20],
             addPopupOptions: {
                 popupVisible: false
             },
@@ -167,21 +167,21 @@ export default {
         ...mapFields(store, ["idToDelete"])
     },
     methods: {
-        ...mapActions(store, ["setExcersisesList", "setWorkoutTypes", "setDetails"]),
+        ...mapActions(store, ["setExcersisesList", "setWorkoutTypes", "deleteExcercise"]),
+        ...mapActions(editStore, ["setExcersiseDetails"]),
+        ...mapMutations(store, ["resetForm"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
         },      
         onAddPopupClose(){
             this.addPopupOptions.popupVisible = false;
-            this.setExcersisesList();
         },
         showEditPopup(options){
-            this.setExcersiseDetails(options.data.Id);
+            this.setExcersiseDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
         onEditPopupClose(){
             this.editPopupOptions.popupVisible = false;
-            this.setExcersisesList();
         },
         showDeletePopup(data) {
             this.deletePopupOptions.popupVisible = true;
@@ -191,11 +191,8 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteExcersise() {
-            this.deleteExcersise()
-                .then(() => {
-                    this.setExcersisesList();
-                });
+        deleteExcersiseMethod() {
+            this.deleteExcercise();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();
             this.idToDelete = null;

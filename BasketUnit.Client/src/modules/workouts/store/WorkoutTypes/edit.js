@@ -32,9 +32,9 @@ const mutations = {
         state.workoutTypes = payload;
     },
     setWorkoutTypeDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id,
-        state.editForm.Name = payload.Model.Name,
-        state.editForm.Description = payload.Model.Description
+        state.editForm.Id = payload.id,
+        state.editForm.Name = payload.name,
+        state.editForm.Description = payload.description
     }
 }
 
@@ -46,13 +46,19 @@ const actions = {
             });
     },
     setWorkoutTypeDetails: ({ commit }, id) => {
-        service.setWorkoutTypeDetails(id)
+        service.getWorkoutTypeDetails(id)
             .then(response => {
                 commit("setWorkoutTypeDetails", response.data);
             });
     },
-    editWorkoutType: ({ state }) => {
-        service.editWorkoutType(state.editForm);
+    async editWorkoutType ({ commit, state, dispatch }) {
+        try {
+            await service.editWorkoutType(state.editForm);
+            dispatch("setWorkoutTypesList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

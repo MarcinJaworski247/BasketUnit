@@ -18,6 +18,9 @@ const getters = {
     getField,
     getForm: (state) => {
         return state.editForm;
+    },
+    getArenasList: (state) => {
+        return state.arenas;
     }
 }
 
@@ -30,16 +33,31 @@ const mutations = {
         state.editForm.Capacity = null
     },
     setDetails: (state, payload) => {
-        state.editForm.Id = payload.Model.Id;
-        state.editForm.Name = payload.Model.Name,
-        state.editForm.Address = payload.Model.Address,
-        state.editForm.Capacity = payload.Model.Capacity
+        state.editForm.Id = payload.id;
+        state.editForm.Name = payload.name,
+        state.editForm.Address = payload.address,
+        state.editForm.Capacity = payload.capacity
+    },
+    setArenasList: (state, payload) => {
+        state.arenas = payload;
     }
 }
 
 const actions = {
-    editArena: ({ state }) => {
-        service.editArena(state.editForm);
+    async editArena ({ state, commit, dispatch }) {
+        try {    
+            await service.editArena(state.editForm);
+            dispatch("setArenasList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    setArenasList: ({ commit }) => {
+        service.getArenas()
+            .then(response => {
+                commit("setArenasList", response.data);
+            });
     },
     setArenaDetails: ({ commit }, id) => {
         service.setArenaDetails(id)

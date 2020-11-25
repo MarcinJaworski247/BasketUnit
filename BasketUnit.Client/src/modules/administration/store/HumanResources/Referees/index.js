@@ -9,8 +9,7 @@ const state = {
         LastName: '',
         NationalityId: null,
         BirthDate: null,
-        PhoneNumber: '',
-        EmailAddress: ''
+        LicenseExparationDate: null
     },
     referees: [],
     idToDelete: null,
@@ -37,20 +36,25 @@ const mutations = {
         state.addForm.LastName = '',
         state.addForm.NationalitId = null,
         state.addForm.BirthDate = null,
-        state.addForm.PhoneNumber = ''
-        state.addForm.EmailAddress = ''
+        state.addForm.LicenseExparationDate = null
     },
     setRefereesList: (state, payload) => {
         state.referees = payload;
     },
     setNationalities: (state, payload) => {
         state.nationalities = payload;
-    } 
+    }
 }
 
 const actions = {
-    addReferees: ({ state }) => {
-        service.addReferees(state.addForm);
+    async addReferees ({ state, dispatch, commit }) {
+        try {
+            await service.addReferees(state.addForm);
+            dispatch("setRefereesList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setRefereesList: ({ commit }) => {
         service.getReferees()
@@ -59,10 +63,18 @@ const actions = {
             });
     },
     setNationalities: ({ commit }) => {
-        service.getNationalities()
+        service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
             });
+    },
+    async deleteReferee ({ state, dispatch }) {
+        try {
+            await service.deleteReferee(state.idToDelete);
+            dispatch("setRefereesList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

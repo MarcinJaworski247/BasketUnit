@@ -20,7 +20,7 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.CoachRepository.GetCoachesToLookup();
         }
-        public List<Coach> GetCoaches()
+        public List<ListCoachesVM> GetCoaches()
         {
             return RepositoriesWrapper.CoachRepository.GetCoaches();
         }

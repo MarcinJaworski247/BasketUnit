@@ -9,7 +9,7 @@ namespace BasketUnit.WebAPI.Repositories
 {
     public interface IPlayerRepository : IRepository<Player>
     {
-        List<Player> GetPlayers();
+        List<ListPlayersVM> GetPlayers();
         Player AddPlayer(AddPlayerVM model);
         DetailsPlayerVM SetPlayerDetails(int playerId);
         EditPlayerVM EditPlayer(EditPlayerVM model);

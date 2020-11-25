@@ -36,14 +36,28 @@ const mutations = {
 }
 
 const actions = {
-    addArena: ({ state }) => {
-        service.addArena(state.addForm);
+    async addArena ({ state, dispatch, commit }) {
+        try {
+            await service.addArena(state.addForm);
+            dispatch("setArenasList");
+            commit("resetForm");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setArenasList: ({ commit }) => {
         service.getArenas()
             .then(response => {
                 commit("setArenasList", response.data);
             });
+    },
+    async deleteArena ({ state, dispatch }) {
+        try {
+            await service.deleteArena(state.idToDelete)
+            dispatch("setArenasList");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

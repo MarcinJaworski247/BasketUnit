@@ -35,6 +35,8 @@ namespace BasketUnit.WebAPI.Repositories
         public DetailsTeamVM SetTeamDetails(int teamId)
         {
             Team team = MainDatabaseContext.Teams.Where(x => x.Id == teamId).FirstOrDefault();
+            Arena arena = MainDatabaseContext.Arenas.Where(x => x.Id == team.ArenaId).FirstOrDefault();
+            Coach coach = MainDatabaseContext.Coaches.Where(x => x.Id == team.CoachId).FirstOrDefault();
             DetailsTeamVM detailsTeamVM = new DetailsTeamVM
             {
                 Id = team.Id,
@@ -42,8 +44,10 @@ namespace BasketUnit.WebAPI.Repositories
                 Name = team.Name,
                 FullName = team.City + " " + team.Name,
                 Badge = team.Badge,
-                CoachFullName = team.CoachId.HasValue ? team.Coach.FirstName + " " + team.Coach.LastName : "",
-                Arena = team.ArenaId.HasValue ? team.Arena.Name : ""
+                CoachFullName = coach != null ? coach.FirstName + " " + coach.LastName : "",
+                Arena = arena != null ? arena.Name : "",
+                CoachId = team.CoachId,
+                ArenaId = team.ArenaId
             };
             return detailsTeamVM;
         }
