@@ -29,6 +29,12 @@ namespace BasketUnit.WebAPI.Repositories
             };
             MainDatabaseContext.Teams.Add(team);
             MainDatabaseContext.SaveChanges();
+            TeamSchedule teamSchedule = new TeamSchedule
+            {
+                TeamId = team.Id
+            };
+            MainDatabaseContext.TeamSchedules.Add(teamSchedule);
+            MainDatabaseContext.SaveChanges();
 
             return team;
         }

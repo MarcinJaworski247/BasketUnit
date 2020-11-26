@@ -7,11 +7,12 @@ namespace BasketUnit.WebAPI.ViewModels
 {
     public class AddGameVM
     {
-        public DateTime Date { get; set; }
-        public int ArenaId { get; set; }
+        public DateTime GameDateFrom { get; set; }
+        public DateTime GameDateTo { get; set; }
         public int HomeTeamId { get; set; }
         public int AwayTeamId { get; set; }
-        public int Referee1Id { get; set; }
-        public int Referee2Id { get; set; }
+        public int ArenaId { get; set; }
+        public int FirstRefereeId { get; set; }
+        public int SecondRefereeId { get; set; }
     }
 }

@@ -4,49 +4,86 @@ import service from "../services/index";
 const namespaced = true;
 
 const state = {
-    activities: [],
-    workouts: [],
+    activitiesToShow: [],
     teams: [],
     excersices: [],
-    newActivity: {
-        startDate: null,
-        endDate: null,
-        subject: '',
-        excersiceId: null
+    arenas: [],
+    referees: [],
+    addGameForm: {
+        GameDateFrom: null,
+        GameDateTo: null,
+        HomeTeamId: null,
+        AwayTeamId: null,
+        ArenaId: null,
+        FirstRefereeId: null,
+        SecondRefereeId: null
+    },
+    addWorkoutForm: {
+        WorkoutDateFrom: null,
+        WorkoutDateTo: null,
+        ExcerciseId: null,
+        Notes: ''
     }
 }
 
 const getters = {
     getField,
-    getActivities: (state) => {
-        return state.activities;
+    getActivitiesToShow: (state) => {
+        return state.activitiesToShow;
     },
     getExcercises: (state) => {
         return state.excersices;
     },
     getTeams: (state) => {
         return state.teams;
+    },
+    getArenas: (state) => {
+        return state.arenas;
+    },
+    getReferees: (state) => {
+        return state.referees;
     }
 }
 
 const mutations = {
     updateField,
-    setActivities: (state, payload) => {
-        state.activities = payload;
+    setActivitiesToShow: (state, payload) => {
+        state.activitiesToShow = payload;
     },
     setExcercises: (state, payload) => {
         state.excersices = payload;
     },
     setTeams: (state, payload) => {
         state.teams = payload;
+    },
+    setReferees: (state, payload) => {
+        state.referees = payload;
+    },
+    setArenas: (state, payload) => {
+        state.arenas = payload;
+    },
+    resetAddGameForm: (state) => {
+        state.addGameForm.GameDateFrom = null;
+        state.addGameForm.GameDateTo = null;
+        state.addGameForm.HomeTeamId = null;
+        state.addGameForm.AwayTeamId = null;
+        state.addGameForm.ArenaId = null;
+        state.addGameForm.FirstRefereeId = null;
+        state.addGameForm.SecondRefereeId = null;
+    },
+    resetAddWorkoutForm: (state) => {
+        state.addWorkoutForm.WorkoutDateFrom = null;
+        state.addWorkoutForm.WorkoutDateTo = null;
+        state.addWorkoutForm.ExcerciseId = null;
+        state.addWorkoutForm.Notes = '';
     }
 }
 
 const actions = {
-    setActivities: ({ commit }) => {
-        service.getActivities()
+    setActivitiesToShow: ({ commit }) => {
+        service.getActivitiesToShow()
             .then(response => {
-                commit("setActivities", response.data)
+                commit("setActivitiesToShow", response.data)
             });
     },
     setExcercises: ({ commit }) => {
@@ -60,6 +97,36 @@ const actions = {
             .then(response => {
                 commit("setTeams", response.data)
             });
+    },
+    setReferees: ({ commit }) => {
+        service.getRefereesToLookup()
+            .then(response => {
+                commit("setReferees", response.data)
+            });
+    },
+    setArenas: ({ commit }) => {
+        service.getArenasToLookup()
+            .then(response => {
+                commit("setArenas", response.data)
+            });
+    },
+    async addGame ({ commit, state, dispatch }) {
+        try {
+            await service.addGame(state.addGameForm);
+            dispatch("setActivitiesToShow");
+            commit("resetAddGameForm");
+        } catch (err) {
+            console.log(err);
+        }
+    },
+    async addWorkout ({ commit, state, dispatch }) {
+        try {
+            await service.addWorkout(state.addWorkoutForm);
+            dispatch("setActivitiesToShow");
+            commit("resetAddWorkoutForm");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

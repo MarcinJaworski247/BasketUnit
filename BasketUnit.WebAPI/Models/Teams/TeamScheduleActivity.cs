@@ -17,5 +17,6 @@ namespace BasketUnit.WebAPI.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public ActivityType ActivityType { get; set; }
+        public string Notes { get; set; }
     }
 }
