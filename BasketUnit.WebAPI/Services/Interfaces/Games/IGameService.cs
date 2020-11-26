@@ -9,5 +9,6 @@ namespace BasketUnit.WebAPI.Services
     public interface IGameService
     {
         void AddGame(AddGameVM model);
+        List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
     }
 }

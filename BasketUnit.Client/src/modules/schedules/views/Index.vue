@@ -1,6 +1,6 @@
 <template>
 <div class="content">
-    <div>
+    <div class="mb-1">
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -11,33 +11,47 @@
             :use-submit-behavior="false"
             type="default"
             text="Dodaj mecz"
-            class="main-tabpanel-button"
+            class="ml-2 main-tabpanel-button"
             @click="showAddGamePopup" />
     </div>
     <DxScheduler
-        :data-source="getActivities"
+        :data-source="getActivitiesToShow"
         :current-date="currentDate"
         :views="views"
-        :groups="groups"
-        height="800"
-        width="1200"
+        height="600"
         :show-all-day-panel="true"
         :first-day-of-week="1"
         :start-day-hour="8"
         :end-day-hour="22"
         current-view="week"
-        data-cell-template="dataCellTemplate">
+        appointment-template="AppointmentTemplateSlot"
+        appointment-tooltip-template="AppointmentTooltipTemplateSlot"
+        :on-content-ready="onContentReady">
 
-        <DxResource
+        <template #AppointmentTemplateSlot="{ data }">
+            <AppointmentTemplate
+            :scheduler="scheduler"
+            :template-model="data"
+            />
+        </template>
+
+        <template #AppointmentTooltipTemplateSlot="{ data }">
+            <AppointmentTooltipTemplate
+            :scheduler="scheduler"
+            :template-tooltip-model="data"
+            />
+        </template>
+
+        <!-- <DxResource
             :data-source="coaches"
             :allow-multiple="false"
             label="Trener"
             field-expr="CoachId" />
 
-        <template #dataCellTemplate="{ getActivities: cellData }">
+        <template #dataCellTemplate="{ getActivitiesToShow: cellData }">
             <DataCell
                 :cell-data="cellData" />
-        </template>
+        </template> -->
     </DxScheduler>
 
 
@@ -46,55 +60,12 @@
         :visible.sync="addGameVisible"
         :drag-enabled="false"
         :show-title="true"
-        title="Dodaj mecz"
         height="auto"
-        width="280">
-        <div class="row">
-            <div class="col-6">
-                <label>Data od</label>
-                <DxDateBox v-model="GameDateFrom"/>
-            </div>
-            <div class="col-6">
-                <label>Data do</label>
-                <DxDateBox v-model="GameDateTo"/>
-            </div>
+        width="auto">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Dodaj mecz</h3>
         </div>
-        <div class="row">
-            <div class="col-6">
-                <label>Drużyna gospodarzy</label>
-                <DxSelectBox v-model="HomeTeamId" :data-soruce="getTeams" value-expr="value" display-expr="text" />
-            </div>
-            <div class="col-6">
-                <label>Drużyna gości</label>
-                <DxSelectBox v-model="AwayTeamId" :data-soruce="getTeams" value-expr="value" display-expr="text" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <label>Arena</label>
-                <DxSelectBox v-model="ArenaId" :data-soruce="getArenas" value-expr="value" display-expr="text" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-6">
-                <label>Arbiter 1</label>
-                <DxSelectBox v-model="FirstRefereeId" :data-soruce="getReferees" value-expr="value" display-expr="text" />
-            </div>
-            <div class="col-6">
-                <label>Arbiter 2</label>
-                <DxSelectBox v-model="SecondRefereeId" :data-soruce="getReferees" value-expr="value" display-expr="text" />
-            </div>
-        </div>
-        <DxButton
-            text="Anuluj"
-            type="default"
-            styling-mode="outlined"
-            @click="hideAddGamePopup()" />
-        <DxButton
-            text="Zapisz"
-            type="default"
-            styling-mode="outlined"
-            @click="addGameMethod()" />
+        <AddGame @closeAdd="hideAddGamePopup"></AddGame>
     </DxPopup>
 
     <!-- add workout -->
@@ -102,41 +73,12 @@
         :visible.sync="addWorkoutVisible"
         :drag-enabled="false"
         :show-title="true"
-        title="Dodaj trening"
         height="auto"
-        width="280">
-        <div class="row">
-            <div class="col-6">
-                <label>Data od</label>
-                <DxDateBox v-model="WorkoutDateFrom"/>
-            </div>
-            <div class="col-6">
-                <label>Data do</label>
-                <DxDateBox v-model="WorkoutDateTo"/>
-            </div>
+        width="auto">
+        <div slot="titleTemplate">
+            <h3 class="popup-title-text">Dodaj trening</h3>
         </div>
-        <div class="row">
-            <div class="col-4">
-                <label>Trening</label>
-                <DxSelectBox v-model="WorkoutId" :data-soruce="getExcercises" value-expr="value" display-expr="text" />
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-12">
-                <DxTextArea v-model="Notes"/>
-            </div>
-        </div>
-        
-        <DxButton
-            text="Anuluj"
-            type="default"
-            styling-mode="outlined"
-            @click="hideAddWorkoutPopup()" />
-        <DxButton
-            text="Zapisz"
-            type="default"
-            styling-mode="outlined"
-            @click="addWorkoutMethod()" />
+        <AddWorkout @closeAdd="hideAddWorkoutPopup"></AddWorkout>
     </DxPopup>
 
 
@@ -144,16 +86,24 @@
 </template>
 <script>
 import {
-    DxTextBox,
+    //DxTextBox,
     DxButton,
-    DxSelectBox,
+    // DxSelectBox,
     DxPopup,
-    DxDateBox,
-    DxTextArea
+    // DxDateBox,
+    // DxTextArea
 } from 'devextreme-vue';
-import notify from 'devextreme/ui/notify';
-import { DxScheduler, DxResource } from 'devextreme-vue/scheduler';
-import DataCell from '../components/DataCell';
+import { 
+    DxScheduler, 
+    //DxResource 
+} from 'devextreme-vue/scheduler';
+// import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
+// import { DxValidationGroup } from "devextreme-vue/validation-group";
+//import DataCell from '../components/DataCell';
+import AppointmentTemplate from '../components/AppointmentTemplate.vue';
+import AppointmentTooltipTemplate from '../components/AppointmentTooltipTemplate.vue';
+import AddGame from '../components/AddGame.vue';
+import AddWorkout from '../components/AddWorkout.vue';
 //import ResourceCell from '../components/ResourceCell';
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
@@ -163,56 +113,102 @@ export default {
     data() {
         return {
             currentDate: new Date(),
-            views: ['day', 'week'],
-            groups: ['coachId'],
+            views: ['day', 'week', 'month'],
+            //groups: ['coachId'],
             addGameVisible: false,
-            addWorkoutVisible: false
+            addWorkoutVisible: false,
+            scheduler: null,
         };
     },
     computed: {
-        ...mapGetters(store, ["getActivitiesToShow", "getExcercises", "getTeams", "getArenas", "getReferees"])
+        ...mapGetters(store, [
+            "getActivitiesToShow", 
+            // "getExcercises", 
+            // "getTeams", 
+            // "getArenas", 
+            // "getReferees"
+        ]),
+        // ...mapFields(store, [
+        //     "addGameForm.GameDateFrom",
+        //     "addGameForm.GameDateTo",
+        //     "addGameForm.HomeTeamId",
+        //     "addGameForm.AwayTeamId",
+        //     "addGameForm.ArenaId",
+        //     "addGameForm.FirstRefereeId",
+        //     "addGameForm.SecondRefereeId",
+        //     "addWorkoutForm.WorkoutDateFrom",
+        //     "addWorkoutForm.WorkoutDateTo",
+        //     "addWorkoutForm.ExcerciseId",
+        //     "addWorkoutForm.Notes"
+        // ])
     },
     methods: {
-        ...mapActions(store, ["setActivitiesToShow", "setExcercises", "setTeams", "setReferees", "setArenas"]),
+        ...mapActions(store, [
+            "setActivitiesToShow", 
+            // "setExcercises", 
+            // "setTeams", 
+            // "setReferees", 
+            // "setArenas", 
+            // "addGame", 
+            // "addWorkout"
+        ]),
         hideAddGamePopup() {
             this.addGameVisible = false;
         },
-        addGameMethod() {
-            this.addGame();
-            this.addGameVisible = false;
+        addGameMethod(e) {
+            let validateResult = e.validationGroup.validate();
+            if(validateResult.isValid) {
+                //this.addGame();
+                this.showSuccessNotify();
+                this.addGameVisible = false;
+            }            
         },
         showAddGamePopup() {
             this.addGameVisible = true;
         },
 
-        hideAddGamePopup() {
+        hideAddWorkoutPopup() {
             this.addWorkoutVisible = false;
         },
-        addGameMethod() {
-            this.addWorkout();
-            this.addWorkoutVisible = false;
+        addWorkoutMethod(e) {
+            let validateResult = e.validationGroup.validate();
+            if(validateResult.isValid) {
+                //this.addWorkout();
+                this.showSuccessNotify();
+                this.addWorkoutVisible = false;
+            }            
         },
-        showAddGamePopup() {
+        showAddWorkoutPopup() {
             this.addWorkoutVisible = true;
+        },
+        onContentReady(e) {
+            this.scheduler = e.component;
         }
     },
     mounted() {
         this.setActivitiesToShow();
-        this.setExcercises();
-        this.setTeams();
-        this.setReferees();
-        this.setArenas();
+        // this.setExcercises();
+        // this.setTeams();
+        // this.setReferees();
+        // this.setArenas();
     },
     components: {
         DxScheduler,
-        DxResource,
-        DataCell,
-        DxTextBox,
+        //DxResource,
+        //DataCell,
+        //DxTextBox,
         DxButton,
-        DxSelectBox,
+        //DxSelectBox,
         DxPopup,
-        DxDateBox,
-        DxTextArea
+        // DxDateBox,
+        // DxTextArea,
+        // DxValidator,
+        // DxRequiredRule,
+        // DxValidationGroup,
+        AddGame,
+        AddWorkout,
+        AppointmentTemplate,
+        AppointmentTooltipTemplate
     }
 };
 </script>

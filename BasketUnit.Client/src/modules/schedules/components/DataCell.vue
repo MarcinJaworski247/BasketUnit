@@ -1,6 +1,6 @@
 <template>
-    <div :class="markWeekEnd(cellData)">
-        <div :class="markTraining(cellData)">
+    <div >
+        <div >
             {{ cellData.Text }}
         </div>
     </div>

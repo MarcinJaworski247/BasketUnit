@@ -1,10 +1,11 @@
 <template>
   <div id="app">
+    <div style="display: flex;">
     <div class="vertical-nav bg-white ml-1">
       <div class="py-4 px-3 mb-1 ">
         <div class="media d-flex align-items-center"><i class="fas fa-basketball-ball mr-1" style="font-size: 42px;"></i>
           <div class="media-body">
-            <h5 class="m-1">BASKETUNIT</h5>
+            <h5 class="m-1">BASKET UNIT</h5>
           </div>
         </div>
       </div>
@@ -79,16 +80,48 @@
           <span>{{ userData.TeamName }}</span>
         </div>   -->
     </div>
-    <div class="container mt-3 pl-2">
+    <div class="container mt-4 pl-2 pr-2" style="width: auto;">
       <router-view />
+    </div>
+    <div style="justify-content: flex-end;">
+      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid black; margin-top: 100px;">
+        <router-link :to="{ name: 'schedules.index' }" class="margin: auto;">Nadchodzące wydarzenia</router-link>
+        <div v-for="item in getClosestGames" :key="item.startDate">
+          {{item.homeTeam}} vs. {{item.awayTeam}}
+          Arena: {{item.arena}}
+          Data: {{item.startDate}}
+        </div>
+      </div>
+      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid black; margin-top: 50px;">
+        <router-link :to="{ name: 'statistics.index' }" class="margin: auto;">Liderzy ligi</router-link>
+        <div v-for="item in getLeaugueLeaders" :key="item.statType">
+          <strong>{{item.statType}}</strong>
+          {{item.fullNamePlayer}}
+          {{item.team}}
+          {{item.score}}
+        </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
 
 <script>
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  name: 'App'
+  name: 'App',
+  computed: {
+    ...mapGetters(["getLeaugueLeaders", "getClosestGames"])
+  },
+  methods: {
+    ...mapActions(["setLeagueaLeaders", "setClosestGames"])
+  },
+  created(){
+    this.setLeagueaLeaders();
+    this.setClosestGames();
+  }
 };
 </script>
 

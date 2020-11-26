@@ -57,9 +57,9 @@ namespace BasketUnit.WebAPI.Controllers.Team
             return Ok(player);
         }
         [HttpPost("saveFirstLineup")]
-        public ActionResult SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        public ActionResult SaveFirstLineup(FirstLineupVM model)
         {
-            TeamService.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
+            TeamService.SaveFirstLineup(model);
             return Ok(true);
         }
         [HttpGet("getDataToPlayerDetailsChart/{playerId}")]
@@ -72,6 +72,12 @@ namespace BasketUnit.WebAPI.Controllers.Team
         public ActionResult GetPlayerLastGameStats(int playerId)
         {
             var data = TeamService.GetPlayerLastGameStats(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getEditForm")]
+        public ActionResult GetFirstLineupIds()
+        {
+            var data = TeamService.GetFirstLineupIds();
             return Ok(data);
         }
     }

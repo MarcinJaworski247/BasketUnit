@@ -90,5 +90,26 @@ namespace BasketUnit.WebAPI.Repositories
                 MainDatabaseContext.SaveChanges();
             }
         }
+        public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
+        {
+            List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Id).Take(5).ToList();
+            List<ClosestGamesWidgetVM> closestGamesWidgetVMs = new List<ClosestGamesWidgetVM>();
+            List<Arena> arenas = MainDatabaseContext.Arenas.ToList();
+            List<Team> teams = MainDatabaseContext.Teams.ToList();
+
+            foreach(var item in games)
+            {
+                List<GameTeams> gameTeams = item.GameTeams.ToList();
+                ClosestGamesWidgetVM data = new ClosestGamesWidgetVM
+                {
+                    StartDate = item.Date,
+                    HomeTeam = teams.Where(x => x.Id == gameTeams[0].TeamId).Select(x => x.Name).FirstOrDefault(),
+                    AwayTeam = teams.Where(x => x.Id == gameTeams[1].TeamId).Select(x => x.Name).FirstOrDefault(),
+                    Arena = arenas.Where(x => x.Id == item.ArenaId).Select(x => x.Name).FirstOrDefault()
+                };
+                closestGamesWidgetVMs.Add(data);
+            }
+            return closestGamesWidgetVMs;
+        }
     }
 }

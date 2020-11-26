@@ -47,3 +47,16 @@ insert into Teams (Name, City, ArenaId, CreatedDate) values ('Celtics', 'Boston'
 insert into Teams (Name, City, ArenaId, CreatedDate) values ('Heat', 'Miami', 8, getdate())
 insert into Teams (Name, City, ArenaId, CreatedDate) values ('76ers', 'Philadelphia', 9, getdate())
 insert into Teams (Name, City, ArenaId, CreatedDate) values ('Knicks', 'New York', 10, getdate())
+
+
+
+insert into TeamSchedules (TeamId, CreatedDate) values (1, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (2, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (3, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (4, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (5, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (6, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (7, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (8, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (9, getdate())
+insert into TeamSchedules (TeamId, CreatedDate) values (10, getdate())

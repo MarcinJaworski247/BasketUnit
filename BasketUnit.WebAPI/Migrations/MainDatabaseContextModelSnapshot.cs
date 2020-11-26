@@ -636,13 +636,13 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("TeamScheduleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TeamScheduleId1")
                         .HasColumnType("int");
 
                     b.Property<int?>("WorkoutId")
@@ -657,8 +657,6 @@ namespace BasketUnit.WebAPI.Migrations
                     b.HasIndex("ModifiedById");
 
                     b.HasIndex("TeamScheduleId");
-
-                    b.HasIndex("TeamScheduleId1");
 
                     b.ToTable("TeamScheduleActivities");
                 });
@@ -1154,15 +1152,15 @@ namespace BasketUnit.WebAPI.Migrations
                         .WithMany()
                         .HasForeignKey("ModifiedById");
 
-                    b.HasOne("BasketUnit.WebAPI.Models.Workout", "Workout")
+                    b.HasOne("BasketUnit.WebAPI.Models.TeamSchedule", "TeamSchedule")
                         .WithMany("TeamScheduleActivities")
                         .HasForeignKey("TeamScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("BasketUnit.WebAPI.Models.TeamSchedule", "TeamSchedule")
+                    b.HasOne("BasketUnit.WebAPI.Models.Workout", "Workout")
                         .WithMany("TeamScheduleActivities")
-                        .HasForeignKey("TeamScheduleId1")
+                        .HasForeignKey("TeamScheduleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

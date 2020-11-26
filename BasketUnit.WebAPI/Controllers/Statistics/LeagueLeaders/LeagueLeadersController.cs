@@ -11,10 +11,10 @@ namespace BasketUnit.WebAPI.Controllers.Statistics.LeagueLeaders
     [ApiController]
     public class LeagueLeadersController : ControllerBase
     {
-        private readonly IPlayerService PlayerService;
-        public LeagueLeadersController(IPlayerService playerService)
+        private readonly IStatsService StatsService;
+        public LeagueLeadersController(IStatsService statsService)
         {
-            this.PlayerService = playerService;
+            this.StatsService = statsService;
         }
         //[HttpGet("getPointsLeaders")]
         //public ActionResult GetPointsLeaders()
@@ -46,5 +46,11 @@ namespace BasketUnit.WebAPI.Controllers.Statistics.LeagueLeaders
         //    var data = PlayerService.GetStealsLeaders();
         //    return Ok(data);
         //}
+        [HttpGet("getLeadersToWidget")]
+        public ActionResult GetLeadersToWidget()
+        {
+            var data = StatsService.GetLeadersToWidget();
+            return Ok(data);
+        }
     }
 }

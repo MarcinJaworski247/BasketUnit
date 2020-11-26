@@ -27,5 +27,9 @@ namespace BasketUnit.WebAPI.Services
             RepositoriesWrapper.GameRepository.AddGameTeams(model, game.Id);
             RepositoriesWrapper.GameRepository.AddGameStats(model, game.Id);
         }
+        public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
+        {
+            return RepositoriesWrapper.GameRepository.GetClosestGamesToWidget();
+        }
     }
 }

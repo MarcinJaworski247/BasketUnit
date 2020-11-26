@@ -48,9 +48,9 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.TeamRepository.GetFirstLineupPlayerByPosition(position);
         }
-        public void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        public void SaveFirstLineup(FirstLineupVM model)
         {
-            RepositoriesWrapper.TeamRepository.SaveFirstLineup(pointGuardId, shootingGuardId, smallForwardId, powerForwardId, centerId);
+            RepositoriesWrapper.TeamRepository.SaveFirstLineup(model);
         }
         public List<PlayerDetailsChartVM> GetDataToPlayerDetailsChart(int playerId)
         {
@@ -69,6 +69,18 @@ namespace BasketUnit.WebAPI.Services
         {
             int teamId = RepositoriesWrapper.TeamRepository.GetTeamIdByPlayer(playerId);
             return RepositoriesWrapper.StatsRepository.GetPlayerLastGameStats(playerId, teamId);
+        }
+        public FirstLineupVM GetFirstLineupIds()
+        {
+            return RepositoriesWrapper.TeamRepository.GetFirstLineupIds();
+        }
+        public List<DetailsPlayerVM> GetFirstLineupPlayers()
+        {
+            return RepositoriesWrapper.PlayerRepository.GetFirstLineupPlayers();
+        }
+        public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
+        {
+            return RepositoriesWrapper.TeamRepository.GetClosestGamesToWidget();
         }
     }
 }

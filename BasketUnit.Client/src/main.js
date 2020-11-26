@@ -19,6 +19,8 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 import VueLazyload from 'vue-lazyload'
 
+
+
 Vue.use(BootstrapVue);
 
 Vue.use(VueLazyload, {

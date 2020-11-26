@@ -22,8 +22,8 @@ class teamsService {
     getFirstLineupPlayer(positionId) {
         return axios.get(`/team/getFirstLineupPlayer/${positionId}`);
     }
-    saveFirstLineup(pointGuardId, shootingGuard, smallForwardId, powerForwardId, centerId) {
-        return axios.post("/teams/saveFirstLineup", pointGuardId, shootingGuard, smallForwardId, powerForwardId, centerId);
+    saveFirstLineup(data) {
+        return axios.post("/team/saveFirstLineup", data);
     }
     getNationalitiesToLookup() {
         return axios.get("/administration/humanResources/getNationalities");
@@ -33,6 +33,9 @@ class teamsService {
     }    
     getDataToPlayerDetailsChart(playerId) {
         return axios.get(`/team/getDataToPlayerDetailsChart/${playerId}`);
+    }
+    getEditForm() {
+        return axios.get("/team/getEditForm");
     }
 }
 

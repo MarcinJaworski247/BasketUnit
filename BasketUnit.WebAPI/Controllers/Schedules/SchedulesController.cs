@@ -71,5 +71,11 @@ namespace BasketUnit.WebAPI.Controllers.Schedules
             TeamScheduleActivityService.AddWorkout(model);
             return Ok(true);
         }
+        [HttpGet("getClosestGamesToWidget")]
+        public ActionResult GetClosestGamesToWidget()
+        {
+            var data = GameService.GetClosestGamesToWidget();
+            return Ok(data);
+        }
     }
 }

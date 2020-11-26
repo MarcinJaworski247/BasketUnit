@@ -1,6 +1,7 @@
 ﻿using BasketUnit.WebAPI.Context;
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -119,6 +120,23 @@ namespace BasketUnit.WebAPI.Repositories
                 };
             }
             return playerStasts;
+        }
+        public List<LeagueLeadersWidgetVM> GetLeadersToWidget()
+        {
+            //List<Team> teams = MainDatabaseContext.Teams.ToList();
+            //List<Player> players = MainDatabaseContext.Players.ToList();
+            //List<Stats> stats = MainDatabaseContext.Stats.ToList();
+
+            List<LeagueLeadersWidgetVM> leagueLeadersWidgetVMs = new List<LeagueLeadersWidgetVM>();
+            //LeagueLeadersWidgetVM points = new LeagueLeadersWidgetVM
+            //{
+            //    StatType = "Points",
+            //    PlayerFullName = "",
+            //    Team = "",
+            //    Score = 0
+            //};
+            //leagueLeadersWidgetVMs.Add(points);
+            return leagueLeadersWidgetVMs;
         }
     }
 }

@@ -22,9 +22,9 @@ namespace BasketUnit.WebAPI.Repositories
             List<TeamScheduleActivity> teamScheduleActivities = MainDatabaseContext.TeamScheduleActivities.Where(x => x.TeamScheduleId == teamScheduleId).ToList();
             List<ScheduleActivityVM> data = teamScheduleActivities.Select(x => new ScheduleActivityVM()
             {
-                Subject = x.Workout.Name + "/ " + x.Workout.Description,
                 StartDate = x.StartDate,
-                EndDate = x.EndDate
+                EndDate = x.EndDate,
+                Subject = ""
             }).ToList();
             return data;
         }

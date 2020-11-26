@@ -12,5 +12,6 @@ namespace BasketUnit.WebAPI.Repositories
         List<PlayerDetailsChartVM> GetAvgStatsByPlayer(int playerId);
         List<PlayerDetailsChartVM> GetTeamAvgsToChartData(List<PlayerDetailsChartVM> playerStats, List<int> teamPlayersIds);
         List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId, int playerTeamId);
+        List<LeagueLeadersWidgetVM> GetLeadersToWidget();
     }
 }

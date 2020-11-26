@@ -119,36 +119,36 @@ namespace BasketUnit.WebAPI.Repositories
             };
             return editPlayer;
         }
-        public void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId)
+        public void SaveFirstLineup(FirstLineupVM model)
         {
             // to do team  parameter
             TeamFirstLineup pointGuard = new TeamFirstLineup
             {
-                PlayerId = pointGuardId,
+                PlayerId = (int)model.PointGuardId,
                 TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(pointGuard);
             TeamFirstLineup shootingGuard = new TeamFirstLineup
             {
-                PlayerId = shootingGuardId,
+                PlayerId = (int)model.ShootingGuardId,
                 TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(shootingGuard);
             TeamFirstLineup smallForward = new TeamFirstLineup
             {
-                PlayerId = smallForwardId,
+                PlayerId = (int)model.SmallForwardId,
                 TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(smallForward);
             TeamFirstLineup powerForward = new TeamFirstLineup
             {
-                PlayerId = powerForwardId,
+                PlayerId = (int)model.PowerForwardId,
                 TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(powerForward);
             TeamFirstLineup center = new TeamFirstLineup
             {
-                PlayerId = centerId,
+                PlayerId = (int)model.CenterId,
                 TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(center);
@@ -161,6 +161,40 @@ namespace BasketUnit.WebAPI.Repositories
         public List<int> GetPlayersIdByTeam(int teamId)
         {
             return MainDatabaseContext.TeamLineups.Where(x => x.TeamId == teamId).Select(x => x.PlayerId).ToList(); 
+        }
+        public FirstLineupVM GetFirstLineupIds()
+        {
+            List<TeamFirstLineup> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).ToList();
+            FirstLineupVM firstLineupVM = new FirstLineupVM
+            {
+                PointGuardId = teamFirstLineups[0].PlayerId,
+                ShootingGuardId = teamFirstLineups[1].PlayerId,
+                SmallForwardId = teamFirstLineups[2].PlayerId,
+                PowerForwardId = teamFirstLineups[3].PlayerId,
+                CenterId = teamFirstLineups[4].PlayerId,
+            };
+            return firstLineupVM;
+        }
+        public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
+        {
+            List<ClosestGamesWidgetVM> closestGamesWidgetVMs = new List<ClosestGamesWidgetVM>();
+            List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Date).Take(5).ToList();
+            foreach(var item in games)
+            {
+                List<GameTeams> gt = MainDatabaseContext.GameTeams.Where(x => x.GameId == item.Id).ToList();
+                Team homeTeam = gt[0].Team;
+                Team awayTeam = gt[1].Team;
+                Arena arena = MainDatabaseContext.Arenas.Where(x => x.Id == item.ArenaId).FirstOrDefault();
+                ClosestGamesWidgetVM game = new ClosestGamesWidgetVM
+                {
+                    StartDate = item.Date,
+                    HomeTeam = homeTeam.Name,
+                    AwayTeam = awayTeam.Name,
+                    Arena = arena.Name
+                };
+                closestGamesWidgetVMs.Add(game);
+            }
+            return closestGamesWidgetVMs;
         }
     }
 }

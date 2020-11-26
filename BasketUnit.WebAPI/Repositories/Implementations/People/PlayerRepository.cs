@@ -136,12 +136,30 @@ namespace BasketUnit.WebAPI.Repositories
             // to do team id parameter
             List<DetailsPlayerVM> firstLineup = new List<DetailsPlayerVM>();
             List<int> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).Select(x => x.PlayerId).ToList();
-            MainDatabaseContext.Players.Where(x => teamFirstLineups.Contains(x.Id)).Select(x => new DetailsPlayerVM() {
-                FullName = x.FirstName + " " + x.LastName,
-                Position = x.Position.ToString(),
-                PlayerNumber = x.Number,
-                Avatar = Convert.ToBase64String(x.Avatar)
-            }).ToList();
+            //MainDatabaseContext.Players.Where(x => teamFirstLineups.Contains(x.Id)).Select(x => new DetailsPlayerVM() {
+            //    FullName = x.FirstName + " " + x.LastName,
+            //    Position = x.Position.ToString(),
+            //    PlayerNumber = x.Number,
+            //    Avatar = Convert.ToBase64String(x.Avatar)
+            //}).ToList();
+            List<Player> players = MainDatabaseContext.Players.ToList();
+            foreach(var item in players)
+            {
+                foreach(var x in teamFirstLineups)
+                {
+                    if(item.Id == x)
+                    {
+                        DetailsPlayerVM dp = new DetailsPlayerVM
+                        {
+                            FullName = item.FirstName + " " + item.LastName,
+                            Position = item.Position.ToString(),
+                            PlayerNumber = item.Number,
+                            Avatar = Convert.ToBase64String(item.Avatar)
+                        };
+                        firstLineup.Add(dp);
+                    }
+                }
+            }
             return firstLineup;
         }
     }

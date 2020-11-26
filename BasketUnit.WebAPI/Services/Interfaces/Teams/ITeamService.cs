@@ -18,8 +18,11 @@ namespace BasketUnit.WebAPI.Services
         List<SelectModelBinder<int>> GetTeamsToLookup();
         List<SelectModelBinder<int>> GetPlayersByPosition(int position);
         EditPlayerVM GetFirstLineupPlayerByPosition(int position);
-        void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId);
+        void SaveFirstLineup(FirstLineupVM model);
         List<PlayerDetailsChartVM> GetDataToPlayerDetailsChart(int playerId);
         List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId);
+        FirstLineupVM GetFirstLineupIds();
+        List<DetailsPlayerVM> GetFirstLineupPlayers();
+        List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
     }
 }

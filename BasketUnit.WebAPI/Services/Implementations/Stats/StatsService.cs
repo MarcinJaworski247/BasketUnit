@@ -1,4 +1,5 @@
 ﻿using BasketUnit.WebAPI.Repositories;
+using BasketUnit.WebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,10 @@ namespace BasketUnit.WebAPI.Services
         public StatsService(IRepositoriesWrapper repositoriesWrapper)
         {
             this.RepositoriesWrapper = repositoriesWrapper;
+        }
+        public List<LeagueLeadersWidgetVM> GetLeadersToWidget()
+        {
+            return RepositoriesWrapper.StatsRepository.GetLeadersToWidget();
         }
     }
 }

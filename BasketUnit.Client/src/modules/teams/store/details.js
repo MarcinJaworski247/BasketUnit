@@ -36,7 +36,6 @@ const getters = {
 const mutations = {
     updateField,
     setDetails: (state,  payload) => {
-        debugger
         state.detailsForm.Id = payload.id,
         state.detailsForm.FirstName = payload.firstName,
         state.detailsForm.LastName = payload.lastName,
@@ -57,7 +56,6 @@ const mutations = {
 
 const actions = {
     setDetails: ({ commit, rootState }) => {
-        debugger
         service.getPlayerDetails(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setDetails", response.data);

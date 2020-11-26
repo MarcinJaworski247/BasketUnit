@@ -32,6 +32,7 @@ const getters = {
         return state.activitiesToShow;
     },
     getExcercises: (state) => {
+        debugger
         return state.excersices;
     },
     getTeams: (state) => {
@@ -51,6 +52,7 @@ const mutations = {
         state.activitiesToShow = payload;
     },
     setExcercises: (state, payload) => {
+        debugger
         state.excersices = payload;
     },
     setTeams: (state, payload) => {
@@ -87,6 +89,7 @@ const actions = {
             });
     },
     setExcercises: ({ commit }) => {
+        debugger
         service.getExcercisesToLookup()
             .then(response => {
                 commit("setExcercises", response.data);

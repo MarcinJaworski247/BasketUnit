@@ -14,5 +14,6 @@ namespace BasketUnit.WebAPI.Repositories
         void AddGameTeams(AddGameVM model, int gameId);
         void AddGameReferees(AddGameVM model, int gameId);
         void AddGameStats(AddGameVM model, int gameId);
+        List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
     }
 }

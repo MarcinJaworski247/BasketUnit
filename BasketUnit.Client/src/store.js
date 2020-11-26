@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import axios from "./http-common";
 // Administration/Clubs/Teams
 import AdministrationTeamStore from './modules/administration/store/Clubs/Teams/index.js'
 import AdministrationEditTeamStore from './modules/administration/store/Clubs/Teams/edit.js'
@@ -32,12 +32,17 @@ import LeagueLeadersStore from './modules/statistics/store/LeagueLeaders/index.j
 // Team
 import TeamStore from './modules/teams/store/index.js'
 import TeamPlayerDetailsStore from './modules/teams/store/details.js'
+import FirstLineupStore from './modules/teams/store/firstLineup.js'
 
 // Workouts
 import WorkoutsExcercisesStore from './modules/workouts/store/Excercises/index.js'
 import WorkoutsExcercisesEditStore from './modules/workouts/store/Excercises/edit.js'
 import WorkoutsTypesStore from './modules/workouts/store/WorkoutTypes/index.js'
 import WorkoutsTypesEditStore from './modules/workouts/store/WorkoutTypes/edit.js'
+
+
+import { getField, updateField } from 'vuex-map-fields';
+
 
 Vue.use(Vuex)
 
@@ -62,6 +67,43 @@ export default new Vuex.Store({
         WorkoutsExcercisesEditStore, 
         WorkoutsTypesStore, 
         WorkoutsTypesEditStore,
-        TeamPlayerDetailsStore
+        TeamPlayerDetailsStore,
+        FirstLineupStore
+    },
+    state: {
+        leagueaLeaders: [],
+        closestGames: []
+    },
+    getters: {
+        getField,
+        getLeaugueLeaders(state) {
+            return state.leagueLeaders;
+        },
+        getClosestGames(state) {
+            return state.closestGames;
+        }
+    },
+    mutations: {
+        updateField,
+        setLeagueaLeaders: (state, payload) => {
+            state.leagueLeaders = payload;
+        },
+        setClosestGames: (state, payload) => {
+            state.closestGames = payload;
+        }
+    },
+    actions: {
+        setLeagueaLeaders: ({ commit }) => {
+            axios.get("/statistics/LeagueLeaders/getLeadersToWidget")
+                .then(response => {
+                    commit("setLeagueaLeaders", response.data);
+                });
+        },
+        setClosestGames: ({ commit }) => {
+            axios.get("/schedules/getClosestGamesToWidget")
+                .then(response => {
+                    commit("setClosestGames", response.data);
+                });
+        }
     }
 });

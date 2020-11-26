@@ -16,7 +16,8 @@
                     <DxChart
                         class="chart"
                         :data-source="getDataToCharts"
-                        title="Średnie statystyki na tle reszty zespołu">
+                        title="Średnie statystyki na tle reszty zespołu"
+                        width="500">
                         <DxCommonSeriesSettings
                             argument-field="statType"
                             type="bar">
@@ -150,12 +151,12 @@ export default {
         ])
     },
     methods: {
-        ...mapActions(store, ["setDetails", "setLastGamesStats", "setDataToCharts"])
+        ...mapActions(store, ["setDetails", "setLastGamesStats", "setDataToChart"])
     },
     mounted() {
         this.setDetails();
         this.setLastGamesStats();
-        this.setDataToCharts();
+        this.setDataToChart();
     },
     components: {
         DxButton,
