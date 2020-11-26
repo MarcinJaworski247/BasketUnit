@@ -9,7 +9,7 @@ const state = {
         City: '',
         CoachId: null,
         ArenaId: null,
-        Badge: []
+        Badge: ''
     },
     coaches: [],
     arenas: [],
@@ -40,7 +40,7 @@ const mutations = {
         state.addForm.City = '',
         state.addForm.CoachId = null,
         state.addForm.ArenaId = null,
-        state.addForm.Badge = []
+        state.addForm.Badge = ''
     },
     setCoaches: (state, payload) => {
         state.coaches = payload;

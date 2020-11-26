@@ -13,12 +13,13 @@ namespace BasketUnit.WebAPI.Services
         Team AddTeam(AddTeamVM model);
         DetailsTeamVM SetTeamDetails(int teamId);
         EditTeamVM EditTeam(EditTeamVM model);
-        List<Team> GetTeams();
+        List<ListTeamsVM> GetTeams();
         void DeleteTeam(int teamId);
         List<SelectModelBinder<int>> GetTeamsToLookup();
         List<SelectModelBinder<int>> GetPlayersByPosition(int position);
         EditPlayerVM GetFirstLineupPlayerByPosition(int position);
         void SaveFirstLineup(int pointGuardId, int shootingGuardId, int smallForwardId, int powerForwardId, int centerId);
         List<PlayerDetailsChartVM> GetDataToPlayerDetailsChart(int playerId);
+        List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId);
     }
 }

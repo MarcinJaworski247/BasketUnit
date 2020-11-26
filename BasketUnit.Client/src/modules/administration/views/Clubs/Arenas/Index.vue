@@ -19,7 +19,8 @@
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true">
+        show-filter-row="true"
+        width="1000">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
             data-field="name"
@@ -45,7 +46,6 @@
             :allow-search="false"
             :allow-filtering="false"
             width=100 />
-        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
         <DxPaging :page-size="10" />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
             <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
@@ -127,7 +127,6 @@ import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
-    DxPager,
     DxPaging 
   } from 'devextreme-vue/data-grid'
 import notify from 'devextreme/ui/notify';
@@ -207,7 +206,6 @@ export default {
         DxDataGrid, 
         DxColumn, 
         DxFilterRow,
-        DxPager,
         DxPaging,
         editForm,
         addForm

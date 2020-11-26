@@ -22,6 +22,7 @@
         :row-alternation-enabled="true"
         class="main-datagrid"
         show-filter-row="true"
+        width="1000"
     >
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn
@@ -33,7 +34,7 @@
             alignment="center"
             width="100"/>
         <div slot="badgeCellTemplate" slot-scope="{ data }">
-            <img v-bind:src="data.badge" />
+            <img v-if="data.value.length" style="width: 80px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+data.value"/>
         </div>
         <DxColumn 
             data-field="city"
@@ -71,7 +72,6 @@
             :allow-search="false"
             :allow-filtering="false"
             width=100 />
-        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
         <DxPaging :page-size="10" />
         <div slot="teamActionsCellTemplate" slot-scope="{ data }">
             <DxButton @click="showEditPopupMethod(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" styling-mode="text" />
@@ -155,7 +155,6 @@ import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
-    DxPager,
     DxPaging,
     DxLookup 
   } from 'devextreme-vue/data-grid'
@@ -237,7 +236,6 @@ export default {
         DxDataGrid, 
         DxColumn, 
         DxFilterRow,
-        DxPager,
         DxPaging,
         editForm,
         addForm,

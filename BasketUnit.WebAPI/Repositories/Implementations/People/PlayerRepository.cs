@@ -73,18 +73,23 @@ namespace BasketUnit.WebAPI.Repositories
         {
             Player player = MainDatabaseContext.Players.Where(x => x.Id == playerId).FirstOrDefault();
             int? playersTeamId = MainDatabaseContext.TeamLineups.Where(x => x.PlayerId == playerId).Select(x => x.TeamId).FirstOrDefault();
+            string team = MainDatabaseContext.Teams.Where(x => x.Id == (int)playersTeamId).Select(x => x.City + " " + x.Name).FirstOrDefault();
+            string nationality = MainDatabaseContext.Nationalities.Where(x => x.Id == player.NationalityId).Select(x => x.Name).FirstOrDefault();
             DetailsPlayerVM detailsPlayerVM = new DetailsPlayerVM
             {
                 Id = player.Id,
                 FirstName = player.FirstName,
                 LastName = player.LastName,
                 FullName = player.FirstName + " " + player.LastName,
-                Avatar = player.Avatar,
+                Avatar = Convert.ToBase64String(player.Avatar),
                 Position = player.Position.ToString(),
                 PlayerNumber = player.Number,
                 BirthDate = player.BirthDate,
                 NationalityId = player.NationalityId,
-                TeamId = playersTeamId
+                TeamId = playersTeamId,
+                PositionId = (int)player.Position,
+                Nationality = nationality,
+                Team = team
             };
             return detailsPlayerVM;
         }
@@ -126,10 +131,17 @@ namespace BasketUnit.WebAPI.Repositories
                 MainDatabaseContext.SaveChanges();
             }
         }
-        public List<Player> GetFirstLineupPlayers()
+        public List<DetailsPlayerVM> GetFirstLineupPlayers()
         {
             // to do team id parameter
-            List<Player> firstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).Select(x => x.Player).ToList();
+            List<DetailsPlayerVM> firstLineup = new List<DetailsPlayerVM>();
+            List<int> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).Select(x => x.PlayerId).ToList();
+            MainDatabaseContext.Players.Where(x => teamFirstLineups.Contains(x.Id)).Select(x => new DetailsPlayerVM() {
+                FullName = x.FirstName + " " + x.LastName,
+                Position = x.Position.ToString(),
+                PlayerNumber = x.Number,
+                Avatar = Convert.ToBase64String(x.Avatar)
+            }).ToList();
             return firstLineup;
         }
     }

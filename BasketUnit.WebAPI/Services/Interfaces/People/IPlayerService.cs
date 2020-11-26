@@ -14,6 +14,6 @@ namespace BasketUnit.WebAPI.Services
         EditPlayerVM EditPlayer(EditPlayerVM model);
         Player AddPlayer(AddPlayerVM model);
         void DeletePlayer(int playerId);
-        List<Player> GetFirstLineupPlayers();
+        List<DetailsPlayerVM> GetFirstLineupPlayers();
     }
 }

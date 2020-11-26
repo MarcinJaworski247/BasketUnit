@@ -8,7 +8,7 @@ class teamsService {
         return axios.get("/team/getFirstLineupPlayers");
     }
     getPlayerDetails(playerId) {
-        return axios.get(`/team/setPlayerDetails/${playerId}`);
+        return axios.get(`/team/getPlayerDetails/${playerId}`);
     }
     editPlayer(data) {
         return axios.post("/team/editPlayer", data)
@@ -29,7 +29,7 @@ class teamsService {
         return axios.get("/administration/humanResources/getNationalities");
     }
     getLastGamesStats(playerId) {
-        return axios.get(`/team/getLastGamesStats/${playerId}`);
+        return axios.get(`/team/getPlayerLastGamesStats/${playerId}`);
     }    
     getDataToPlayerDetailsChart(playerId) {
         return axios.get(`/team/getDataToPlayerDetailsChart/${playerId}`);

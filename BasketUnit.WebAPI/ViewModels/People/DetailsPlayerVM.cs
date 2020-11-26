@@ -14,10 +14,11 @@ namespace BasketUnit.WebAPI.ViewModels
         public DateTime BirthDate { get; set; }
         public string Position { get; set; }
         public int PositionId { get; set; }
-        public byte[] Avatar { get; set; }
+        public string Avatar { get; set; }
         public int PlayerNumber { get; set; }
         public string Team { get; set; }
         public int? TeamId { get; set; }
         public int NationalityId { get; set; }
+        public string Nationality { get; set; }
     }
 }

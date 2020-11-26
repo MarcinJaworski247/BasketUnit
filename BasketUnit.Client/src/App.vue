@@ -101,7 +101,7 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 3px 3px 10px rgba(243, 125, 70, 0.671);
+  box-shadow: 3px 3px 10px rgba(104, 103, 102, 0.096);
   transition: all 0.4s;
   font-size: 16px;
 }

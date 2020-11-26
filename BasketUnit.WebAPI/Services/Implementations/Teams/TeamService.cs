@@ -28,7 +28,7 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.TeamRepository.EditTeam(model);
         }
-        public List<Team> GetTeams()
+        public List<ListTeamsVM> GetTeams()
         {
             return RepositoriesWrapper.TeamRepository.GetTeams();
         }
@@ -54,16 +54,21 @@ namespace BasketUnit.WebAPI.Services
         }
         public List<PlayerDetailsChartVM> GetDataToPlayerDetailsChart(int playerId)
         {
-            List<Stats> playerStats = RepositoriesWrapper.StatsRepository.GetStatsByPlayer(playerId);
-            Team team = RepositoriesWrapper.TeamRepository.GetTeamByPlayer(playerId);
-            List<Player> restOfTeam = RepositoriesWrapper.TeamRepository.GetPlayersByTeam(team.Id);
-            List<Stats> teamStats = RepositoriesWrapper.StatsRepository.GetStatsByTeam(team.Id);
+            // player avgs
+            List<PlayerDetailsChartVM> playerStats = RepositoriesWrapper.StatsRepository.GetAvgStatsByPlayer(playerId);
+            // players team
+            int teamId = RepositoriesWrapper.TeamRepository.GetTeamIdByPlayer(playerId);
+            // teams players
+            List<int> teamPlayersIds = RepositoriesWrapper.TeamRepository.GetPlayersIdByTeam(teamId);
+            // team players avgs
+            List<PlayerDetailsChartVM> dataToChart = RepositoriesWrapper.StatsRepository.GetTeamAvgsToChartData(playerStats, teamPlayersIds);
 
-            List<PlayerDetailsChartVM> playerDetailsChart = new List<PlayerDetailsChartVM>();
-
-
-
-            return playerDetailsChart;
+            return dataToChart;
+        }
+        public List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId)
+        {
+            int teamId = RepositoriesWrapper.TeamRepository.GetTeamIdByPlayer(playerId);
+            return RepositoriesWrapper.StatsRepository.GetPlayerLastGameStats(playerId, teamId);
         }
     }
 }

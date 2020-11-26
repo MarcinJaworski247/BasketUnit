@@ -63,6 +63,7 @@ const mutations = {
         state.players = payload;
     },
     setDetails: (state, payload) => {
+        debugger
         state.editForm.Id = payload.id,
         state.editForm.FirstName = payload.firstName,
         state.editForm.LastName = payload.lastName,
@@ -71,7 +72,7 @@ const mutations = {
         state.editForm.BirthDate = payload.birthDate,
         state.editForm.NationalityId = payload.nationalityId,
         state.editForm.Avatar = payload.avatar,
-        state.editForm.PlayerNumber = payload.number
+        state.editForm.PlayerNumber = payload.playerNumber
     },
     setNationalities: (state, payload) => {
         state.nationalities = payload

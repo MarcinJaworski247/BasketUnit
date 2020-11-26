@@ -17,7 +17,6 @@ class humanResourcesService {
         return axios.get("/administration/humanResources/getPositionsToLookup");
     }
     getPlayerDetails(playerId) {
-        debugger
         return axios.get(`/administration/humanResources/getPlayerDetails/${playerId}`);
     }
     getCoachDetails(coachId) {
@@ -54,7 +53,6 @@ class humanResourcesService {
         return axios.post("/administration/humanResources/addReferee", data);
     }
     getNationalitiesToLookup() {
-        debugger
         return axios.get("/administration/humanResources/getNationalities");
     }
     deleteReferee(refereeId) {

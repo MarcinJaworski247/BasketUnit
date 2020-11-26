@@ -35,7 +35,7 @@ namespace BasketUnit.WebAPI.Services
         {
             RepositoriesWrapper.PlayerRepository.DeletePlayer(playerId);
         }
-        public List<Player> GetFirstLineupPlayers()
+        public List<DetailsPlayerVM> GetFirstLineupPlayers()
         {
             return RepositoriesWrapper.PlayerRepository.GetFirstLineupPlayers();
         }

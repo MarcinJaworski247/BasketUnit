@@ -2,14 +2,14 @@
     <div class="content">
         <div class="printers">
 
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-6">
                     <!-- informacje -->
-                    <img v-bind:src="{Avatar}" />
-                    {{ FirstName }} {{ LastName }}
-                    {{ Position }}, #{{ PlayerNumber }}
-                    Narodowość: {{ Nationality }}
-                    Data urodzenia: {{ BirthDate }}
+                    <img style="width: 250px;" v-bind:src="'data:image/jpeg;base64,'+Avatar"/>
+                    <div class="row mt-2"><span>{{ FirstName }} {{ LastName }}</span></div>
+                    <div class="row mt-2"><span>{{ Position }}</span>, <span> #{{  PlayerNumber }}</span></div>
+                    <div class="row mt-2"><span>Narodowość: </span> {{ Nationality }}</div>
+                    <div class="row mt-2"><span>Data urodzenia:</span> <span>{{ BirthDate }}</span></div>
 
                 </div>
                 <div class="col-6">
@@ -39,8 +39,9 @@
                     </DxChart>
                 </div>
             </div>
-            <div class="row">
+            <div class="row mt-4">
                 <div class="col-12">
+                <h3>Statystyki z ostatnich meczy </h3>
                     <DxDataGrid
                         id="gridContainer"
                         :data-source="getLastGamesStats"
@@ -54,7 +55,7 @@
                             caption="Przeciwko"
                             data-type="string"/>
                         <DxColumn
-                            data-field="gameDate"
+                            data-field="gameTime"
                             alignment="center"
                             caption="Data"
                             data-type="date"/>
@@ -135,7 +136,18 @@ export default {
 
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getLastGamesStats", "getDataToCharts"])
+        ...mapGetters(store, ["getForm", "getLastGamesStats", "getDataToCharts"]),
+        ...mapFields(store, [
+            "detailsForm.Id",
+            "detailsForm.FirstName",
+            "detailsForm.LastName",
+            "detailsForm.BirthDate",
+            "detailsForm.Team",
+            "detailsForm.PlayerNumber",
+            "detailsForm.Avatar",
+            "detailsForm.Nationality",
+            "detailsForm.Position"
+        ])
     },
     methods: {
         ...mapActions(store, ["setDetails", "setLastGamesStats", "setDataToCharts"])

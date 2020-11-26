@@ -64,9 +64,16 @@ namespace BasketUnit.WebAPI.Repositories
             MainDatabaseContext.SaveChanges();
             return model;
         }
-        public List<Team> GetTeams()
+        public List<ListTeamsVM> GetTeams()
         {
-            return MainDatabaseContext.Teams.ToList();
+            return MainDatabaseContext.Teams.Select(x => new ListTeamsVM() {
+                Id = x.Id,
+                Name = x.Name,
+                City = x.City,
+                Badge = x.Badge,
+                CoachId = x.CoachId,
+                ArenaId = x.ArenaId
+            }).ToList();
         }
         public void DeleteTeam(int teamId)
         {
@@ -101,7 +108,7 @@ namespace BasketUnit.WebAPI.Repositories
             {
                 FirstName = player.FirstName,
                 LastName = player.LastName,
-                Number = player.Number,
+                PlayerNumber = player.Number,
                 Avatar = player.Avatar
             };
             return editPlayer;
@@ -140,6 +147,14 @@ namespace BasketUnit.WebAPI.Repositories
             };
             MainDatabaseContext.TeamFirstLineups.Add(center);
             MainDatabaseContext.SaveChanges();
+        }
+        public int GetTeamIdByPlayer(int playerId)
+        {
+            return MainDatabaseContext.TeamLineups.Where(x => x.PlayerId == playerId).Select(x => x.TeamId).FirstOrDefault();
+        }
+        public List<int> GetPlayersIdByTeam(int teamId)
+        {
+            return MainDatabaseContext.TeamLineups.Where(x => x.TeamId == teamId).Select(x => x.PlayerId).ToList(); 
         }
     }
 }

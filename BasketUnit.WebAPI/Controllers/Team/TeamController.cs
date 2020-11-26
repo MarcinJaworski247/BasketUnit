@@ -26,13 +26,13 @@ namespace BasketUnit.WebAPI.Controllers.Team
             var data = PlayerService.GetPlayers();
             return Ok(data);
         }
-        [HttpGet("GetFirstLineupPlayers")]
+        [HttpGet("getFirstLineupPlayers")]
         public ActionResult GetFirstLineupPlayers()
         {
             var data = PlayerService.GetFirstLineupPlayers();
             return Ok(data);
         }
-        [HttpGet("getPlayerDetails")]
+        [HttpGet("getPlayerDetails/{playerId}")]
         public ActionResult GetPlayerDetails(int playerId)
         {
             var data = PlayerService.SetPlayerDetails(playerId);
@@ -44,13 +44,13 @@ namespace BasketUnit.WebAPI.Controllers.Team
             var data = PlayerService.EditPlayer(model);
             return Ok(data);
         }
-        [HttpGet("getPlayersByPosition")]
+        [HttpGet("getPlayersByPosition/{position}")]
         public ActionResult GetPlayersByPosition(int position)
         {
             List<SelectModelBinder<int>> players = TeamService.GetPlayersByPosition(position);
             return Ok(players);
         }
-        [HttpGet("getFirstLineupPlayer")]
+        [HttpGet("getFirstLineupPlayer/{position}")]
         public ActionResult GetFirstLineupPlayer(int position)
         {
             var player = TeamService.GetFirstLineupPlayerByPosition(position);
@@ -66,6 +66,12 @@ namespace BasketUnit.WebAPI.Controllers.Team
         public ActionResult GetDataToPlayerDetailsChart(int playerId)
         {
             var data = TeamService.GetDataToPlayerDetailsChart(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getPlayerLastGamesStats/{playerId}")]
+        public ActionResult GetPlayerLastGameStats(int playerId)
+        {
+            var data = TeamService.GetPlayerLastGameStats(playerId);
             return Ok(data);
         }
     }

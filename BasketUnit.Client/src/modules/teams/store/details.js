@@ -1,5 +1,6 @@
 import { getField, updateField } from 'vuex-map-fields';
 import service from "../services/index.js";
+import router from "../../../router"
 
 const namespaced = true;
 
@@ -10,7 +11,7 @@ const state = {
          LastName: '',
          BirthDate: null,
          Team: '',
-         Number: null,
+         PlayerNumber: null,
          Avatar: [],
          Nationality: '',
          Position: ''
@@ -35,12 +36,13 @@ const getters = {
 const mutations = {
     updateField,
     setDetails: (state,  payload) => {
+        debugger
         state.detailsForm.Id = payload.id,
         state.detailsForm.FirstName = payload.firstName,
         state.detailsForm.LastName = payload.lastName,
         state.detailsForm.BirthDate = payload.birthDate,
         state.detailsForm.Team = payload.team,
-        state.detailsForm.Number = payload.number,
+        state.detailsForm.PlayerNumber = payload.playerNumber,
         state.detailsForm.Avatar = payload.avatar,
         state.detailsForm.Nationality = payload.nationality,
         state.detailsForm.Position = payload.position
@@ -55,19 +57,20 @@ const mutations = {
 
 const actions = {
     setDetails: ({ commit, rootState }) => {
-        service.getPlayerDetails(rootState.route.params.playerId)
+        debugger
+        service.getPlayerDetails(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setDetails", response.data);
             });
     },
     setLastGamesStats: ({ commit, rootState }) => {
-        service.getLastGamesStats(rootState.route.params.playerId)
+        service.getLastGamesStats(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setLastGamesStats", response.data);
             });
     },
     setDataToChart: ({ commit, rootState }) => {
-        service.getDataToPlayerDetailsChart(rootState.route.params.playerId)
+        service.getDataToPlayerDetailsChart(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setDataToChart", response.data);
             });

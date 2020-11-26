@@ -6,64 +6,65 @@
         <DxSelectBox
             v-model="pointGuardId"
             :data-source="getPointGuards"
-            value-expr="Value"
-            display-expr="Text"/>
+            value-expr="value"
+            display-expr="text"
+            @valueChanged="onPointGuardChanged(value, text)"/>
         <label>Shooting Guard</label>
         <DxSelectBox
             v-model="shootingGuardId"
             :data-source="getShootingGuards"
-            value-expr="Value"
-            display-expr="Text"/>
+            value-expr="value"
+            display-expr="text"/>
         <label>Small Forward</label>
         <DxSelectBox
             v-model="smallForwardId"
             :data-source="getSmallForwards"
-            value-expr="Value"
-            display-expr="Text"/>
+            value-expr="value"
+            display-expr="text"/>
         <label>Power Forward</label>
         <DxSelectBox
             v-model="powerForwardId"
             :data-source="getPowerForwards"
-            value-expr="Value"
-            display-expr="Text"/>
+            value-expr="value"
+            display-expr="text"/>
         <label>Center</label>
         <DxSelectBox
             v-model="centerId"
             :data-source="getCenters"
-            value-expr="Value"
-            display-expr="Text"/>
+            value-expr="value"
+            display-expr="text"/>
     </div>
-    <div class="col-xs-6 ml-4 court-wrapper" style="display: flex;">
+    <div class="col-xs-6 ml-4 court-wrapper">
         <div class="ml-4">
             <div class="row mt-4">
                 <div class="tile-border">
-                    {{ firstLineup.pointGuard.FirstName }} {{ firstLineup.pointGuard.LastName }}
-                    {{ firstLineup.pointGuard.Number }}
-                    <img v-if="firstLineup.pointGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.pointGuard.Avatar" /> 
+                    {{ center.firstName }} {{ center.lastName }}
+                    #{{ center.playerNumber }}
+                    <!-- <img v-if="firstLineup.pointGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.pointGuard.Avatar" />  -->
                 </div>
                 <div class="tile-border">
-                    {{ firstLineup.shootingGuard.FirstName }} {{ firstLineup.shootingGuard.LastName }}
-                    {{ firstLineup.shootingGuard.Number }}
-                    <img v-if="firstLineup.shootingGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.shootingGuard.Avatar" /> 
-                </div>
-            </div>
-            <div class="row mt-4">
-                <div class="tile-border">
-                    {{ firstLineup.smallForward.FirstName }} {{ firstLineup.smallForward.LastName }}
-                    {{ firstLineup.smallForward.Number }}
-                    <img v-if="firstLineup.smallForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.smallForward.Avatar" /> 
-                </div>
-                <div class="tile-border">
-                    {{ firstLineup.powerForward.FirstName }} {{ firstLineup.powerForward.LastName }}
-                    {{ firstLineup.powerForward.Number }}
-                    <img v-if="firstLineup.powerForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.powerForward.Avatar" /> 
+                    {{ powerForward.firstName }} {{ powerForward.lastName }}
+                    #{{ powerForward.playerNumber }}
+                    <!-- <img v-if="firstLineup.shootingGuard.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.shootingGuard.Avatar" />  -->
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="tile-border">
-                    {{ firstLineup.center.FirstName }} {{ firstLineup.center.LastName }} 
-                    {{ firstLineup.center.Number }}
-                    <img v-if="firstLineup.center.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.center.Avatar" /> 
+                    {{ smallForward.firstName }} {{ smallForward.lastName }}
+                    #{{ smallForward.playerNumber }}
+                    <!-- <img v-if="firstLineup.smallForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.smallForward.Avatar" />  -->
+                </div>
+                <div class="tile-border">
+                    {{ shootingGuard.firstName }} {{ shootingGuard.lastName }}
+                    #{{ shootingGuard.playerNumber }}
+                    <!-- <img v-if="firstLineup.powerForward.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.powerForward.Avatar" />  -->
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="tile-border">
+                    {{ pointGuard.firstName }} {{ pointGuard.lastName }} 
+                    #{{ pointGuard.playerNumber }}
+                    <!-- <img v-if="firstLineup.center.Avatar.length" v-bind:src="'data:image/jpeg;base64,'+firstLineup.center.Avatar" />  -->
                 </div>
             </div>
         </div>
@@ -103,13 +104,18 @@ export default {
     },
     computed: {
         ...mapGetters(store, [
-            "getPlayersList", 
+            // "getPlayersList", 
             "getFirstLineupPlayers",
             "getPointGuards",
             "getShootingGuards",
             "getSmallForwards",
             "getPowerForwards",
-            "getCenters"
+            "getCenters",
+            "getFirstLineupPointGuard",
+            "getFirstLineupShootingGuard",
+            "getFirstLineupSmallForward",
+            "getFirstLineupPowerForward",
+            "getFirstLineupCenter"
         ]),
         ...mapState(store, [
             "pointGuardId", 
@@ -118,17 +124,24 @@ export default {
             "powerForwardId", 
             "centerId",
             "firstLineup"
+        ]),
+        ...mapFields(store, [
+            "firstLineup.pointGuard",
+            "firstLineup.shootingGuard",
+            "firstLineup.smallForward",
+            "firstLineup.powerForward",
+            "firstLineup.center",
         ])
     },
     methods: {
         ...mapActions(store, [
-            "setPlayersList", 
+            // "setPlayersList", 
             "setFirstLineupPlayers",
-            "setPointGuard",
-            "setShootingGuard",
-            "setSmallForward",
-            "setPowerForward",
-            "setCenter",
+            // "setPointGuard",
+            // "setShootingGuard",
+            // "setSmallForward",
+            // "setPowerForward",
+            // "setCenter",
             "setPointGuards",
             "setShootingGuards",
             "setSmallForwards",
@@ -147,15 +160,19 @@ export default {
             notify("Zapisano", "success", 500);
             })
         },
+        onPointGuardChanged(value, text) {
+            this.pointGuard.Id = value;
+            this.pointGuard.FullName = text;
+        }
     },
     mounted() {
-        this.setPlayersList();
+        // this.setPlayersList();
         this.setFirstLineupPlayers();
-        this.setPointGuard();
-        this.setShootingGuard();
-        this.setSmallForward();
-        this.setPowerForward();
-        this.setCenter();
+        // this.setPointGuard();
+        // this.setShootingGuard();
+        // this.setSmallForward();
+        // this.setPowerForward();
+        // this.setCenter();
         this.setPointGuards();
         this.setShootingGuards();
         this.setSmallForwards();

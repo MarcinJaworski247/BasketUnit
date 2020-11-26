@@ -10,7 +10,7 @@
         :row-alternation-enabled="true"
         class="main-datagrid"
         show-filter-row="true"
-    >
+        width="1000">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
             data-field="avatar"
@@ -22,20 +22,27 @@
             width="100"
         />
         <div slot="avatarCellTemplate" slot-scope="{ data }">
-            <img v-bind:src="data.avatar" />
+            <img v-if="data.value.length" style="width: 80px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+data.value"/>
         </div>
         <DxColumn 
             data-field="fullName"
             alignment="left"
             caption="Imię i nazwisko"
             data-type="string"
-            cellTemplate="nameHyperlinkTemplate" />
-        <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
+            cell-template="nameHyperlinkTemplate" />
+        <template #nameHyperlinkTemplate="{ data }">
+            <span class="hyperLink" @click="function () { $router.push({ name: 'team.player.details', params: { playerId: data.data.id }  }) }"> {{data.data.fullName}} </span>
+        </template>
+
+
+        <!-- <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
             <router-link
-                :to="{ name: 'team.player.details', params: { playerId: data.value } }">
+                :to="{ name: 'team.player.details', params: { playerId: data.id } }">
                 {{ data.value }}
             </router-link>
-        </div>
+        </div> -->
+
+
         <DxColumn 
             data-field="nationalityId"
             alignment="left"
@@ -81,8 +88,7 @@
             </router-link>
             <!-- <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="ml-3 datagrid-button" type="normal"/> -->
         </div>
-        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
-        <DxPaging :page-size="5" />
+        <DxPaging :page-size="10" />
     </DxDataGrid>
     </div>
 
@@ -110,7 +116,7 @@ import
     // DxPopup,
     DxButton
 } from 'devextreme-vue';
-import { DxDataGrid, DxColumn, DxFilterRow, DxPager, DxPaging, DxLookup } from "devextreme-vue/data-grid"; 
+import { DxDataGrid, DxColumn, DxFilterRow, DxPaging, DxLookup } from "devextreme-vue/data-grid"; 
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 // import editForm from "./EditPlayer.vue";
@@ -151,8 +157,7 @@ export default {
     components: {
         DxDataGrid, 
         DxColumn, 
-        DxFilterRow, 
-        DxPager,
+        DxFilterRow,
         DxPaging,
         // editForm,
         // DxPopup,
@@ -161,3 +166,12 @@ export default {
     }
 }
 </script>
+
+<style scoped>
+.hyperLink{
+    color: #4099ff;
+}
+.hyperLink:hover{
+    cursor: pointer;
+}
+</style>

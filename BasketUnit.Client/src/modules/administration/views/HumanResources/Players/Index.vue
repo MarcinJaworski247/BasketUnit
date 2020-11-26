@@ -19,7 +19,8 @@
         :allow-column-reordering="true"
         :row-alternation-enabled="true"
         class="main-datagrid"
-        show-filter-row="true">
+        show-filter-row="true"
+        width="1000">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
             data-field="avatar"
@@ -31,7 +32,7 @@
             width="100"
         />
         <div slot="avatarCellTemplate" slot-scope="{ data }">
-            <img v-bind:src="data.avatar" />
+            <img v-if="data.value.length" style="width: 80px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+data.value"/>
         </div>
         <DxColumn 
             data-field="fullName"
@@ -77,6 +78,11 @@
                 value-expr="value"
                 display-expr="text" />
         </DxColumn>
+        <DxColumn
+            data-field="playerNumber"
+            alignment="center"
+            caption="Numer"
+            data-type="number"/>
         <DxColumn 
             data-field="id"
             alignment="center"
@@ -95,7 +101,6 @@
             <DxButton @click="showPlayerEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
             <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
-        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
         <DxPaging :page-size="10" />
     </DxDataGrid>
 
@@ -174,7 +179,6 @@ import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
-    DxPager,
     DxPaging,
     DxLookup 
   } from 'devextreme-vue/data-grid'
@@ -256,7 +260,6 @@ export default {
         DxDataGrid, 
         DxColumn, 
         DxFilterRow,
-        DxPager,
         DxPaging,
         editForm,
         addForm,

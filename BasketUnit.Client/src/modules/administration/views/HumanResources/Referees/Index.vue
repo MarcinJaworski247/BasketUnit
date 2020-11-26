@@ -20,7 +20,7 @@
         :row-alternation-enabled="true"
         class="main-datagrid"
         show-filter-row="true"
-    >
+        width="1000">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
             data-field="firstName"
@@ -51,7 +51,6 @@
             data-type="date"
             alignment="center"
             caption="Data wygaśnięcia licencji" />
-        <DxPager :allowed-page-sizes="pageSizes" :show-page-size-selector="true" />
         <DxPaging :page-size="10" />
         <DxColumn 
             data-field="id"
@@ -141,7 +140,6 @@ import {
     DxDataGrid, 
     DxColumn, 
     DxFilterRow,
-    DxPager,
     DxPaging,
     DxLookup 
   } from 'devextreme-vue/data-grid'
@@ -221,7 +219,6 @@ export default {
         DxDataGrid, 
         DxColumn, 
         DxFilterRow,
-        DxPager,
         DxPaging,
         editForm,
         addForm,
