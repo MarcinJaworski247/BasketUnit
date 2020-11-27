@@ -2,6 +2,7 @@
 using BasketUnit.WebAPI.Enums;
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,27 +20,41 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ListPlayersVM> GetPlayers()
         {
-            List<Player> players = MainDatabaseContext.Players.ToList();
+            //List<Player> players = MainDatabaseContext.Players.ToList();
 
-            List<TeamLineup> teamLineups = MainDatabaseContext.TeamLineups.ToList();
+            //List<TeamLineup> teamLineups = MainDatabaseContext.TeamLineups.ToList();
 
 
-            // to fix!! change to left join
-            List<ListPlayersVM> result = players.Join(teamLineups, x => x.Id, y => y.PlayerId, (x, y) => new ListPlayersVM()
-            {
+            //// to fix!! change to left join
+            //List<ListPlayersVM> result = players.Join(teamLineups, x => x.Id, y => y.PlayerId, (x, y) => new ListPlayersVM()
+            //{
+            //    Id = x.Id,
+            //    Avatar = x.Avatar,
+            //    FirstName = x.FirstName,
+            //    LastName = x.LastName,
+            //    FullName = x.FirstName + " " + x.LastName,
+            //    BirthDate = x.BirthDate,
+            //    PositionId = (int)x.Position,
+            //    NationalityId = x.NationalityId,
+            //    PlayerNumber = x.Number,
+            //    TeamId = y.TeamId
+            //}).ToList();
+
+
+            List<ListPlayersVM> players = MainDatabaseContext.Players.Include(x => x.TeamLineup).Include(x => x.Stats).Include(x => x.Nationality).Select(x => new ListPlayersVM() {
                 Id = x.Id,
                 Avatar = x.Avatar,
                 FirstName = x.FirstName,
                 LastName = x.LastName,
-                FullName = x.FirstName + " " + x.LastName,
+                FullName = x.FirstName +  " "  + x.LastName,
                 BirthDate = x.BirthDate,
                 PositionId = (int)x.Position,
-                NationalityId = x.NationalityId,
+                NationalityId = x.Nationality.Id,
                 PlayerNumber = x.Number,
-                TeamId = y.TeamId
+                TeamId = x.TeamLineup.FirstOrDefault().TeamId
             }).ToList();
 
-            return result;
+            return players;
         }
         public Player AddPlayer(AddPlayerVM model)
         {
@@ -71,27 +86,46 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public DetailsPlayerVM SetPlayerDetails(int playerId)
         {
-            Player player = MainDatabaseContext.Players.Where(x => x.Id == playerId).FirstOrDefault();
-            int? playersTeamId = MainDatabaseContext.TeamLineups.Where(x => x.PlayerId == playerId).Select(x => x.TeamId).FirstOrDefault();
-            string team = MainDatabaseContext.Teams.Where(x => x.Id == (int)playersTeamId).Select(x => x.City + " " + x.Name).FirstOrDefault();
-            string nationality = MainDatabaseContext.Nationalities.Where(x => x.Id == player.NationalityId).Select(x => x.Name).FirstOrDefault();
-            DetailsPlayerVM detailsPlayerVM = new DetailsPlayerVM
+            //Player player = MainDatabaseContext.Players.Where(x => x.Id == playerId).FirstOrDefault();
+            //int? playersTeamId = MainDatabaseContext.TeamLineups.Where(x => x.PlayerId == playerId).Select(x => x.TeamId).FirstOrDefault();
+            //string team = MainDatabaseContext.Teams.Where(x => x.Id == (int)playersTeamId).Select(x => x.City + " " + x.Name).FirstOrDefault();
+            //string nationality = MainDatabaseContext.Nationalities.Where(x => x.Id == player.NationalityId).Select(x => x.Name).FirstOrDefault();
+            //DetailsPlayerVM detailsPlayerVM = new DetailsPlayerVM
+            //{
+            //    Id = player.Id,
+            //    FirstName = player.FirstName,
+            //    LastName = player.LastName,
+            //    FullName = player.FirstName + " " + player.LastName,
+            //    Avatar = Convert.ToBase64String(player.Avatar),
+            //    Position = player.Position.ToString(),
+            //    PlayerNumber = player.Number,
+            //    BirthDate = player.BirthDate,
+            //    NationalityId = player.NationalityId,
+            //    TeamId = playersTeamId,
+            //    PositionId = (int)player.Position,
+            //    Nationality = nationality,
+            //    Team = team
+            //};
+
+            DetailsPlayerVM data = MainDatabaseContext.Players.Include(x => x.TeamLineup).ThenInclude(y => y.Team).Include(x => x.Nationality).Where(x => x.Id == playerId).Select(x => new DetailsPlayerVM()
             {
-                Id = player.Id,
-                FirstName = player.FirstName,
-                LastName = player.LastName,
-                FullName = player.FirstName + " " + player.LastName,
-                Avatar = Convert.ToBase64String(player.Avatar),
-                Position = player.Position.ToString(),
-                PlayerNumber = player.Number,
-                BirthDate = player.BirthDate,
-                NationalityId = player.NationalityId,
-                TeamId = playersTeamId,
-                PositionId = (int)player.Position,
-                Nationality = nationality,
-                Team = team
-            };
-            return detailsPlayerVM;
+                Id = x.Id,
+                FirstName = x.FirstName, 
+                LastName = x.LastName,
+                FullName = x.FirstName + " " + x.LastName,
+                Avatar = Convert.ToBase64String(x.Avatar),
+                Position = x.Position.ToString(),
+                PlayerNumber = x.Number,
+                BirthDate = x.BirthDate,
+                NationalityId = x.NationalityId,
+                Nationality = x.Nationality.Name,
+                TeamId = x.TeamLineup.FirstOrDefault().TeamId,
+                PositionId = (int)x.Position,
+                Team = x.TeamLineup.FirstOrDefault().Team.City + " " + x.TeamLineup.FirstOrDefault().Team.Name
+            }).FirstOrDefault();
+
+
+            return data;
         }
         public EditPlayerVM EditPlayer(EditPlayerVM model)
         {
@@ -101,7 +135,7 @@ namespace BasketUnit.WebAPI.Repositories
             player.FirstName = model.FirstName;
             player.LastName = model.LastName;
             player.Avatar = model.Avatar;
-            player.Position = model.Position;
+            player.Position = (Position)model.PositionId;
             player.BirthDate = model.BirthDate;
             player.Number = model.PlayerNumber;
             player.NationalityId = model.NationalityId;
@@ -134,33 +168,42 @@ namespace BasketUnit.WebAPI.Repositories
         public List<DetailsPlayerVM> GetFirstLineupPlayers()
         {
             // to do team id parameter
-            List<DetailsPlayerVM> firstLineup = new List<DetailsPlayerVM>();
-            List<int> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).Select(x => x.PlayerId).ToList();
+            //List<DetailsPlayerVM> firstLineup = new List<DetailsPlayerVM>();
+            //List<int> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).Select(x => x.PlayerId).ToList();
             //MainDatabaseContext.Players.Where(x => teamFirstLineups.Contains(x.Id)).Select(x => new DetailsPlayerVM() {
             //    FullName = x.FirstName + " " + x.LastName,
             //    Position = x.Position.ToString(),
             //    PlayerNumber = x.Number,
             //    Avatar = Convert.ToBase64String(x.Avatar)
             //}).ToList();
-            List<Player> players = MainDatabaseContext.Players.ToList();
-            foreach(var item in players)
+            //List<Player> players = MainDatabaseContext.Players.ToList();
+            //foreach(var item in players)
+            //{
+            //    foreach(var x in teamFirstLineups)
+            //    {
+            //        if(item.Id == x)
+            //        {
+            //            DetailsPlayerVM dp = new DetailsPlayerVM
+            //            {
+            //                FullName = item.FirstName + " " + item.LastName,
+            //                Position = item.Position.ToString(),
+            //                PlayerNumber = item.Number,
+            //                Avatar = Convert.ToBase64String(item.Avatar)
+            //            };
+            //            firstLineup.Add(dp);
+            //        }
+            //    }
+            //}
+
+            List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => new DetailsPlayerVM()
             {
-                foreach(var x in teamFirstLineups)
-                {
-                    if(item.Id == x)
-                    {
-                        DetailsPlayerVM dp = new DetailsPlayerVM
-                        {
-                            FullName = item.FirstName + " " + item.LastName,
-                            Position = item.Position.ToString(),
-                            PlayerNumber = item.Number,
-                            Avatar = Convert.ToBase64String(item.Avatar)
-                        };
-                        firstLineup.Add(dp);
-                    }
-                }
-            }
-            return firstLineup;
+                FirstName = x.Player.FirstName + " " + x.Player.LastName,
+                Position = x.Player.Position.ToString(),
+                PositionId = (int)x.Player.Position,
+                Avatar = Convert.ToBase64String(x.Player.Avatar)
+            }).ToList();
+
+            return data;
         }
     }
 }

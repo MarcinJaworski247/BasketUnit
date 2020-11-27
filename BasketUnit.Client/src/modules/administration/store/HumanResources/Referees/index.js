@@ -9,7 +9,7 @@ const state = {
         LastName: '',
         NationalityId: null,
         BirthDate: null,
-        LicenseExparationDate: null
+        LicenseExpirationDate: null
     },
     referees: [],
     idToDelete: null,
@@ -36,7 +36,7 @@ const mutations = {
         state.addForm.LastName = '',
         state.addForm.NationalitId = null,
         state.addForm.BirthDate = null,
-        state.addForm.LicenseExparationDate = null
+        state.addForm.LicenseExpirationDate = null
     },
     setRefereesList: (state, payload) => {
         state.referees = payload;
@@ -47,9 +47,9 @@ const mutations = {
 }
 
 const actions = {
-    async addReferees ({ state, dispatch, commit }) {
+    async addReferee ({ state, dispatch, commit }) {
         try {
-            await service.addReferees(state.addForm);
+            await service.addReferee(state.addForm);
             dispatch("setRefereesList");
             commit("resetForm");
         } catch (err) {

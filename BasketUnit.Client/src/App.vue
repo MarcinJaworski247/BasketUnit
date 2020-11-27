@@ -84,16 +84,16 @@
       <router-view />
     </div>
     <div style="justify-content: flex-end;">
-      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid black; margin-top: 100px;">
-        <router-link :to="{ name: 'schedules.index' }" class="margin: auto;">Nadchodzące wydarzenia</router-link>
+      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
+        <div style="margin-top: 10px; text-align: center; font-weight: bold;"><router-link :to="{ name: 'schedules.index' }" styl="margin: auto;">Nadchodzące wydarzenia</router-link></div>
         <div v-for="item in getClosestGames" :key="item.startDate">
           {{item.homeTeam}} vs. {{item.awayTeam}}
           Arena: {{item.arena}}
           Data: {{item.startDate}}
         </div>
       </div>
-      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid black; margin-top: 50px;">
-        <router-link :to="{ name: 'statistics.index' }" class="margin: auto;">Liderzy ligi</router-link>
+      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; margin-top: 50px; border-radius: 3px;">
+        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: black;"><router-link :to="{ name: 'statistics.index' }">Liderzy ligi</router-link></div>
         <div v-for="item in getLeaugueLeaders" :key="item.statType">
           <strong>{{item.statType}}</strong>
           {{item.fullNamePlayer}}

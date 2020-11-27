@@ -119,6 +119,26 @@ namespace BasketUnit.WebAPI.Repositories
                     Opponent = MainDatabaseContext.GameTeams.Where(x => x.TeamId != playerTeamId).Select(x => x.Team.Name).FirstOrDefault()
                 };
             }
+
+            List<GamePlayerStatsVM> data = MainDatabaseContext.Stats
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .OrderByDescending(x => x.Id)
+                .Take(5)
+                .Select(x => new GamePlayerStatsVM()
+            {
+                GameId = x.GameId,
+                Points = x.Points,
+                Assists = x.Assists,
+                Rebounds = x.Rebounds,
+                Steals = x.Steals,
+                Blocks = x.Blocks,
+                Fouls = x.Fouls,
+                GameTime = x.Game.Date,
+                Opponent = x.Game.GameTeams.Where(x => x.TeamId != playerId).Select(x => x.Team.Name).FirstOrDefault()
+            }).ToList();
+
             return playerStasts;
         }
         public List<LeagueLeadersWidgetVM> GetLeadersToWidget()
@@ -136,6 +156,7 @@ namespace BasketUnit.WebAPI.Repositories
             //    Score = 0
             //};
             //leagueLeadersWidgetVMs.Add(points);
+
             return leagueLeadersWidgetVMs;
         }
     }

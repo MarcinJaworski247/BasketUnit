@@ -2,6 +2,7 @@
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.Utils;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,6 +56,20 @@ namespace BasketUnit.WebAPI.Repositories
                 CoachId = team.CoachId,
                 ArenaId = team.ArenaId
             };
+
+            DetailsTeamVM data = MainDatabaseContext.Teams.Include(x => x.Arena).Include(x => x.Coach).Where(x => x.Id == teamId).Select(x => new DetailsTeamVM()
+            {
+                Id = team.Id,
+                City = team.City,
+                Name = team.Name,
+                FullName = team.City + " " + team.Name,
+                Badge = team.Badge,
+                CoachFullName = team.CoachId.HasValue ? team.Coach.FirstName + " " + team.Coach.LastName : " ",
+                Arena = team.Arena.Name,
+                CoachId = team.CoachId,
+                ArenaId = team.ArenaId
+            }).FirstOrDefault();
+
             return detailsTeamVM;
         }
         public EditTeamVM EditTeam(EditTeamVM model)

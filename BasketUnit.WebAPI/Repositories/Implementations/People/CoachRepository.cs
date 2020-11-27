@@ -2,6 +2,7 @@
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.Utils;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,21 +30,33 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ListCoachesVM> GetCoaches()
         {
-            List<Coach> coaches = MainDatabaseContext.Coaches.ToList();
+            //List<Coach> coaches = MainDatabaseContext.Coaches.ToList();
 
-            List<Team> teams = MainDatabaseContext.Teams.ToList();
+            //List<Team> teams = MainDatabaseContext.Teams.ToList();
 
             // to fix!! change to left join
-            List<ListCoachesVM> result = coaches.Join(teams, x => x.Id, y => y.CoachId, (x, y) => new ListCoachesVM()
+            //List<ListCoachesVM> result = coaches.Join(teams, x => x.Id, y => y.CoachId, (x, y) => new ListCoachesVM()
+            //{
+            //    Id = x.Id,
+            //    FirstName = x.FirstName,
+            //    LastName = x.LastName, 
+            //    FullName = x.FirstName + " " + x.LastName,
+            //    BirthDate = x.BirthDate, 
+            //    NationalityId = x.NationalityId,
+            //    ExperienceYears = x.ExperienceYears,
+            //    TeamId = y.Id
+            //}).ToList();
+
+            List<ListCoachesVM> result = MainDatabaseContext.Coaches.Include(x => x.Team).Select(x => new ListCoachesVM()
             {
                 Id = x.Id,
                 FirstName = x.FirstName,
-                LastName = x.LastName, 
+                LastName = x.LastName,
                 FullName = x.FirstName + " " + x.LastName,
-                BirthDate = x.BirthDate, 
-                NationalityId = x.NationalityId,
+                BirthDate = x.BirthDate,
+                NationalityId = x.Nationality.Id,
                 ExperienceYears = x.ExperienceYears,
-                TeamId = y.Id
+                TeamId = x.Team.Id
             }).ToList();
 
             return result;

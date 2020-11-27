@@ -1,5 +1,5 @@
 <template>
-        <form @submit.prevent="editReferee">
+        <form @submit.prevent="addReferee">
         <DxValidationGroup :ref="`validationGroup`">
 
         <div class="form-group">
@@ -48,7 +48,7 @@
             <div class="row">
                 <div class="col-12">
                     <label>Data wygaśnięcia licencji</label>
-                    <DxDateBox v-model="LicenseExperationDate">
+                    <DxDateBox v-model="LicenseExpirationDate">
                         <DxValidator>
                             <DxRequiredRule message="Pole jest wymagane"/>
                         </DxValidator>
@@ -107,7 +107,7 @@ export default {
             "addForm.TeamId",
             "addForm.BirthDate",
             "addForm.NationalityId",
-            "addForm.LicenseExperationDate"
+            "addForm.LicenseExpirationDate"
         ])
     },
     methods: {

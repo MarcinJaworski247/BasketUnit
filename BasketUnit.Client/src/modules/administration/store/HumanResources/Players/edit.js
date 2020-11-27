@@ -93,6 +93,7 @@ const actions = {
             });
     },
     async editPlayer ({ state, commit, dispatch }) {
+        debugger
         try {
             await service.editPlayer(state.editForm);
             dispatch("setPlayersList");

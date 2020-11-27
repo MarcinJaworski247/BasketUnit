@@ -1,6 +1,7 @@
 ﻿using BasketUnit.WebAPI.Context;
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,11 +19,14 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ScheduleActivityVM> GetGamesToScheduler()
         {
-            List<ScheduleActivityVM> data = MainDatabaseContext.Games.Select(x => new ScheduleActivityVM()
+            List<ScheduleActivityVM> data = MainDatabaseContext.Games.Include(x => x.Arena).Include(x => x.GameTeams).ThenInclude(y => y.Team).Select(x => new ScheduleActivityVM()
             {
                 StartDate = x.Date,
                 EndDate = x.Date.AddHours(3),
-                Subject = ""
+                Subject = "",
+                HomeTeamBadge = x.GameTeams[0].Team.Badge,
+                AwayTeamBadge = x.GameTeams[1].Team.Badge,
+                Arena = x.Arena.Name
             }).ToList();
             return data;
         }
@@ -92,23 +96,36 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
         {
-            List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Id).Take(5).ToList();
-            List<ClosestGamesWidgetVM> closestGamesWidgetVMs = new List<ClosestGamesWidgetVM>();
-            List<Arena> arenas = MainDatabaseContext.Arenas.ToList();
-            List<Team> teams = MainDatabaseContext.Teams.ToList();
+            //List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Id).Take(5).ToList();
+            //List<ClosestGamesWidgetVM> closestGamesWidgetVMs = new List<ClosestGamesWidgetVM>();
+            //List<Arena> arenas = MainDatabaseContext.Arenas.ToList();
+            //List<Team> teams = MainDatabaseContext.Teams.ToList();
 
-            foreach(var item in games)
-            {
-                List<GameTeams> gameTeams = item.GameTeams.ToList();
-                ClosestGamesWidgetVM data = new ClosestGamesWidgetVM
-                {
-                    StartDate = item.Date,
-                    HomeTeam = teams.Where(x => x.Id == gameTeams[0].TeamId).Select(x => x.Name).FirstOrDefault(),
-                    AwayTeam = teams.Where(x => x.Id == gameTeams[1].TeamId).Select(x => x.Name).FirstOrDefault(),
-                    Arena = arenas.Where(x => x.Id == item.ArenaId).Select(x => x.Name).FirstOrDefault()
-                };
-                closestGamesWidgetVMs.Add(data);
-            }
+            //foreach(var item in games)
+            //{
+            //    List<GameTeams> gameTeams = item.GameTeams.ToList();
+            //    ClosestGamesWidgetVM data = new ClosestGamesWidgetVM
+            //    {
+            //        StartDate = item.Date,
+            //        HomeTeam = teams.Where(x => x.Id == gameTeams[0].TeamId).Select(x => x.Name).FirstOrDefault(),
+            //        AwayTeam = teams.Where(x => x.Id == gameTeams[1].TeamId).Select(x => x.Name).FirstOrDefault(),
+            //        Arena = arenas.Where(x => x.Id == item.ArenaId).Select(x => x.Name).FirstOrDefault()
+            //    };
+            //    closestGamesWidgetVMs.Add(data);
+            //}
+
+            List<ClosestGamesWidgetVM> data = MainDatabaseContext.Games
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .OrderByDescending(x => x.Id)
+                .Take(5)
+                .Select(x => new ClosestGamesWidgetVM() {
+                    StartDate = x.Date,
+                    HomeTeam = x.GameTeams[0].Team.City + " " + x.GameTeams[0].Team.Name,
+                    AwayTeam = x.GameTeams[1].Team.City + " " + x.GameTeams[1].Team.Name,
+                    Arena = x.Arena.Name
+                }).ToList();
+
             return closestGamesWidgetVMs;
         }
     }
