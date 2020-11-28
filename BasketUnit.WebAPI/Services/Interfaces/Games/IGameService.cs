@@ -10,5 +10,10 @@ namespace BasketUnit.WebAPI.Services
     {
         void AddGame(AddGameVM model);
         List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
+        List<ListAllGamesVM> GetGamesList();
+        GameDetailsVM GetGameDetails(int gameId);
+        List<GameStatsListVM> GetGamePlayersStats(int gameId);
+        GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId);
+        void SaveGamePlayerStatistics(GamePlayerStatisticsVM data);
     }
 }

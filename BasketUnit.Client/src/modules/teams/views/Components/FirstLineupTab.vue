@@ -1,74 +1,64 @@
 <template>
 <div class="container">
-    <div class="row mt-4 mb-2">
-    <div class="col-xs-6 mr-4">
-        <label>Point Guard</label>
+    <div class="row mt-4 mb-4">
+    <div class="col-xs-6 mr-4 mt-4">
+        <label class="mt-4">Point Guard</label>
         <DxSelectBox
             v-model="pointGuardId"
             :data-source="getPointGuards"
             value-expr="value"
             display-expr="text"/>
-        <label>Shooting Guard</label>
+        <label class="mt-2">Shooting Guard</label>
         <DxSelectBox
             v-model="shootingGuardId"
             :data-source="getShootingGuards"
             value-expr="value"
             display-expr="text"/>
-        <label>Small Forward</label>
+        <label class="mt-2">Small Forward</label>
         <DxSelectBox
             v-model="smallForwardId"
             :data-source="getSmallForwards"
             value-expr="value"
             display-expr="text"/>
-        <label>Power Forward</label>
+        <label class="mt-2">Power Forward</label>
         <DxSelectBox
             v-model="powerForwardId"
             :data-source="getPowerForwards"
             value-expr="value"
             display-expr="text"/>
-        <label>Center</label>
+        <label class="mt-2">Center</label>
         <DxSelectBox
             v-model="centerId"
             :data-source="getCenters"
             value-expr="value"
             display-expr="text"/>
     </div>
-    <div class="col-xs-6 ml-4 court-wrapper">
+    <div class="col-xs-6 ml-4 court-wrapper court-background-image">
         <div class="ml-4">
             <div class="row mt-4">
-                <div class="tile-border">
-                    <!-- {{ center.firstName }} {{ center.lastName }}
-                    #{{ center.playerNumber }} -->
-                    {{getFirstLineupPlayers[4].fullName}}
-                    <img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[4].avatar" /> 
+                <div class="tile-border" style="margin-left: 20px;">
+                   <div><img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[4].avatar" style="width: 100px;  margin-top: 10px;" /> </div>
+                   <span style="font-weight: bold;margin-top: 8px;"> {{getFirstLineupPlayers[4].firstName}}</span>
                 </div>
-                <div class="tile-border">
-                    <!-- {{ powerForward.firstName }} {{ powerForward.lastName }}
-                    #{{ powerForward.playerNumber }} -->
-                    {{getFirstLineupPlayers[3].fullName}}
-                    <img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[3].avatar" /> 
+                <div class="tile-border" style="margin-left: 450px;">
+                    <div><img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[3].avatar" style="width: 100px;  margin-top: 10px;" /> </div>
+                    <span style="font-weight: bold; margin-top: 8px;">{{getFirstLineupPlayers[3].firstName}}</span>
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="tile-border">
-                    <!-- {{ smallForward.firstName }} {{ smallForward.lastName }}
-                    #{{ smallForward.playerNumber }} -->
-                    {{getFirstLineupPlayers[2].fullName}}
-                    <img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[2].avatar" /> 
+                <div class="tile-border" style="margin-left: 20px;">
+                    <div><img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[2].avatar" style="width: 100px;  margin-top: 10px;" /> </div>
+                    <span style="font-weight: bold; margin-top: 8px;">{{getFirstLineupPlayers[2].firstName}}</span>
                 </div>
-                <div class="tile-border">
-                    <!-- {{ shootingGuard.firstName }} {{ shootingGuard.lastName }}
-                    #{{ shootingGuard.playerNumber }} -->
-                    {{getFirstLineupPlayers[1].fullName}}
-                    <img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[1].avatar" /> 
+                <div class="tile-border" style="margin-left: 450px;">
+                    <div><img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[1].avatar" style="width: 100px;  margin-top: 10px;" /> </div>
+                    <span style="font-weight: bold; margin-top: 8px;">{{getFirstLineupPlayers[1].firstName}}</span>
                 </div>
             </div>
             <div class="row mt-4">
-                <div class="tile-border">
-                    <!-- {{ pointGuard.firstName }} {{ pointGuard.lastName }} 
-                    #{{ pointGuard.playerNumber }} -->
-                    {{getFirstLineupPlayers[0].fullName}}
-                    <img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[0].avatar" /> 
+                <div class="tile-border" style="margin-left: 310px;">
+                    <div><img v-bind:src="'data:image/jpeg;base64,'+getFirstLineupPlayers[0].avatar" style="width: 100px;margin-top: 10px;" /></div>
+                    <span style="font-weight: bold; margin-top: 8px; ">{{getFirstLineupPlayers[0].firstName}}</span>
                 </div>
             </div>
         </div>
@@ -171,11 +161,21 @@ export default {
     border: 1px solid black;
     width: 800px;
     height: 600px;
+    display:  flex;
+    
 }
+
+.court-background-image{
+    background-image: url('../../../../assets/court.png')
+}
+
 .tile-border {
-    border: 1px solid black; 
-    height: 100px; 
-    width: 100px;
-    border-radius: 3px;;
+    border: 1px solid  rgb(243, 234, 234); 
+    height: 150px; 
+    width: 150px;
+    border-radius: 5px;
+    background-color: rgb(243, 234, 234);
+    text-align: center;
+    opacity: 0.8;
 }
 </style>

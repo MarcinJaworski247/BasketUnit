@@ -31,5 +31,25 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.GameRepository.GetClosestGamesToWidget();
         }
+        public List<ListAllGamesVM> GetGamesList()
+        {
+            return RepositoriesWrapper.GameRepository.GetGamesList();
+        }
+        public GameDetailsVM GetGameDetails(int gameId)
+        {
+            return RepositoriesWrapper.GameRepository.GetGameDetails(gameId);
+        }
+        public List<GameStatsListVM> GetGamePlayersStats(int gameId)
+        {
+            return RepositoriesWrapper.GameRepository.GetGamePlayersStats(gameId);
+        }
+        public GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId)
+        {
+            return RepositoriesWrapper.GameRepository.GetGamePlayerStatistics(playerId, gameId);
+        }
+        public void SaveGamePlayerStatistics(GamePlayerStatisticsVM data)
+        {
+            RepositoriesWrapper.GameRepository.SaveGamePlayerStatistics(data);
+        }
     }
 }

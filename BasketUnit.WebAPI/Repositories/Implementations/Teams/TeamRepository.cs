@@ -137,6 +137,11 @@ namespace BasketUnit.WebAPI.Repositories
         public void SaveFirstLineup(FirstLineupVM model)
         {
             // to do team  parameter
+
+            List<TeamFirstLineup> teamFirstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).ToList();
+            MainDatabaseContext.TeamFirstLineups.RemoveRange(teamFirstLineup);
+            MainDatabaseContext.SaveChanges();
+
             TeamFirstLineup pointGuard = new TeamFirstLineup
             {
                 PlayerId = (int)model.PointGuardId,

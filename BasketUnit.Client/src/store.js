@@ -40,6 +40,13 @@ import WorkoutsExcercisesEditStore from './modules/workouts/store/Excercises/edi
 import WorkoutsTypesStore from './modules/workouts/store/WorkoutTypes/index.js'
 import WorkoutsTypesEditStore from './modules/workouts/store/WorkoutTypes/edit.js'
 
+// Games
+import GamesStore from './modules/games/store/index.js';
+import GamesDetailsStore from './modules/games/store/details.js';
+
+// Protocols 
+import ProtocolsStore from './modules/protocols/store/index.js';
+import ProtocolsEditStore from './modules/protocols/store/edit.js';
 
 import { getField, updateField } from 'vuex-map-fields';
 
@@ -68,7 +75,11 @@ export default new Vuex.Store({
         WorkoutsTypesStore, 
         WorkoutsTypesEditStore,
         TeamPlayerDetailsStore,
-        FirstLineupStore
+        FirstLineupStore,
+        GamesStore,
+        GamesDetailsStore,
+        ProtocolsStore,
+        ProtocolsEditStore
     },
     state: {
         leagueaLeaders: [],

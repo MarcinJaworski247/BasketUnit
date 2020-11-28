@@ -126,7 +126,148 @@ namespace BasketUnit.WebAPI.Repositories
                     Arena = x.Arena.Name
                 }).ToList();
 
-            return closestGamesWidgetVMs;
+            return data;
+        }
+        public List<ListAllGamesVM> GetGamesList()
+        {
+            List<ListAllGamesVM> data = MainDatabaseContext
+                .Games
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .Include(x => x.GameReferees)
+                .ThenInclude(z => z.Referee)
+                .Include(x => x.Arena)
+                .Select(x => new ListAllGamesVM
+                {
+                    Id = x.Id,
+                    HomeTeam = x.GameTeams[0].Team.City + " " + x.GameTeams[0].Team.Name,
+                    HomeTeamId = x.GameTeams[0].Team.Id,
+                    AwayTeam = x.GameTeams[1].Team.City + " " + x.GameTeams[1].Team.Name,
+                    AwayTeamId = x.GameTeams[1].Team.Id,
+                    Arena = x.Arena.Name,
+                    Date = x.Date
+                }).ToList();
+
+            foreach(var item in data)
+            {
+                List<int> homeTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup[0].Team.Id == item.HomeTeamId)
+                    .Select(x => x.Points).ToList();
+
+                item.HomeTeamPoints = homeTeamPoints.Sum();
+
+                List<int> awayTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup[0].Team.Id == item.AwayTeamId)
+                    .Select(x => x.Points).ToList();
+
+                item.HomeTeamPoints = awayTeamPoints.Sum();
+
+            }
+
+            return data;
+        }
+        public GameDetailsVM GetGameDetails(int gameId)
+        {
+            Game game = MainDatabaseContext.Games
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .Include(x => x.GameReferees)
+                .ThenInclude(z => z.Referee)
+                .Include(x => x.Arena).FirstOrDefault();
+
+            GameDetailsVM data = new GameDetailsVM
+            {
+                HomeTeam = game.GameTeams[0].Team.City + " " + game.GameTeams[0].Team.Name,
+                AwayTeam = game.GameTeams[1].Team.City + " " + game.GameTeams[1].Team.Name,
+                HomeTeamBadge = Convert.ToBase64String(game.GameTeams[0].Team.Badge), 
+                AwayTeamBadge = Convert.ToBase64String(game.GameTeams[1].Team.Badge),
+                GameDate = game.Date,
+                FirstReferee = game.GameReferees[0].Referee.FirstName + " " + game.GameReferees[0].Referee.LastName,
+                SecondReferee = game.GameReferees[1].Referee.FirstName + " " + game.GameReferees[1].Referee.LastName,
+            };
+
+            List<int> homeTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == game.Id && x.Player.TeamLineup[0].Team.Id == game.GameTeams[0].GameId)
+                    .Select(x => x.Points).ToList();
+
+            data.HomeTeamScore = homeTeamPoints.Sum();
+
+            List<int> awayTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == game.Id && x.Player.TeamLineup[0].Team.Id == game.GameTeams[1].GameId)
+                    .Select(x => x.Points).ToList();
+
+            data.AwayTeamScore = awayTeamPoints.Sum();
+
+            return data; 
+        }
+        public List<GameStatsListVM> GetGamePlayersStats(int gameId)
+        {
+            List<GameStatsListVM> data = MainDatabaseContext.Stats
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.GameId == gameId)
+                .Select(x => new GameStatsListVM()
+                {
+                    Id = x.Game.Id,
+                    FullName = x.Player.FirstName + " " + x.Player.LastName,
+                    Team = x.Player.TeamFirstLineup[0].Team.City +  " " + x.Player.TeamFirstLineup[0].Team.Name,
+                    Points = x.Points,
+                    Assists = x.Assists, 
+                    Rebounds = x.Rebounds,
+                    Steals = x.Steals,
+                    Blocks = x.Blocks,
+                    Fouls = x.Fouls
+                }).ToList();
+            return data;
+        }
+        public GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId)
+        {
+            GamePlayerStatisticsVM stats = MainDatabaseContext.Stats
+                .Include(x => x.Player)
+                .Where(x => x.PlayerId == playerId && x.GameId == gameId)
+                .Select(x => new GamePlayerStatisticsVM()
+                {
+                    Id = x.Player.Id,
+                    FullName = x.Player.FirstName + " " + x.Player.LastName,
+                    Points = x.Points,
+                    Assist = x.Assists,
+                    Rebounds = x.Rebounds,
+                    Steals = x.Steals,
+                    Blocks = x.Blocks,
+                    Fouls = x.Fouls
+                }).FirstOrDefault();
+
+            return stats;
+        }
+        public void SaveGamePlayerStatistics(GamePlayerStatisticsVM data)
+        {
+            Stats stats = MainDatabaseContext.Stats.Include(x => x.Player).FirstOrDefault();
+            stats.Points = data.Points;
+            stats.Assists = data.Assist;
+            stats.Rebounds = data.Rebounds;
+            stats.Steals = data.Steals;
+            stats.Blocks = data.Blocks;
+            stats.Fouls = data.Fouls;
+
+            MainDatabaseContext.Stats.Update(stats);
+            MainDatabaseContext.SaveChanges();
         }
     }
 }

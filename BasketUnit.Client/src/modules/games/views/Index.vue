@@ -1,10 +1,10 @@
 <template>
-    <div class="content">
-        <div class="printers">
+<div class="content">
+    <div class="printers mt-4 mb-2">
         <div class="main-header mt-1 mb-2"> 
-            <h3 class="main-header-title"> Protokoły </h3>
+            <h3 class="main-header-title"> Mecze </h3>
         </div>
-            <DxDataGrid
+        <DxDataGrid
         id="gridContainer"
         :data-source="getGamesList"
         :show-borders="true"
@@ -21,10 +21,20 @@
                 caption="Gospodarze"
                 data-type="string"/>
             <DxColumn
+                data-field="homeTeamPoints"
+                alignment="center"
+                caption="Wynik"
+                data-type="number"/>
+            <DxColumn
                 data-field="awayTeam"
                 alignment="left"
                 caption="Goście"
                 data-type="string"/>
+            <DxColumn
+                data-field="awayTeamPoints"
+                alignment="center"
+                caption="Wynik"
+                data-type="number"/>
             <DxColumn
                 data-field="arena"
                 alignment="left"
@@ -46,32 +56,26 @@
             <div slot="actionsCellTemplate" slot-scope="{ data }">
                 <router-link
                     class="datagrid-btn"
-                    :to="{ name: 'protocols.edit', params: { gameId: data.value } }">
-                    <DxButton hint="Edytuj" icon="fas fa-chevron-right" class="datagrid-button" type="normal"/>
+                    :to="{ name: 'games.details', params: { gameId: data.value } }">
+                    <DxButton hint="Szczegóły" icon="fas fa-chevron-right" class="datagrid-button" type="normal"/>
                 </router-link>
             </div>
         </DxDataGrid>
-        </div>
     </div>
+</div>
 </template>
 <script>
 import 
-{
+{  
     DxButton
 } from 'devextreme-vue';
-import {
-    DxDataGrid, 
-    DxColumn, 
-    DxFilterRow,
-    DxPaging
-  } from 'devextreme-vue/data-grid'
-  import { mapFields } from "vuex-map-fields";
+import { DxDataGrid, DxColumn, DxFilterRow } from "devextreme-vue/data-grid"; 
+import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-const store = "ProtocolsStore";
-
+const store = "GamesStore";
 export default {
-    name: "protocols",
-    data() {
+    name: "games",
+    data(){
 
     },
     created() {
@@ -84,14 +88,13 @@ export default {
         ...mapActions(store, ["setGamesList"])
     },
     mounted() {
-        this.setGamesList;
+        this.setGamesList();
     },
     components: {
-        DxButton,
         DxDataGrid, 
         DxColumn, 
-        DxFilterRow,
-        DxPaging
+        DxFilterRow,      
+        DxButton
     }
 }
 </script>

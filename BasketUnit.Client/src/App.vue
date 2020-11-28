@@ -56,6 +56,22 @@
             </span>
             </router-link>
         </li>
+        <li class="nav-item mb-3">
+          <router-link :to="{ name: 'games.index' }" class="nav-link">
+          <span class="nav-link text-dark">
+              <i class="fas fa-basketball-ball mr-1"></i>
+              Mecze
+            </span>
+            </router-link>
+        </li>
+        <li class="nav-item mb-3">
+          <router-link :to="{ name: 'protocols.index' }" class="nav-link">
+          <span class="nav-link text-dark">
+              <i class="fas fa-file-alt mr-1"></i>
+              Protokoły
+            </span>
+            </router-link>
+        </li>
         <!-- <li class="nav-item mb-3">
           <router-link :to="{ name: 'administration.index' }" class="nav-link">
           <span class="nav-link text-dark">

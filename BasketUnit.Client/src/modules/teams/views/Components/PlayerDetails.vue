@@ -2,22 +2,23 @@
     <div class="content">
         <div class="printers">
 
-            <div class="row mt-4">
-                <div class="col-6">
+            <div class="row mt-4" style="border: 1px solid black;">
+                <div class="col-4">
                     <!-- informacje -->
-                    <img style="width: 250px;" v-bind:src="'data:image/jpeg;base64,'+Avatar"/>
-                    <div class="row mt-2"><span>{{ FirstName }} {{ LastName }}</span></div>
-                    <div class="row mt-2"><span>{{ Position }}</span>, <span> #{{  PlayerNumber }}</span></div>
-                    <div class="row mt-2"><span>Narodowość: </span> {{ Nationality }}</div>
-                    <div class="row mt-2"><span>Data urodzenia:</span> <span>{{ BirthDate }}</span></div>
+                    <img style="width: 250px; border: 1px solid black; margin-top: 10px;" v-bind:src="'data:image/jpeg;base64,'+Avatar" />
+                    <div class="row mt-2 ml-2"><h2>{{ FirstName }} {{ LastName }}</h2></div>
+                    <div class="row mt-2 ml-2"><h4>{{ Position + " " }}</h4> <h4> #{{ PlayerNumber }}</h4></div>
+                    <div class="row mt-2 ml-2"><h4>Narodowość: </h4> <h4 style="font-weight: normal;">{{ " " + Nationality }}</h4></div>
+                    <div class="row mt-2 ml-2"><h4>Data urodzenia:</h4> <h4 style="font-weight: normal">{{ BirthDate }}</h4></div>
 
                 </div>
-                <div class="col-6">
+                <div class="col-8">
                     <DxChart
                         class="chart"
                         :data-source="getDataToCharts"
-                        title="Średnie statystyki na tle reszty zespołu"
-                        width="500">
+                        title="Średnie statystyki"
+                        width="auto"
+                        :min-width="700">
                         <DxCommonSeriesSettings
                             argument-field="statType"
                             type="bar">
@@ -29,18 +30,11 @@
                         </DxCommonSeriesSettings>
                         <DxSeries
                             value-field="playerAvg"
-                            name="Zawodnik"/>
-                        <DxSeries
-                            value-field="restOfTeamAvg"
-                            name="Reszta drużyny"/>
-                        <DxLegend
-                            vertical-alignment="bottom"
-                            horizontal-alignment="center"
-                        />
+                            name="statType"/>
                     </DxChart>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-4" style="border: 1px solid black;">
                 <div class="col-12">
                 <h3>Statystyki z ostatnich meczy </h3>
                     <DxDataGrid
@@ -120,8 +114,7 @@ import {
     DxSeries,
     DxCommonSeriesSettings,
     DxLabel,
-    DxFormat,
-    DxLegend
+    DxFormat
 } from 'devextreme-vue/chart';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
@@ -166,8 +159,7 @@ export default {
         DxSeries,
         DxCommonSeriesSettings,
         DxLabel,
-        DxFormat,
-        DxLegend
+        DxFormat
     }
 }
 </script>

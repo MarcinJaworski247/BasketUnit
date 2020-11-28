@@ -122,9 +122,13 @@ const actions = {
                 commit("setEditForm", response.data);
             });
     },
-    async saveFirstLineup ({ state }) {
-        debugger
-        await service.saveFirstLineup(state.editForm);            
+    async saveFirstLineup ({ state, dispatch }) {
+        try {
+            await service.saveFirstLineup(state.editForm);            
+            dispatch("setFirstLineupPlayers");
+        } catch (err) {
+            console.log(err);
+        }
     },
     setFirstLineupPlayers: ({ commit }) => {
         service.getFirstLineupPlayers()

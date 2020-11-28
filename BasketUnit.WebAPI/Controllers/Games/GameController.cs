@@ -17,41 +17,41 @@ namespace BasketUnit.WebAPI.Controllers.Games
         {
             this.GameService = gameService;
         }
-        //[HttpGet("getGames")]
-        //public ActionResult GetGames()
-        //{
-        //    var data = GameService.GetGames();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getGamesToLookup")]
-        //public ActionResult GetGamesToLookup()
-        //{
-        //    var data = GameService.GetGamesToLookup();
-        //    return Ok(data);
-        //}
-        //[HttpPost("addGame")]
-        //public ActionResult AddGame(AddGameVM model)
-        //{
-        //    var data = GameService.AddGame(model);
-        //    return Ok(data);
-        //}
-        //[HttpPost("editGame")]
-        //public ActionResult EditGame(EditGameVM model)
-        //{
-        //    var data = GameService.EditGame(model);
-        //    return Ok(data);
-        //}
-        //[HttpGet("getGameDetails")]
-        //public ActionResult GetExcersiseDetails(int gameId)
-        //{
-        //    var data = GameService.SetGameDetails(gameId);
-        //    return Ok(data);
-        //}
-        //[HttpPost("deleteGame")]
-        //public ActionResult DeleteGame(int gameId)
-        //{
-        //    GameService.DeleteGame(gameId);
-        //    return Ok(true);
-        //}
+        [HttpGet("getGamesList")]
+        public ActionResult GetGamesList()
+        {
+            var data = GameService.GetGamesList();
+            return Ok(data);
+        }
+        [HttpGet("getGameDetails/{gameId}")]
+        public ActionResult GetGameDetails(int gameId)
+        {
+            var data = GameService.GetGameDetails(gameId);
+            return Ok(data);
+        }
+        [HttpGet("getGamePlayersStats/{gameId}")]
+        public ActionResult GetGamePlayersStats(int gameId)
+        {
+            var data = GameService.GetGamePlayersStats(gameId);
+            return Ok(data);
+        }
+        [HttpGet("getGameStatistics/{gameId}")]
+        public ActionResult GetGameStatistics(int gameId)
+        {
+            var data = GameService.GetGamePlayersStats(gameId);
+            return Ok(data);
+        }
+        [HttpGet("getGamePlayerStatistics")]
+        public ActionResult GetGamePlayerStatistics(int playerId, int gameId)
+        {
+            var data = GameService.GetGamePlayerStatistics(playerId, gameId);
+            return Ok(data);
+        }
+        [HttpPost("saveGamePlayerStatistics")]
+        public ActionResult SaveGamePlayerStatistics(GamePlayerStatisticsVM data)
+        {
+            GameService.SaveGamePlayerStatistics(data);
+            return Ok(true);
+        }
     }
 }

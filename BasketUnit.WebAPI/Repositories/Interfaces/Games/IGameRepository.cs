@@ -15,5 +15,10 @@ namespace BasketUnit.WebAPI.Repositories
         void AddGameReferees(AddGameVM model, int gameId);
         void AddGameStats(AddGameVM model, int gameId);
         List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
+        List<ListAllGamesVM> GetGamesList();
+        GameDetailsVM GetGameDetails(int gameId);
+        List<GameStatsListVM> GetGamePlayersStats(int gameId);
+        GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId);
+        void SaveGamePlayerStatistics(GamePlayerStatisticsVM data);
     }
 }
