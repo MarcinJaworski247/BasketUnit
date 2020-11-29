@@ -23,6 +23,7 @@
         class="main-datagrid"
         show-filter-row="true"
         width="1000"
+        height="auto"
     >
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn

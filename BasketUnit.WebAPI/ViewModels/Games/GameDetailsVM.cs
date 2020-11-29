@@ -8,7 +8,9 @@ namespace BasketUnit.WebAPI.ViewModels
     public class GameDetailsVM
     {
         public string HomeTeam { get; set; }
+        public int HomeTeamId { get; set; }
         public string AwayTeam { get; set; }
+        public int AwayTeamId { get; set; }
         public string HomeTeamBadge { get; set; }
         public string AwayTeamBadge { get; set; }
         public DateTime GameDate { get; set; }

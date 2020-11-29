@@ -76,7 +76,9 @@ const store = "GamesStore";
 export default {
     name: "games",
     data(){
+        return {
 
+        };
     },
     created() {
 

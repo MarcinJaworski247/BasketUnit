@@ -32,14 +32,14 @@
           </span>
           </router-link>
         </li>
-        <li class="nav-item mb-3">
+        <!-- <li class="nav-item mb-3">
           <router-link :to="{ name: 'statistics.index' }" class="nav-link">
           <span class="nav-link text-dark">
               <i class="fas fa-chart-bar mr-1"></i>
               Statystyki
           </span>
           </router-link>
-        </li>
+        </li> -->
         <li class="nav-item mb-3">
           <router-link :to="{ name: 'schedules.index' }" class="nav-link">
           <span class="nav-link text-dark">
@@ -100,21 +100,46 @@
       <router-view />
     </div>
     <div style="justify-content: flex-end;">
-      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold;"><router-link :to="{ name: 'schedules.index' }" styl="margin: auto;">Nadchodzące wydarzenia</router-link></div>
-        <div v-for="item in getClosestGames" :key="item.startDate">
-          {{item.homeTeam}} vs. {{item.awayTeam}}
-          Arena: {{item.arena}}
-          Data: {{item.startDate}}
+      <div style="width: 175px; height: 400px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
+        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Przyszłe mecze</div>
+        <div v-for="item in getClosestGames" :key="item.startDate" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)" class="mt-3">
+          <strong>{{item.homeTeam}} vs. {{item.awayTeam}}</strong>
+          <div>Arena: {{item.arena}}</div>
+          <div>Data: {{item.startDate}}</div>
         </div>
       </div>
-      <div style="width: 150px; height: 300px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; margin-top: 50px; border-radius: 3px;">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: black;"><router-link :to="{ name: 'statistics.index' }">Liderzy ligi</router-link></div>
-        <div v-for="item in getLeaugueLeaders" :key="item.statType">
+      <div style="width: 175px; height: 375px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; margin-top: 50px; border-radius: 3px;">
+        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue;">Liderzy ligi</div>
+        <!-- <div v-for="item in getLeaugueLeaders" :key="item.statType">
           <strong>{{item.statType}}</strong>
           {{item.fullNamePlayer}}
           {{item.team}}
           {{item.score}}
+        </div> -->
+        <div  class="mt-3 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
+          <div><strong>Punkty</strong></div>
+          <div>Kevin Durant, Nets</div>
+          <div>31.1 </div>
+        </div>
+        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
+          <div><strong>Asysty</strong></div>
+          <div>Ben Simmons, 76ers</div>
+          <div>11.2 </div>
+        </div>
+        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
+          <div><strong>Zbiórki</strong></div>
+          <div>Zion Williamson, Pelicans</div>
+          <div>12.4 </div>
+        </div>
+        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
+          <div><strong>Przechwyty</strong></div>
+          <div>LeBron James, Lakers</div>
+          <div>3.6 </div>
+        </div>
+        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
+          <div><strong>Bloki</strong></div>
+          <div>Anthony Davis, Lakers</div>
+          <div>2.4 </div>
         </div>
       </div>
     </div>

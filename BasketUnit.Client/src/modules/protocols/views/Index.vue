@@ -1,7 +1,7 @@
 <template>
     <div class="content">
         <div class="printers">
-        <div class="main-header mt-1 mb-2"> 
+        <div class="main-header mt-4 mb-4"> 
             <h3 class="main-header-title"> Protokoły </h3>
         </div>
             <DxDataGrid
@@ -62,8 +62,7 @@ import
 import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow,
-    DxPaging
+    DxFilterRow
   } from 'devextreme-vue/data-grid'
   import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
@@ -72,7 +71,9 @@ const store = "ProtocolsStore";
 export default {
     name: "protocols",
     data() {
+        return {
 
+        };
     },
     created() {
 
@@ -84,14 +85,13 @@ export default {
         ...mapActions(store, ["setGamesList"])
     },
     mounted() {
-        this.setGamesList;
+        this.setGamesList();
     },
     components: {
         DxButton,
         DxDataGrid, 
         DxColumn, 
-        DxFilterRow,
-        DxPaging
+        DxFilterRow
     }
 }
 </script>

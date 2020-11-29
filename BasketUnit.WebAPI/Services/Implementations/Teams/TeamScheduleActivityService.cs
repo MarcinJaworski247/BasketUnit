@@ -17,7 +17,7 @@ namespace BasketUnit.WebAPI.Services
         }
         public void AddWorkout(AddWorkoutScheduleVM model)
         {
-            int teamId = 1;
+            int teamId = 2;
             TeamSchedule teamSchedule = RepositoriesWrapper.TeamScheduleRepository.GetTeamScheduleByTeam(teamId);
             RepositoriesWrapper.TeamScheduleRepository.AddWorkoutToSchedule(model, teamSchedule);
         }

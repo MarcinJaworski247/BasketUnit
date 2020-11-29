@@ -1,7 +1,9 @@
 <template>
     <div class="content">
         <div class="printers">
-
+            <div class="main-header mt-4 mb-4"> 
+                <h3 class="main-header-title"> Protokół meczu </h3>
+            </div>
             <DxDataGrid
                 id="gridContainer"
                 :data-source="getGameStatistics"
@@ -18,12 +20,14 @@
                     caption="Zawodnik"
                     alignment="left"
                     data-type="string"
+                    width="200"
                 />
                 <DxColumn 
                     data-field="team"
                     caption="Drużyna"
                     alignment="left"
                     data-type="string"
+                    width="200"
                 />
                 <DxColumn 
                     data-field="points"
@@ -71,17 +75,17 @@
                     width="100"
                 />
                 <div slot="actionsCellTemplate" slot-scope="{ data }">
-                    <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
+                    <DxButton @click="showProtocolEditPopup(data)" icon="fas fa-chevron-right"/>
                 </div>
             </DxDataGrid>
 
-            <div class="d-flex end-xs mt-5">
+            <div class="d-flex end-xs mt-5 mb-4">
             <DxButton
                 :use-submit-behavior="false"
                 type="normal"
                 styling-mode="outlined"
                 text="Wróć"
-                @click="function(){ $router.push({ name: 'games.index' }) }"/>
+                @click="function(){ $router.push({ name: 'protocols.index' }) }"/>
             </div>
         </div>
 
@@ -91,15 +95,10 @@
             :visible.sync="popupVisible"
             :drag-enabled="false"
             :width="500"
+            :title="FullName"
             height="auto"
             class="popup">
             <div class="form-group">
-                <div class="row">
-                    <div class="col-12">
-                        <label>Zawodnik</label>
-                        {{ FullName }}
-                    </div>
-                </div>
                 <div class="row">
                     <div class="col-6">
                         <label>Punkty</label>
@@ -130,7 +129,7 @@
                         <DxNumberBox v-model="Fouls"/>
                     </div>
                 </div>
-                <div class="popup-bottom">
+                <div class="popup-bottom mt-4">
                     <DxButton 
                         :use-submit-behavior="false"
                         styling-mode="outlined"
@@ -138,11 +137,11 @@
                         text="Anuluj"
                         @click="hideEditPopup" />
                     <DxButton 
-                        :use-submit-behavior="true"
+                        :use-submit-behavior="false"
                         type="default"
                         class="ml-1"
                         text="Zapisz"
-                        @click="saveGamePlayerStatistics" />
+                        @click="saveGamePlayerStatisticsMethod" />
                 </div>
             </div>
         </DxPopup>
@@ -156,34 +155,45 @@ import
 { 
     DxPopup,
     DxButton,
-    DxNumberBox,
-    DxTextBox
+    DxNumberBox
 } from 'devextreme-vue';
 import {
     DxDataGrid, 
     DxColumn, 
-    DxFilterRow,
-    DxPaging,
-    DxLookup 
+    DxFilterRow
   } from 'devextreme-vue/data-grid'
 import { mapFields } from "vuex-map-fields";
-import { mapGetters, mapActions } from "vuex";
+import notify from 'devextreme/ui/notify';
+import { mapGetters, mapActions, mapState } from "vuex";
 const store = "ProtocolsEditStore";
 export default {
     name: "protocolEdit",
     data(){
-        popupVisible = false;
+        return {
+        popupVisible: false
+        };
     },
     created(){
 
     },
     computed: {
         ...mapGetters(store, ["getGameStatistics"]),
-        ...mapState(store, ["getForm"])
+        ...mapState(store, ["getForm"]),
+        ...mapFields(store, [
+            "editForm.Id",
+            "editForm.FullName",
+            "editForm.Points",
+            "editForm.Assists",
+            "editForm.Rebounds",
+            "editForm.Steals",
+            "editForm.Blocks",
+            "editForm.Fouls"
+        ])
     },
     methods: {
         ...mapActions(store, ["saveGamePlayerStatistics", "setGamePlayerStatistics", "setGameStatistics"]),
-        showEditPopup(options){
+        showProtocolEditPopup(options){
+            debugger
             this.setGamePlayerStatistics(options.data.id);
             this.popupVisible = true;
         },
@@ -195,7 +205,7 @@ export default {
                 notify("Zapisano", "success", 500);
             });
         },
-        saveGamePlayerStatistics(){
+        saveGamePlayerStatisticsMethod(){
             this.saveGamePlayerStatistics();
             this.popupVisible = false;
             this.showSuccessNotify();
@@ -203,6 +213,14 @@ export default {
     },
     mounted(){
         this.setGameStatistics();
+    },
+    components: {
+    DxPopup,
+    DxButton,
+    DxNumberBox,
+    DxDataGrid, 
+    DxColumn, 
+    DxFilterRow
     }
 }
 </script>

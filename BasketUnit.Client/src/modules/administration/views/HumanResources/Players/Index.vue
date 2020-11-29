@@ -20,7 +20,8 @@
         :row-alternation-enabled="true"
         class="main-datagrid"
         show-filter-row="true"
-        width="1000">
+        width="1000"
+        height="auto">
         <DxFilterRow :visible="true" :show-operation-chooser="true" />
         <DxColumn 
             data-field="avatar"

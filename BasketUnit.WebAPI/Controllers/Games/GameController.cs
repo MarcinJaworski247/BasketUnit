@@ -41,7 +41,7 @@ namespace BasketUnit.WebAPI.Controllers.Games
             var data = GameService.GetGamePlayersStats(gameId);
             return Ok(data);
         }
-        [HttpGet("getGamePlayerStatistics")]
+        [HttpGet("getGamePlayerStatistics/{playerId}/{gameId}")]
         public ActionResult GetGamePlayerStatistics(int playerId, int gameId)
         {
             var data = GameService.GetGamePlayerStatistics(playerId, gameId);

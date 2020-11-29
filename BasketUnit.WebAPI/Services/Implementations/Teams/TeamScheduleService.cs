@@ -17,7 +17,7 @@ namespace BasketUnit.WebAPI.Services
         public List<ScheduleActivityVM> GetActivities()
         {
             List<ScheduleActivityVM> games = RepositoriesWrapper.GameRepository.GetGamesToScheduler();
-            List<ScheduleActivityVM> workouts = RepositoriesWrapper.TeamScheduleRepository.GetWorkoutsToScheduler(1);
+            List<ScheduleActivityVM> workouts = RepositoriesWrapper.TeamScheduleRepository.GetWorkoutsToScheduler(2);
             return games.Concat(workouts).ToList();
         }
     }

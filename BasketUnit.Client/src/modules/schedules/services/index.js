@@ -5,7 +5,6 @@ class schedulesService {
         return axios.get("/schedules/getActivitiesToShow");
     }
     getExcercisesToLookup() {
-        debugger
         return axios.get("/schedules/getExcercisesToLookup");
     }
     getTeamsToLookup() {

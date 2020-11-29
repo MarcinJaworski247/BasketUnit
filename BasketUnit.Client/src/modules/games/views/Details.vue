@@ -1,19 +1,25 @@
 <template>
     <div class="content">
         <div class="printers">
-            <div style="display: flex;">
-                <div style="text-align: center;" class="mt-4">
-                    <h3>{{ HomeTeam }}</h3><img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+HomeTeamBadge"/>
-                    <h4>{{ HomeTeamScore }} " : " {{ AwayTeamScore }}</h4>
-                    <img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+AwayTeamBadge"/><h3>{{AwayTeamBadge}}</h3>
-                    <div class="mt-2">
+            <div >
+                <div style="text-align: center; font-size: 24px; font-weight: bold;" class="mt-4">
+                    <div>
+                        
+                        <img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+HomeTeamBadge"/>
+                        {{ HomeTeam }}
+                        {{ HomeTeamScore }}  :  {{ AwayTeamScore }}
+                        {{ AwayTeam }}
+                        <img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+AwayTeamBadge"/>
+                        
+                    </div>
+                    <div class="mt-4">
                         <h4>Data: {{ GameDate }}</h4>
                         <h4>Arena: {{ Arena }}</h4>
-                        <h4>Sędziowie: {{ FirstReferee }} ", " {{ SecondReferee }}</h4>
+                        <h4>Sędziowie: {{ FirstReferee }},  {{ SecondReferee }}</h4>
                     </div>
                 </div>
                 <div class="mt-4">
-                    <h4>Statystyki </h4>
+                    <h4 class="mb-4">Statystyki </h4>
                     <DxDataGrid
                         id="homegridContainer"
                         :data-source="getGamePlayersStats"
@@ -66,7 +72,7 @@
                 </div>
                 
             </div>
-            <div class="d-flex end-xs mt-5">
+            <div class="d-flex end-xs mt-5 mb-4">
             <DxButton
                 :use-submit-behavior="false"
                 type="normal"
@@ -91,10 +97,12 @@ const store = "GamesDetailsStore";
 export default {
     name: "gameDetails",
     data() {
+        return {
 
+        };
     },
     created() {
-
+        
     },
     computed: {
         ...mapGetters(store, ["getGameDetails", "getGamePlayersStats"]),

@@ -1,6 +1,7 @@
 ﻿using BasketUnit.WebAPI.Context;
 using BasketUnit.WebAPI.Models;
 using BasketUnit.WebAPI.ViewModels;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,12 +20,13 @@ namespace BasketUnit.WebAPI.Repositories
         public List<ScheduleActivityVM> GetWorkoutsToScheduler(int teamId)
         {
             int teamScheduleId = MainDatabaseContext.TeamSchedules.Where(x => x.TeamId == teamId).Select(x => x.Id).FirstOrDefault();
-            List<TeamScheduleActivity> teamScheduleActivities = MainDatabaseContext.TeamScheduleActivities.Where(x => x.TeamScheduleId == teamScheduleId).ToList();
+            List<TeamScheduleActivity> teamScheduleActivities = MainDatabaseContext.TeamScheduleActivities.Include(x => x.Workout).Where(x => x.TeamScheduleId == teamScheduleId).ToList();
             List<ScheduleActivityVM> data = teamScheduleActivities.Select(x => new ScheduleActivityVM()
             {
                 StartDate = x.StartDate,
                 EndDate = x.EndDate,
-                Subject = ""
+                Subject = "",
+                Excercise = x.Workout.Name + "/ " + x.Workout.Description
             }).ToList();
             return data;
         }

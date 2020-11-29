@@ -114,7 +114,7 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<SelectModelBinder<int>> GetPlayersByPosition(int position)
         {
-            List<Player> players = MainDatabaseContext.Players.Where(x => x.Position == (Enums.Position)position).ToList();
+            List<Player> players = MainDatabaseContext.Players.Include(x => x.TeamLineup).ThenInclude(y => y.Team).Where(x => x.Position == (Enums.Position)position && x.TeamLineup.FirstOrDefault().TeamId == 2).ToList();
             List<SelectModelBinder<int>> result = players.Select(x => new SelectModelBinder<int>()
             {
                 Value = x.Id,
@@ -138,38 +138,38 @@ namespace BasketUnit.WebAPI.Repositories
         {
             // to do team  parameter
 
-            List<TeamFirstLineup> teamFirstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).ToList();
+            List<TeamFirstLineup> teamFirstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 2).ToList();
             MainDatabaseContext.TeamFirstLineups.RemoveRange(teamFirstLineup);
             MainDatabaseContext.SaveChanges();
 
             TeamFirstLineup pointGuard = new TeamFirstLineup
             {
                 PlayerId = (int)model.PointGuardId,
-                TeamId = 1
+                TeamId = 2
             };
             MainDatabaseContext.TeamFirstLineups.Add(pointGuard);
             TeamFirstLineup shootingGuard = new TeamFirstLineup
             {
                 PlayerId = (int)model.ShootingGuardId,
-                TeamId = 1
+                TeamId = 2
             };
             MainDatabaseContext.TeamFirstLineups.Add(shootingGuard);
             TeamFirstLineup smallForward = new TeamFirstLineup
             {
                 PlayerId = (int)model.SmallForwardId,
-                TeamId = 1
+                TeamId = 2
             };
             MainDatabaseContext.TeamFirstLineups.Add(smallForward);
             TeamFirstLineup powerForward = new TeamFirstLineup
             {
                 PlayerId = (int)model.PowerForwardId,
-                TeamId = 1
+                TeamId = 2
             };
             MainDatabaseContext.TeamFirstLineups.Add(powerForward);
             TeamFirstLineup center = new TeamFirstLineup
             {
                 PlayerId = (int)model.CenterId,
-                TeamId = 1
+                TeamId = 2
             };
             MainDatabaseContext.TeamFirstLineups.Add(center);
             MainDatabaseContext.SaveChanges();
@@ -184,14 +184,14 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public FirstLineupVM GetFirstLineupIds()
         {
-            List<TeamFirstLineup> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).ToList();
+            List<TeamFirstLineup> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 2).ToList();
             FirstLineupVM firstLineupVM = new FirstLineupVM
             {
-                PointGuardId = teamFirstLineups[0].PlayerId,
-                ShootingGuardId = teamFirstLineups[1].PlayerId,
-                SmallForwardId = teamFirstLineups[2].PlayerId,
-                PowerForwardId = teamFirstLineups[3].PlayerId,
-                CenterId = teamFirstLineups[4].PlayerId,
+                PointGuardId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.PointGuard).Select(x => x.PlayerId).FirstOrDefault(),
+                ShootingGuardId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.ShootingGuard).Select(x => x.PlayerId).FirstOrDefault(),
+                SmallForwardId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.SmallForward).Select(x => x.PlayerId).FirstOrDefault(),
+                PowerForwardId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.PowerForward).Select(x => x.PlayerId).FirstOrDefault(),
+                CenterId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.Center).Select(x => x.PlayerId).FirstOrDefault(),
             };
             return firstLineupVM;
         }

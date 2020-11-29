@@ -56,6 +56,24 @@ namespace BasketUnit.WebAPI.Repositories
 
             return players;
         }
+        public List<ListPlayersVM> GetTeamPlayers()
+        {
+            List<ListPlayersVM> players = MainDatabaseContext.Players.Include(x => x.TeamLineup).Include(x => x.Stats).Include(x => x.Nationality).Where(x => x.TeamLineup.FirstOrDefault().TeamId == 2).Select(x => new ListPlayersVM()
+            {
+                Id = x.Id,
+                Avatar = x.Avatar,
+                FirstName = x.FirstName,
+                LastName = x.LastName,
+                FullName = x.FirstName + " " + x.LastName,
+                BirthDate = x.BirthDate,
+                PositionId = (int)x.Position,
+                NationalityId = x.Nationality.Id,
+                PlayerNumber = x.Number,
+                TeamId = x.TeamLineup.FirstOrDefault().TeamId
+            }).ToList();
+
+            return players;
+        }
         public Player AddPlayer(AddPlayerVM model)
         {
             Player player = new Player
@@ -195,7 +213,7 @@ namespace BasketUnit.WebAPI.Repositories
             //    }
             //}
 
-            List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => new DetailsPlayerVM()
+            List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 2).Select(x => new DetailsPlayerVM()
             {
                 FirstName = x.Player.FirstName + " " + x.Player.LastName,
                 Position = x.Player.Position.ToString(),

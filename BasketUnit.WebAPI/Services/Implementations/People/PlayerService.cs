@@ -39,5 +39,9 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.PlayerRepository.GetFirstLineupPlayers();
         }
+        public List<ListPlayersVM> GetTeamPlayers()
+        {
+            return RepositoriesWrapper.PlayerRepository.GetTeamPlayers();
+        }
     }
 }

@@ -1,6 +1,6 @@
 import { getField, updateField } from 'vuex-map-fields';
 import service from "../services/index.js";
-import router from "../router"
+import router from "../../../router"
 const namespaced = true;
 
 const state = {
@@ -23,6 +23,7 @@ const getters = {
         return state.gameStatistics;
     },
     getForm: (state) => {
+        debugger
         return state.editForm;
     }
 }
@@ -33,14 +34,15 @@ const mutations = {
         state.gameStatistics = payload;
     },
     setGamePlayerStatistics: (state, payload) => {
+        debugger
         state.editForm.Id = payload.id,
         state.editForm.FullName = payload.fullName,
         state.editForm.Points = payload.points,
         state.editForm.Assists = payload.assists,
         state.editForm.Rebounds = payload.rebounds,
         state.editForm.Steals = payload.steals,
-        state.editForm.Blocks = paylaod.blocks,
-        state.editForm.Foulse = payload.fouls
+        state.editForm.Blocks = payload.blocks,
+        state.editForm.Fouls = payload.fouls
     },
     resetForm: (state) => {
         state.editForm.Id = null
@@ -50,7 +52,7 @@ const mutations = {
         state.editForm.Rebounds = null,
         state.editForm.Steals = null,
         state.editForm.Blocks = null,
-        state.editForm.Foulse = null
+        state.editForm.Fouls = null
     }
 }
 
@@ -58,10 +60,11 @@ const actions = {
     setGameStatistics: ({ commit }) => {
         service.getGameStatistics(router.currentRoute.params.gameId)
             .then(response => {
-                commit("getGameStatistics", response.data);
+                commit("setGameStatistics", response.data);
             });
     },
     setGamePlayerStatistics: ({ commit}, id) => {
+        debugger
         service.getGamePlayerStatistics(id, router.currentRoute.params.gameId)
             .then(response => {
                 commit("setGamePlayerStatistics", response.data);
@@ -70,7 +73,7 @@ const actions = {
     async saveGamePlayerStatistics ({ commit, dispatch, state }) {
         try {
             await service.saveGamePlayerStatistics(state.editForm);
-            dispatch("saveGamePlayerStatistics");
+            dispatch("setGamePlayerStatistics");
             commit("resetForm");
         } catch(err) {
             console.log(err);

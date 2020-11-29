@@ -6,7 +6,7 @@
             </div>
 
             <DxTabPanel
-                height="800"
+                min-height="800"
                 width="1200"
                 :animation-enabled=true
                 :swipe-enabled=false

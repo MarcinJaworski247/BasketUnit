@@ -60,7 +60,7 @@ namespace BasketUnit.WebAPI.Repositories
             List<int> blocks = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Blocks).ToList();
             PlayerDetailsChartVM blocksAvg = new PlayerDetailsChartVM
             {
-                StatType = "Steals",
+                StatType = "Blocks",
                 PlayerAvg = (decimal)blocks.Average(),
                 RestOfTeamAvg = 0
             };
@@ -104,7 +104,7 @@ namespace BasketUnit.WebAPI.Repositories
         public List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId, int playerTeamId)
         {
             List<GamePlayerStatsVM> playerStasts = new List<GamePlayerStatsVM>();
-            List<Stats> lastStats = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).OrderByDescending(x => x.Id).Take(5).ToList();
+            List<Stats> lastStats = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId).OrderByDescending(x => x.Id).Take(5).ToList();
             foreach(var item in lastStats)
             {
                 GamePlayerStatsVM gamePlayerStatsVM = new GamePlayerStatsVM
@@ -116,7 +116,7 @@ namespace BasketUnit.WebAPI.Repositories
                     Steals = item.Steals,
                     Blocks = item.Blocks,
                     GameTime = item.Game.Date,
-                    Opponent = MainDatabaseContext.GameTeams.Where(x => x.TeamId != playerTeamId).Select(x => x.Team.Name).FirstOrDefault()
+                    Opponent = MainDatabaseContext.GameTeams.Include(x => x.Team).Where(x => x.TeamId != playerTeamId).Select(x => x.Team.Name).FirstOrDefault()
                 };
             }
 
@@ -139,7 +139,7 @@ namespace BasketUnit.WebAPI.Repositories
                 Opponent = x.Game.GameTeams.Where(x => x.TeamId != playerId).Select(x => x.Team.Name).FirstOrDefault()
             }).ToList();
 
-            return playerStasts;
+            return data;
         }
         public List<LeagueLeadersWidgetVM> GetLeadersToWidget()
         {

@@ -3,9 +3,9 @@
     <div> </div>
     <div>
       <strong>{{ templateModel.appointmentData.subject }}</strong>
-      <div v-if="templateModel.appointmentData.excercise">{{ templateModel.appointmentData.excercise }}</div>
-      <div v-if="templateModel.appointmentData.teams">{{ templateModel.appointmentData.teams }}</div>
-      <div v-if="templateModel.appointmentData.arena">Arena: {{ templateModel.appointmentData.arena }}</div>
+      <h4><div v-if="templateModel.appointmentData.excercise">{{ templateModel.appointmentData.excercise }}</div></h4>
+      <h2><div v-if="templateModel.appointmentData.teams">{{ templateModel.appointmentData.teams }}</div></h2>
+      <h3><div v-if="templateModel.appointmentData.arena">Arena: {{ templateModel.appointmentData.arena }}</div></h3>
     </div>
     <div>
     </div>

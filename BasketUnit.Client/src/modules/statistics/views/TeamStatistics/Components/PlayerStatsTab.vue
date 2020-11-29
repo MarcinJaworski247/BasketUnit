@@ -16,7 +16,7 @@
             stack="player" />
         <DxSeries
             value-field="lastPoints"
-            name="Punkty (ostatnie 5 meczy)"
+            name="Punkty (ostatnie 5 meczów)"
             stack="player" />
         <DxSeries
             value-field="futurePoints"
@@ -28,7 +28,7 @@
             stack="player" />
         <DxSeries
             value-field="lastAssists"
-            name="Asysty (ostatnie 5 meczy)"
+            name="Asysty (ostatnie 5 meczów)"
             stack="player" />
             <DxSeries
             value-field="futureAssists"
@@ -40,7 +40,7 @@
             stack="player" />
         <DxSeries
             value-field="lastRebounds"
-            name="Zbiórki (ostatnie 5 meczy)"
+            name="Zbiórki (ostatnie 5 meczów)"
             stack="player" />
             <DxSeries
             value-field="futureRebounds"

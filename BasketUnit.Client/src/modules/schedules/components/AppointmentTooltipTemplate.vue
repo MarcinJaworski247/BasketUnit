@@ -7,8 +7,10 @@
       </div>
     <div>
         <div v-if="this.templateTooltipModel.appointmentData.excercise">{{ this.templateTooltipModel.appointmentData.excercise }}</div>
-        <div v-if="this.templateTooltipModel.appointmentData.homeTeamBadge"><img v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.homeTeamBadge"/></div>
-        <div v-if="this.templateTooltipModel.appointmentData.awayTeamBadge"><img v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.awayTeamBadge"/></div>
+        <div>
+          <img v-if="this.templateTooltipModel.appointmentData.homeTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.homeTeamBadge" style="width: 50px; margin-right: 24px;"/>
+          <img v-if="this.templateTooltipModel.appointmentData.awayTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.awayTeamBadge"  style="width: 50px;"/>
+        </div>
         <div v-if="this.templateTooltipModel.appointmentData.teams">{{ this.templateTooltipModel.appointmentData.teams }}</div>
         <div v-if="this.templateTooltipModel.appointmentData.arena">{{ this.templateTooltipModel.appointmentData.arena }}</div>
       </div>

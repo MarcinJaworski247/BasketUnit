@@ -23,7 +23,7 @@ namespace BasketUnit.WebAPI.Controllers.Team
         [HttpGet("getPlayersList")]
         public ActionResult GetPlayersList()
         {
-            var data = PlayerService.GetPlayers();
+            var data = PlayerService.GetTeamPlayers();
             return Ok(data);
         }
         [HttpGet("getFirstLineupPlayers")]

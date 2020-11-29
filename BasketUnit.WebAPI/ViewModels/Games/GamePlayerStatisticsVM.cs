@@ -10,7 +10,7 @@ namespace BasketUnit.WebAPI.ViewModels
         public int Id { get; set; }
         public string FullName { get; set; }
         public int Points { get; set; }
-        public int Assist { get; set; }
+        public int Assists { get; set; }
         public int Rebounds { get; set; }
         public int Steals { get; set; }
         public int Blocks { get; set; }

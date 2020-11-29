@@ -32,7 +32,6 @@ const getters = {
         return state.activitiesToShow;
     },
     getExcercises: (state) => {
-        debugger
         return state.excersices;
     },
     getTeams: (state) => {

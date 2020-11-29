@@ -16,9 +16,10 @@
                     <DxChart
                         class="chart"
                         :data-source="getDataToCharts"
-                        title="Średnie statystyki"
-                        width="auto"
-                        :min-width="700">
+                        title="Średnie statystyki  na tle reszty zespołu"
+                        width="800"
+                        height="800"
+                        >
                         <DxCommonSeriesSettings
                             argument-field="statType"
                             type="bar">
@@ -30,17 +31,20 @@
                         </DxCommonSeriesSettings>
                         <DxSeries
                             value-field="playerAvg"
-                            name="statType"/>
+                            name="Zawodnik"/>
+                        <DxSeries
+                            value-field="restOfTeamAvg"
+                            name="Reszta drużyny"/>
                     </DxChart>
                 </div>
             </div>
             <div class="row mt-4" style="border: 1px solid black;">
                 <div class="col-12">
-                <h3>Statystyki z ostatnich meczy </h3>
+                <h3>Statystyki z ostatnich meczów </h3>
                     <DxDataGrid
                         id="gridContainer"
                         :data-source="getLastGamesStats"
-                        key-expr="id"
+                        key-expr="opponent"
                         :allow-column-reordering="true"
                         :row-alternation-enabled="true"
                         class="main-datagrid">
