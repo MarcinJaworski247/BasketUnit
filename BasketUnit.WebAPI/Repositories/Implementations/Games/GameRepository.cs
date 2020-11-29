@@ -181,7 +181,7 @@ namespace BasketUnit.WebAPI.Repositories
                     .Where(x => x.GameId == item.Id && x.Player.TeamLineup.FirstOrDefault().Team.Id == item.AwayTeamId)
                     .Select(x => x.Points).ToList();
 
-                item.HomeTeamPoints = awayTeamPoints.Sum();
+                item.AwayTeamPoints = awayTeamPoints.Sum();
 
             }
 
@@ -194,7 +194,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .ThenInclude(y => y.Team)
                 .Include(x => x.GameReferees)
                 .ThenInclude(z => z.Referee)
-                .Include(x => x.Arena).FirstOrDefault();
+                .Include(x => x.Arena).Where(x => x.Id == gameId).FirstOrDefault();
 
             GameDetailsVM data = new GameDetailsVM
             {
@@ -260,7 +260,8 @@ namespace BasketUnit.WebAPI.Repositories
                 .Where(x => x.Id == playerId && x.GameId == gameId)
                 .Select(x => new GamePlayerStatisticsVM()
                 {
-                    Id = x.Player.Id,
+                    Id = x.Id,
+                    PlayerId = x.PlayerId,
                     FullName = x.Player.FirstName + " " + x.Player.LastName,
                     Points = x.Points,
                     Assists = x.Assists,
@@ -274,7 +275,7 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public void SaveGamePlayerStatistics(GamePlayerStatisticsVM data)
         {
-            Stats stats = MainDatabaseContext.Stats.Include(x => x.Player).FirstOrDefault();
+            Stats stats = MainDatabaseContext.Stats.Include(x => x.Player).Where(x => x.Id == data.Id && x.PlayerId == data.PlayerId).FirstOrDefault();
             stats.Points = data.Points;
             stats.Assists = data.Assists;
             stats.Rebounds = data.Rebounds;

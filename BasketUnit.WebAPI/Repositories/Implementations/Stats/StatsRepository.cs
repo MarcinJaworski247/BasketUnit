@@ -103,29 +103,30 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId, int playerTeamId)
         {
-            List<GamePlayerStatsVM> playerStasts = new List<GamePlayerStatsVM>();
-            List<Stats> lastStats = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId).OrderByDescending(x => x.Id).Take(5).ToList();
-            foreach(var item in lastStats)
-            {
-                GamePlayerStatsVM gamePlayerStatsVM = new GamePlayerStatsVM
-                {
-                    GameId = item.GameId,
-                    Points = item.Points,
-                    Assists = item.Assists,
-                    Rebounds = item.Rebounds,
-                    Steals = item.Steals,
-                    Blocks = item.Blocks,
-                    GameTime = item.Game.Date,
-                    Opponent = MainDatabaseContext.GameTeams.Include(x => x.Team).Where(x => x.TeamId != playerTeamId).Select(x => x.Team.Name).FirstOrDefault()
-                };
-            }
+            //List<GamePlayerStatsVM> playerStasts = new List<GamePlayerStatsVM>();
+            //List<Stats> lastStats = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId).OrderByDescending(x => x.Id).Take(5).ToList();
+            //foreach(var item in lastStats)
+            //{
+            //    GamePlayerStatsVM gamePlayerStatsVM = new GamePlayerStatsVM
+            //    {
+            //        GameId = item.GameId,
+            //        Points = item.Points,
+            //        Assists = item.Assists,
+            //        Rebounds = item.Rebounds,
+            //        Steals = item.Steals,
+            //        Blocks = item.Blocks,
+            //        GameTime = item.Game.Date,
+            //        Opponent = MainDatabaseContext.GameTeams.Include(x => x.Team).Where(x => x.TeamId != playerTeamId && x.GameId == item.GameId).Select(x => x.Team.Name).FirstOrDefault()
+            //    };
+            //}
 
             List<GamePlayerStatsVM> data = MainDatabaseContext.Stats
                 .Include(x => x.Player)
                 .ThenInclude(y => y.TeamLineup)
                 .ThenInclude(z => z.Team)
+                .Include(x => x.Game)
                 .OrderByDescending(x => x.Id)
-                .Take(5)
+                .Where(x => x.PlayerId == playerId )
                 .Select(x => new GamePlayerStatsVM()
             {
                 GameId = x.GameId,
@@ -136,7 +137,7 @@ namespace BasketUnit.WebAPI.Repositories
                 Blocks = x.Blocks,
                 Fouls = x.Fouls,
                 GameTime = x.Game.Date,
-                Opponent = x.Game.GameTeams.Where(x => x.TeamId != playerId).Select(x => x.Team.Name).FirstOrDefault()
+                Opponent = x.Game.GameTeams.Where(y => y.TeamId != playerTeamId && y.GameId == x.GameId).Select(y => y.Team.Name).FirstOrDefault()
             }).ToList();
 
             return data;

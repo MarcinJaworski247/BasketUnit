@@ -18,7 +18,7 @@
         :data-source="getActivitiesToShow"
         :current-date="currentDate"
         :views="views"
-        height="600"
+        height="1000"
         :show-all-day-panel="true"
         :first-day-of-week="1"
         :start-day-hour="8"

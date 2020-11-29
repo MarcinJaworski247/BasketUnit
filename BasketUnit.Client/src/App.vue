@@ -101,7 +101,7 @@
     </div>
     <div style="justify-content: flex-end;">
       <div style="width: 175px; height: 400px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Przyszłe mecze</div>
+        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Ostatnie mecze</div>
         <div v-for="item in getClosestGames" :key="item.startDate" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)" class="mt-3">
           <strong>{{item.homeTeam}} vs. {{item.awayTeam}}</strong>
           <div>Arena: {{item.arena}}</div>

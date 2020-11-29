@@ -23,7 +23,6 @@ const getters = {
         return state.gameStatistics;
     },
     getForm: (state) => {
-        debugger
         return state.editForm;
     }
 }
@@ -34,8 +33,8 @@ const mutations = {
         state.gameStatistics = payload;
     },
     setGamePlayerStatistics: (state, payload) => {
-        debugger
         state.editForm.Id = payload.id,
+        state.editForm.PlayerId = payload.playerId,
         state.editForm.FullName = payload.fullName,
         state.editForm.Points = payload.points,
         state.editForm.Assists = payload.assists,
@@ -46,6 +45,7 @@ const mutations = {
     },
     resetForm: (state) => {
         state.editForm.Id = null
+        state.editForm.PlayerId = null,
         state.editForm.FullName = '',
         state.editForm.Points = null,
         state.editForm.Assists = null,
@@ -64,7 +64,6 @@ const actions = {
             });
     },
     setGamePlayerStatistics: ({ commit}, id) => {
-        debugger
         service.getGamePlayerStatistics(id, router.currentRoute.params.gameId)
             .then(response => {
                 commit("setGamePlayerStatistics", response.data);

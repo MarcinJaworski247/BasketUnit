@@ -13,19 +13,20 @@
 
                 </div>
                 <div class="col-8">
+                    <div class="mb-4">
                     <DxChart
                         class="chart"
                         :data-source="getDataToCharts"
                         title="Średnie statystyki  na tle reszty zespołu"
-                        width="800"
-                        height="800"
+                        width="auto"
+                        height="auto"
                         >
                         <DxCommonSeriesSettings
                             argument-field="statType"
                             type="bar">
                             <DxLabel :visible="true">
                                 <DxFormat
-                                    :precision="0"
+                                    :precision="2"
                                     type="fixedPOint"/>
                             </DxLabel>
                         </DxCommonSeriesSettings>
@@ -36,11 +37,12 @@
                             value-field="restOfTeamAvg"
                             name="Reszta drużyny"/>
                     </DxChart>
+                    </div>
                 </div>
             </div>
             <div class="row mt-4" style="border: 1px solid black;">
-                <div class="col-12">
-                <h3>Statystyki z ostatnich meczów </h3>
+                <div class="col-12 mb-2">
+                <h3 class="mt-2">Statystyki z ostatnich meczów </h3>
                     <DxDataGrid
                         id="gridContainer"
                         :data-source="getLastGamesStats"

@@ -8,6 +8,7 @@ namespace BasketUnit.WebAPI.ViewModels
     public class GamePlayerStatisticsVM
     {
         public int Id { get; set; }
+        public int PlayerId { get; set; }
         public string FullName { get; set; }
         public int Points { get; set; }
         public int Assists { get; set; }
