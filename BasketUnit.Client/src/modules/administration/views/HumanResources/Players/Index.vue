@@ -85,6 +85,15 @@
             caption="Numer"
             data-type="number"/>
         <DxColumn 
+            data-field="collegeId"
+            alignment="left"
+            caption="Uniwersytet">
+            <DxLookup
+                :data-source="getColleges"
+                value-expr="value"
+                display-expr="text" />
+        </DxColumn>
+        <DxColumn 
             data-field="id"
             alignment="center"
             caption=""
@@ -210,11 +219,11 @@ export default {
     created() {
     },
     computed: {
-        ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions", "getNationalities"]),
+        ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions", "getNationalities", "getColleges"]),
         ...mapFields(store, ["idToDelete"])
     },
     methods: {
-        ...mapActions(store, ["setPlayersList", "setTeams", "setPositions", "setNationalities", "deletePlayer"]),
+        ...mapActions(store, ["setPlayersList", "setTeams", "setPositions", "setNationalities", "deletePlayer", "setColleges"]),
         ...mapActions(editStore, ["setPlayerDetails"]),
         showAddPopup(){
             this.addPopupOptions.popupVisible = true;
@@ -254,6 +263,7 @@ export default {
         this.setTeams();
         this.setPositions();
         this.setNationalities();
+        this.setColleges();
     },
     components: {
         DxPopup,

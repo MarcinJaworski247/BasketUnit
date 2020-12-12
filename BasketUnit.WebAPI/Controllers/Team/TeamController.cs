@@ -80,5 +80,17 @@ namespace BasketUnit.WebAPI.Controllers.Team
             var data = TeamService.GetFirstLineupIds();
             return Ok(data);
         }
+        [HttpGet("getPlayerInjuries/{playerId}")]
+        public ActionResult GetPlayerInjuries(int playerId)
+        {
+            var data = PlayerService.GetPlayerInjuries(playerId);
+            return Ok(data);
+        }
+        [HttpPost("addPlayerInjury")]
+        public ActionResult AddPlayerInjury(AddPlayerInjuryVM data)
+        {
+            PlayerService.AddPlayerInjury(data);
+            return Ok(true);
+        }
     }
 }

@@ -199,7 +199,6 @@ export default {
             this.addPopupOptions.popupVisible = false;
         },
         showEditPopupMethod(options){
-            debugger
             this.setTeamDetails(options.data.id);
             this.editPopupOptions.popupVisible = true;
         },
@@ -214,7 +213,7 @@ export default {
             this.deletePopupOptions.popupVisible = false;
             this.idToDelete = null;
         },
-        deleteTeam() {
+        deleteTeamMethod() {
             this.deleteTeam();
             this.deletePopupOptions.popupVisible = false;
             this.showDeletedNotify();

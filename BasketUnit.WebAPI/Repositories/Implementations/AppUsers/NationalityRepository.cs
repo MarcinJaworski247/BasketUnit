@@ -26,5 +26,28 @@ namespace BasketUnit.WebAPI.Repositories
             }).ToList();
             return result; 
         }
+        public List<Nationality> GetNationalitiesList()
+        {
+            return MainDatabaseContext.Nationalities.ToList();
+        }
+        public Nationality GetNationality(int nationalityId)
+        {
+            return MainDatabaseContext.Nationalities.Where(x => x.Id == nationalityId).FirstOrDefault();
+        }
+        public void AddNationality(Nationality nationality)
+        {
+            MainDatabaseContext.Nationalities.Add(nationality);
+            MainDatabaseContext.SaveChanges();
+        }
+        public void DeleteNationality(Nationality nationality)
+        {
+            MainDatabaseContext.Nationalities.Remove(nationality);
+            MainDatabaseContext.SaveChanges();
+        }
+        public void EditNationality(Nationality nationality)
+        {
+            MainDatabaseContext.Nationalities.Update(nationality);
+            MainDatabaseContext.SaveChanges();
+        }
     }
 }

@@ -61,6 +61,7 @@ namespace BasketUnit.WebAPI
             services.AddTransient<IWorkoutService, WorkoutService>();
             services.AddTransient<IWorkoutTypeService, WorkoutTypeService>();
             services.AddTransient<INationalityService, NationalityService>();
+            services.AddTransient<ICollegeService, CollegeService>();
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

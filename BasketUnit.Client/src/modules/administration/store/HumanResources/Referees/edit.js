@@ -11,7 +11,6 @@ const state = {
         BirthDate: null,
         LicenseExpirationDate: null
     },
-    referees: [],
     nationalities: []
 }
 
@@ -34,11 +33,7 @@ const mutations = {
         state.editForm.BirthDate = null,
         state.editForm.LicenseExparationDate = null
     },
-    setRefereesList: (state, payload) => {
-        state.referees = payload;
-    },
     setDetails: (state, payload) => {
-        debugger
         state.editForm.FirstName = payload.firstName,
         state.editForm.LastName = payload.lastName,
         state.editForm.NationalityId = payload.nationalityId,
@@ -54,7 +49,7 @@ const actions = {
     async editReferee ({ state, commit, dispatch }) {
         try {
             await service.editReferee(state.editForm);
-            dispatch("setRefereesList");
+            dispatch("AdministrationRefereeStore/setRefereesList", null, { root: true });
             commit("resetForm");
         } catch (err) {
             console.log(err);
@@ -71,7 +66,7 @@ const actions = {
             .then(response => {
                 commit("setNationalities", response.data);
             });
-    },
+    }
 }
 
 export default { state, getters, mutations, actions, namespaced };

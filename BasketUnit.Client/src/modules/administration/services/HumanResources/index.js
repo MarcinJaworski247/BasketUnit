@@ -64,6 +64,24 @@ class humanResourcesService {
     deletePlayer(playerId) {
         return axios.get(`/administration/humanResources/deletePlayer/${playerId}`);
     }
+    getNationalitiesList() {
+        return axios.get(`/administration/humanResources/getNationalitiesList`);
+    }
+    getNationalityDetails(nationalityId) {
+        return axios.get(`/administration/humanResources/getNationalityDetails/${nationalityId}`);
+    }
+    editNationality(data) {
+        return axios.post(`/administration/humanResources/editNationality`, data);
+    }
+    addNationality(data) {
+        return axios.post(`/administration/humanResources/addNationality`, data);
+    }
+    deleteNationality(nationalityId) {
+        return axios.post(`/administration/humanResources/deleteNationality/${nationalityId}`);
+    }
+    getCollegesToLookup() {
+        return axios.get(`/administration/clubs/getCollegesToLookup`);
+    }
 }
 
 export default new humanResourcesService();

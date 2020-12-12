@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketUnit.WebAPI.Migrations
 {
     [DbContext(typeof(MainDatabaseContext))]
-    [Migration("20201126194639_InitialCreate")]
+    [Migration("20201211225356_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -131,6 +131,43 @@ namespace BasketUnit.WebAPI.Migrations
                     b.HasIndex("ModifiedById");
 
                     b.ToTable("Arenas");
+                });
+
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.College", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<byte[]>("Badge")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("City")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.ToTable("Colleges");
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Functionality", b =>
@@ -328,6 +365,9 @@ namespace BasketUnit.WebAPI.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
+                    b.Property<byte[]>("Flag")
+                        .HasColumnType("varbinary(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -391,6 +431,45 @@ namespace BasketUnit.WebAPI.Migrations
                     b.ToTable("People");
 
                     b.HasDiscriminator<string>("Discriminator").HasValue("Person");
+                });
+
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.PlayerInjury", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<int?>("CreatedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InjuredTo")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Injury")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ModifiedById")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("PlayerId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.HasIndex("ModifiedById");
+
+                    b.HasIndex("PlayerId");
+
+                    b.ToTable("PlayerInjuries");
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Stats", b =>
@@ -763,11 +842,22 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Property<byte[]>("Avatar")
                         .HasColumnType("varbinary(max)");
 
+                    b.Property<int?>("CollegeId")
+                        .HasColumnType("int");
+
+                    b.Property<decimal?>("Height")
+                        .HasColumnType("decimal(18,2)");
+
                     b.Property<int>("Number")
                         .HasColumnType("int");
 
                     b.Property<int>("Position")
                         .HasColumnType("int");
+
+                    b.Property<decimal?>("Weight")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasIndex("CollegeId");
 
                     b.HasDiscriminator().HasValue("Player");
                 });
@@ -829,6 +919,21 @@ namespace BasketUnit.WebAPI.Migrations
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Arena", b =>
+                {
+                    b.HasOne("BasketUnit.WebAPI.Models.Person", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("BasketUnit.WebAPI.Models.Person", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById");
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ModifiedBy");
+                });
+
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.College", b =>
                 {
                     b.HasOne("BasketUnit.WebAPI.Models.Person", "CreatedBy")
                         .WithMany()
@@ -995,6 +1100,29 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Navigation("ModifiedBy");
 
                     b.Navigation("Nationality");
+                });
+
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.PlayerInjury", b =>
+                {
+                    b.HasOne("BasketUnit.WebAPI.Models.Person", "CreatedBy")
+                        .WithMany()
+                        .HasForeignKey("CreatedById");
+
+                    b.HasOne("BasketUnit.WebAPI.Models.Person", "ModifiedBy")
+                        .WithMany()
+                        .HasForeignKey("ModifiedById");
+
+                    b.HasOne("BasketUnit.WebAPI.Models.Player", "Player")
+                        .WithMany("Injuries")
+                        .HasForeignKey("PlayerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("CreatedBy");
+
+                    b.Navigation("ModifiedBy");
+
+                    b.Navigation("Player");
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Stats", b =>
@@ -1215,6 +1343,15 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Navigation("ModifiedBy");
                 });
 
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.Player", b =>
+                {
+                    b.HasOne("BasketUnit.WebAPI.Models.College", "College")
+                        .WithMany("Players")
+                        .HasForeignKey("CollegeId");
+
+                    b.Navigation("College");
+                });
+
             modelBuilder.Entity("BasketUnit.WebAPI.Models.AppRole", b =>
                 {
                     b.Navigation("AppUserRoles");
@@ -1227,6 +1364,11 @@ namespace BasketUnit.WebAPI.Migrations
                     b.Navigation("Game");
 
                     b.Navigation("Team");
+                });
+
+            modelBuilder.Entity("BasketUnit.WebAPI.Models.College", b =>
+                {
+                    b.Navigation("Players");
                 });
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Functionality", b =>
@@ -1283,6 +1425,8 @@ namespace BasketUnit.WebAPI.Migrations
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Player", b =>
                 {
+                    b.Navigation("Injuries");
+
                     b.Navigation("Stats");
 
                     b.Navigation("TeamFirstLineup");

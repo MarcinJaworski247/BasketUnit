@@ -28,6 +28,11 @@
                     <RefereesTab/>
                 </div>
             </template>
+            <template slot="tab4">
+                <div class="container">
+                    <NationalitiesTab/>
+                </div>
+            </template>
         </DxTabPanel>
 
     </div>
@@ -41,6 +46,7 @@ import
 import PlayersTab from "./Players/Index";
 import CoachesTab from "./Coaches/Index";
 import RefereesTab from "./Referees/Index";
+import NationalitiesTab from "./Nationalities/Index";
 export default {
     name: "humanResources",
     data() {
@@ -48,18 +54,23 @@ export default {
             tabs: [
                 {
                     title: "Zawodnicy",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab1"
                 },
                 {
                     title: "Trenerzy",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab2"
                 },
                 {
                     title: "Sędziowie",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab3"
+                },
+                {
+                    title: "Narodowości",
+                    icon: "far fa-flag",
+                    template: "tab4"
                 }
             ]
         };
@@ -68,6 +79,7 @@ export default {
         DxTabPanel,
         PlayersTab,
         CoachesTab,
+        NationalitiesTab,
         RefereesTab
     }
 };

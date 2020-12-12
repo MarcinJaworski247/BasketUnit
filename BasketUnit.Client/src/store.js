@@ -9,6 +9,10 @@ import AdministrationEditTeamStore from './modules/administration/store/Clubs/Te
 import AdministrationArenaStore from './modules/administration/store/Clubs/Arenas/index.js'
 import AdministrationEditArenaStore from './modules/administration/store/Clubs/Arenas/edit.js'
 
+// Administration/Clubs/Colleges
+import AdministrationCollegeStore from './modules/administration/store/Clubs/Colleges/index.js'
+import AdministrationEditCollegeStore from './modules/administration/store/Clubs/Colleges/edit.js'
+
 // Administration/HumanResources/Coaches
 import AdministrationCoachStore from './modules/administration/store/HumanResources/Coaches/index.js'
 import AdministrationEditCoachStore from './modules/administration/store/HumanResources/Coaches/edit.js'
@@ -21,6 +25,10 @@ import AdministrationDetailsPlayerStore from './modules/administration/store/Hum
 // Administration/HumanResources/Referees
 import AdministrationRefereeStore from './modules/administration/store/HumanResources/Referees/index.js'
 import AdministrationEditRefereeStore from './modules/administration/store/HumanResources/Referees/edit.js'
+
+// Administration/HumanResources/Nationalities
+import AdministrationNationalityStore from './modules/administration/store/HumanResources/Nationalities/index.js'
+import AdministrationEditNationalityStore from './modules/administration/store/HumanResources/Nationalities/edit.js'
 
 // Schedules
 import SchedulesStore from './modules/schedules/store/index.js'
@@ -79,7 +87,11 @@ export default new Vuex.Store({
         GamesStore,
         GamesDetailsStore,
         ProtocolsStore,
-        ProtocolsEditStore
+        ProtocolsEditStore,
+        AdministrationNationalityStore,
+        AdministrationEditNationalityStore,
+        AdministrationCollegeStore,
+        AdministrationEditCollegeStore
     },
     state: {
         leagueaLeaders: [],

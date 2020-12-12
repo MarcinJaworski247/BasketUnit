@@ -15,5 +15,8 @@ namespace BasketUnit.WebAPI.ViewModels
         public byte[] Avatar { get; set; }
         public int NationalityId { get; set; }
         public int? TeamId { get; set; }
+        public int? CollegeId { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
     }
 }

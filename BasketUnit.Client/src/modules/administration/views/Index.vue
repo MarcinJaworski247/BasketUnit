@@ -47,12 +47,12 @@ export default {
             tabs: [
                 {
                     title: "Human Resources",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab1"
                 },
                 {
                     title: "Kluby",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab2"
                 }
             ]

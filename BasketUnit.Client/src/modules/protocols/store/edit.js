@@ -4,7 +4,6 @@ import router from "../../../router"
 const namespaced = true;
 
 const state = {
-    gameStatistics: [],
     editForm: {
         Id: null,
         FullName: '',
@@ -19,9 +18,6 @@ const state = {
 
 const getters = {
     getField,
-    getGameStatistics: (state) => {
-        return state.gameStatistics;
-    },
     getForm: (state) => {
         return state.editForm;
     }
@@ -29,9 +25,6 @@ const getters = {
 
 const mutations = {
     updateField,
-    setGameStatistics: (state, payload) => {
-        state.gameStatistics = payload;
-    },
     setGamePlayerStatistics: (state, payload) => {
         state.editForm.Id = payload.id,
         state.editForm.PlayerId = payload.playerId,
@@ -57,12 +50,6 @@ const mutations = {
 }
 
 const actions = {
-    setGameStatistics: ({ commit }) => {
-        service.getGameStatistics(router.currentRoute.params.gameId)
-            .then(response => {
-                commit("setGameStatistics", response.data);
-            });
-    },
     setGamePlayerStatistics: ({ commit}, id) => {
         service.getGamePlayerStatistics(id, router.currentRoute.params.gameId)
             .then(response => {
@@ -72,7 +59,7 @@ const actions = {
     async saveGamePlayerStatistics ({ commit, dispatch, state }) {
         try {
             await service.saveGamePlayerStatistics(state.editForm);
-            dispatch("setGamePlayerStatistics");
+            dispatch("ProtocolsStore/setGamePlayerStatistics", null, { root: true });
             commit("resetForm");
         } catch(err) {
             console.log(err);

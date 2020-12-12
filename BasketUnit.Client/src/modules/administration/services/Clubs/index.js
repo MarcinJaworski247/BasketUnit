@@ -37,6 +37,21 @@ class clubsService {
     deleteTeam(teamId) {
         return axios.post(`/administration/clubs/deleteTeam/${teamId}`);
     }
+    getCollegesList() {
+        return axios.get(`/administration/clubs/getCollegesList`);
+    }
+    deleteCollege(collegeId) {
+        return axios.post(`/administration/clubs/deleteCollege/${collegeId}`);
+    }
+    getCollegeDetails(collegeId) {
+        return axios.get(`/administration/clubs/getCollegeDetails/${collegeId}`)
+    }
+    addCollege(data) {
+        return axios.post(`/administration/clubs/addCollege`, data);
+    }
+    editCollege(data) {
+        return axios.post(`/administration/clubs/editCollege`, data);
+    }
 }
 
 export default new clubsService();

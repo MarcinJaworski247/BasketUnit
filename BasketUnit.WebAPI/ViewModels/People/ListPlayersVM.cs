@@ -17,5 +17,10 @@ namespace BasketUnit.WebAPI.ViewModels
         public int TeamId { get; set; }
         public byte[] Avatar { get; set; }
         public int? PlayerNumber { get; set; }
+        public bool IsInjured { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
+        public int? CollegeId { get; set; }
+        public string College { get; set; }
     }
 }

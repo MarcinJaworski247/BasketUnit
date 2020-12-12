@@ -16,5 +16,7 @@ namespace BasketUnit.WebAPI.Repositories
         void DeletePlayer(int playerId);
         List<DetailsPlayerVM> GetFirstLineupPlayers();
         List<ListPlayersVM> GetTeamPlayers();
+        List<PlayerInjury> GetPlayerInjuries(int playerId);
+        public void AddPlayerInjury(AddPlayerInjuryVM data);
     }
 }

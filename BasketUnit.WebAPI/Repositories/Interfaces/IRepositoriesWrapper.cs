@@ -29,6 +29,7 @@ namespace BasketUnit.WebAPI.Repositories
         IWorkoutRepository WorkoutRepository { get; }
         IWorkoutTypeRepository WorkoutTypeRepository { get; }
         INationalityRepository NationalityRepository { get; }
+        ICollegeRepository CollegeRepository { get; }
         Task<int> CommitAsync();
     }
 }

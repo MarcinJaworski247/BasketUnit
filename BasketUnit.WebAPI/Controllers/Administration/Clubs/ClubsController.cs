@@ -16,11 +16,13 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
         private readonly ITeamService TeamService;
         private readonly ICoachService CoachService;
         private readonly IArenaService ArenaService;
-        public ClubsController(ITeamService teamService, ICoachService coachService, IArenaService arenaService)
+        private readonly ICollegeService CollegeService;
+        public ClubsController(ITeamService teamService, ICoachService coachService, IArenaService arenaService, ICollegeService collegeService)
         {
             this.TeamService = teamService;
             this.CoachService = coachService;
             this.ArenaService = arenaService;
+            this.CollegeService = collegeService;
         }
         [HttpGet("getCoachesToLookup")]
         public ActionResult GetCoachesToLookup()
@@ -92,6 +94,42 @@ namespace BasketUnit.WebAPI.Controllers.Administration.Clubs
         public ActionResult DeleteTeam(int teamId)
         {
             TeamService.DeleteTeam(teamId);
+            return Ok(true);
+        }
+        [HttpGet("getCollegesList")]
+        public ActionResult GetCollegesList()
+        {
+            var data = CollegeService.GetCollegesList();
+            return Ok(data);
+        }
+        [HttpGet("getCollegesToLookup")]
+        public ActionResult GetCollegesToLookup()
+        {
+            List<SelectModelBinder<int>> data = CollegeService.GetCollegesToLookup();
+            return Ok(data);
+        }
+        [HttpGet("getCollegeDetails/{collegeId}")]
+        public ActionResult GetCollegeDetails(int collegeId)
+        {
+            var data = CollegeService.GetCollegeDetails(collegeId);
+            return Ok(data);
+        }
+        [HttpPost("addCollege")]
+        public ActionResult AddCollege(AddCollegeVM model)
+        {
+            CollegeService.AddCollege(model);
+            return Ok(true);
+        }
+        [HttpPost("deleteCollege/{collegeId}")]
+        public ActionResult DeleteCollege(int collegeId)
+        {
+            CollegeService.DeleteCollege(collegeId);
+            return Ok(true);
+        }
+        [HttpPost("editCollege")]
+        public ActionResult EditCollege(EditCollegeVM model)
+        {
+            CollegeService.EditCollege(model);
             return Ok(true);
         }
     }

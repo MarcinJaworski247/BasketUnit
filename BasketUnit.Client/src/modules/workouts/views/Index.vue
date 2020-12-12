@@ -45,12 +45,12 @@ export default {
             tabs: [
                 {
                     title: "Rodzaje treningów",
-                    icon: "far fa-dumbbell",
+                    icon: "fas fa-dumbbell",
                     template: "tab1"
                 },
                 {
                     title: "Ćwiczenia",
-                    icon: "far fa-running",
+                    icon: "fas fa-running",
                     template: "tab2"
                 }
             ]

@@ -17,5 +17,11 @@ namespace BasketUnit.WebAPI.ViewModels
         public DateTime BirthDate { get; set; }
         public int NationalityId { get; set; }
         public int? TeamId { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
+        public int? CollegeId { get; set; }
+        public string College { get; set; }
+        public string Injury { get; set; }
+        public DateTime? InjuriedTo { get; set; }
     }
 }

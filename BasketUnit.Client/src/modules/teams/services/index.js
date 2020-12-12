@@ -37,6 +37,13 @@ class teamsService {
     getEditForm() {
         return axios.get("/team/getEditForm");
     }
+    getPlayerInjuries(playerId) {
+        return axios.get(`/team/getPlayerInjuries/${playerId}`);
+    }
+    addInjury(data) {
+        debugger
+        return axios.post("/team/addPlayerInjury", data);
+    }
 }
 
 export default new teamsService();

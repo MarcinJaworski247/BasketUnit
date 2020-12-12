@@ -23,6 +23,11 @@ namespace BasketUnit.WebAPI.Configurations
             builder
                 .HasMany(x => x.TeamFirstLineup)
                 .WithOne(y => y.Player);
+
+            builder
+                .HasOne(x => x.College)
+                .WithMany(y => y.Players)
+                .HasForeignKey(x => x.CollegeId);
         }
     }
 }

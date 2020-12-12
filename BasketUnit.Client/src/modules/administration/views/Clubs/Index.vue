@@ -23,18 +23,24 @@
                     <ArenasTab/>
                 </div>
             </template>
+            <template slot="tab3">
+                <div class="container">
+                    <CollegesTab/>
+                </div>
+            </template>
         </DxTabPanel>
 
     </div>
 </template>
 
 <script>
-import 
+import  
 { 
     DxTabPanel
 } from 'devextreme-vue';
 import TeamsTab from "./Teams/Index";
 import ArenasTab from "./Arenas/Index";
+import CollegesTab from "./Colleges/Index";
 export default {
     name: "clubs",
     data() {
@@ -42,13 +48,18 @@ export default {
             tabs: [
                 {
                     title: "Drużyny",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab1"
                 },
                 {
                     title: "Areny",
-                    icon: "far fa-warehouse",
+                    icon: "fas fa-warehouse",
                     template: "tab2"
+                },
+                {
+                    title: "Uniwersytety",
+                    icon: "fas fa-warehouse",
+                    template: "tab3"
                 }
             ]
         };
@@ -56,6 +67,7 @@ export default {
     components: {
       TeamsTab,
       ArenasTab,
+      CollegesTab,
       DxTabPanel,
     }
 };

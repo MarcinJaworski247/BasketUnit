@@ -13,8 +13,7 @@ const state = {
         Badge: ''
     },
     coaches: [],
-    arenas: [],
-    teams: []
+    arenas: []
 }
 
 const getters = {
@@ -27,9 +26,6 @@ const getters = {
     },
     getArenas: (state)  => {
         return state.arenas;
-    },
-    getTeamsList: (state) => {
-        return state.teams;
     }
 }
 
@@ -50,16 +46,12 @@ const mutations = {
         state.arenas = payload;
     },
     setDetails: (state, payload) => {
-        debugger
         state.editForm.Id = payload.id;
         state.editForm.Name = payload.name,
         state.editForm.City = payload.city,
         state.editForm.CoachId = payload.coachId,
         state.editForm.ArenaId = payload.arenaId,
         state.editForm.Badge = payload.badge
-    },
-    setTeamsList: (state, payload) => {
-        state.teams = payload;
     }
 }
 
@@ -67,7 +59,7 @@ const actions = {
     async editTeam ({ state, commit, dispatch }) {
         try {
             await service.editTeam(state.editForm);
-            dispatch("setTeamsList");
+            dispatch("AdministrationTeamStore/setTeamsList", null, { root: true });
             commit("resetForm");
         } catch (err) {
             console.log(err);
@@ -86,16 +78,9 @@ const actions = {
             });
     },
     setTeamDetails: ({ commit }, id) => {
-        debugger
         service.setTeamDetails(id)
             .then(response => {
                 commit("setDetails", response.data);
-            });
-    },
-    setTeamsList: ({ commit }) => {
-        service.getTeams()
-            .then(response => {
-                commit("setTeamsList", response.data);
             });
     }
 }

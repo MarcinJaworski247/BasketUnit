@@ -33,6 +33,7 @@ namespace BasketUnit.WebAPI.Context
         public DbSet<Coach> Coaches { get; set; }
         public DbSet<Player> Players { get; set; }
         public DbSet<Referee> Referees { get; set; }
+        public DbSet<PlayerInjury> PlayerInjuries { get; set; }
         #endregion
         #region Stats
         public DbSet<Stats> Stats { get; set; }
@@ -44,6 +45,7 @@ namespace BasketUnit.WebAPI.Context
         public DbSet<TeamLineup> TeamLineups { get; set; }
         public DbSet<TeamSchedule> TeamSchedules { get; set; }
         public DbSet<TeamScheduleActivity> TeamScheduleActivities { get; set; }
+        public DbSet<College> Colleges { get; set; }
         #endregion
         #region Workouts
         public DbSet<Workout> Workouts { get; set; }
@@ -68,6 +70,7 @@ namespace BasketUnit.WebAPI.Context
             builder.ApplyConfiguration(new CoachConfiguration());
             builder.ApplyConfiguration(new PlayerConfiguration());
             builder.ApplyConfiguration(new RefereeConfiguration());
+            builder.ApplyConfiguration(new PlayerInjuryConfiguration());
             #endregion
             #region Stats
             builder.ApplyConfiguration(new StatsConfiguration());
@@ -79,6 +82,7 @@ namespace BasketUnit.WebAPI.Context
             builder.ApplyConfiguration(new TeamLineupConfiguration());
             builder.ApplyConfiguration(new TeamScheduleActivityConfiguration());
             builder.ApplyConfiguration(new TeamScheduleConfiguration());
+            builder.ApplyConfiguration(new CollegeConfiguration());
             #endregion
             #region Workouts
             builder.ApplyConfiguration(new WorkoutConfiguration());

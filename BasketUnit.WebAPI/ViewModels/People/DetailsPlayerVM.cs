@@ -20,5 +20,14 @@ namespace BasketUnit.WebAPI.ViewModels
         public int? TeamId { get; set; }
         public int NationalityId { get; set; }
         public string Nationality { get; set; }
+        public int? CollegeId { get; set; }
+        public string College { get; set; }
+        public string CollegeBadge { get; set; }
+        public string NationalityFlag { get; set; }
+        public decimal? Height { get; set; }
+        public decimal? Weight { get; set; }
+        public string Injury { get; set; }
+        public DateTime? InjuredTo { get; set; }
+        public bool IsInjured { get; set; }
     }
 }

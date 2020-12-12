@@ -14,7 +14,6 @@ const state = {
         ExperienceYears: null
     },
     teams: [],
-    coaches: [],
     nationalities: []
 }
 
@@ -46,9 +45,6 @@ const mutations = {
     setTeams: (state, payload) => {
         state.teams = payload;
     },
-    setCoachesList: (state, payload) => {
-        state.coaches = payload;
-    },
     setDetails: (state, payload) => {
         state.editForm.Id = payload.id,
         state.editForm.FirstName = payload.firstName,
@@ -73,7 +69,7 @@ const actions = {
     async editCoach ({ state, commit, dispatch }) {
         try {
             await service.editCoach(state.editForm);
-            dispatch("setCoachesList");
+            dispatch("AdministrationCoachStore/setCoachesList", null, { root: true });
             commit("resetForm");
         } catch (err) {
             console.log(err);
@@ -89,12 +85,6 @@ const actions = {
         service.getNationalitiesToLookup()
             .then(response => {
                 commit("setNationalities", response.data);
-            });
-    },
-    setCoachesList: ({ commit }) => {
-        service.getCoaches()
-            .then(response => {
-                commit("setCoachesList", response.data);
             });
     }
 }

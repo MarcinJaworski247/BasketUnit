@@ -14,10 +14,24 @@ const state = {
          PlayerNumber: null,
          Avatar: [],
          Nationality: '',
-         Position: ''
+         Position: '',
+         College: '',
+         CollegeBadge: [],
+         NationalityFlag: [],
+         Height: null,
+         Weight: null,
+         Injury: '',
+         InjuredTo: null,
+         IsInjured: false
     },
     lastGamesStats: [],
-    chartData: []
+    chartData: [],
+    injuries: [],
+    injuriesAdd: {
+        PlayerId: null,
+        AddInjury: '',
+        AddInjuredTo: null
+    }
 }
 
 const getters = {
@@ -30,6 +44,9 @@ const getters = {
     },
     getDataToCharts: (state) => {
         return state.chartData;
+    },
+    getInjuries: (state) => {
+        return state.injuries;
     }
 }
 
@@ -44,13 +61,29 @@ const mutations = {
         state.detailsForm.PlayerNumber = payload.playerNumber,
         state.detailsForm.Avatar = payload.avatar,
         state.detailsForm.Nationality = payload.nationality,
-        state.detailsForm.Position = payload.position
+        state.detailsForm.Position = payload.position,
+        state.detailsForm.NationalityFlag = payload.nationalityFlag,
+        state.detailsForm.College = payload.college,
+        state.detailsForm.CollegeBadge = payload.collegeBadge,
+        state.detailsForm.Weight = payload.weight,
+        state.detailsForm.Height = payload.height,
+        state.detailsForm.InjuredTo = payload.injuredTo,
+        state.detailsForm.Injury = payload.injury,
+        state.detailsForm.IsInjured = payload.isInjured
     },
     setLastGamesStats: (state, payload) => {
         state.lastGamesStats = payload;
     },
     setDataToChart: (state, payload) => {
         state.chartData = payload;
+    },
+    setInjuries: (state, payload) => {
+        state.injuries = payload;
+    },
+    resetInjuryAdd: (state) => {
+        state.injuriesAdd.PlayerId = null;
+        state.injuriesAdd.AddInjury = '';
+        state.injuriesAdd.AddInjury = null;
     }
 }
 
@@ -72,6 +105,22 @@ const actions = {
             .then(response => {
                 commit("setDataToChart", response.data);
             });
+    },
+    setInjuries: ({ commit }) => {
+        service.getPlayerInjuries(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setInjuries", response.data);
+            });
+    },
+    async addInjury ({ state, dispatch, commit }) {
+        state.injuriesAdd.PlayerId = Number(router.currentRoute.params.playerId);
+        try {
+            await service.addInjury(state.injuriesAdd);
+            dispatch("setInjuries");
+            commit("resetInjuriesAdd");
+        } catch (err) {
+            console.log(err);
+        }
     }
 }
 

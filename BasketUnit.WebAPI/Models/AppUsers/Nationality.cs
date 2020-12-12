@@ -8,5 +8,6 @@ namespace BasketUnit.WebAPI.Models
     public class Nationality : Entity
     {
         public string Name { get; set; }
+        public byte[] Flag { get; set; }
     }
 }

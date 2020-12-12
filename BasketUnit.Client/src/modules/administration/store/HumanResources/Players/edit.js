@@ -13,12 +13,15 @@ const state = {
         BirthDate:  null,
         NationalityId: null,
         Avatar: '',
-        PlayerNumber: null
+        PlayerNumber: null,
+        Height: null,
+        Weight: null,
+        CollegeId: null
     },
     teams: [],
     positions: [],
-    players: [],
-    nationalities: []
+    nationalities: [],
+    colleges: []
 }
 
 const getters = {
@@ -35,9 +38,9 @@ const getters = {
     getNationalities: (state) => {
         return state.nationalities;
     },
-    getPlayersList: (state) => {
-        return state.players;
-    },
+    getColleges: (state) => {
+        return state.colleges;
+    }
 }
 
 const mutations = {
@@ -51,7 +54,9 @@ const mutations = {
         state.editForm.BirthDate = null,
         state.editForm.NationalityId = null,
         state.editForm.Avatar = '',
-        state.editForm.PlayerNumber = null
+        state.editForm.PlayerNumber = null,
+        state.editForm.Height = null,
+        state.editForm.Weight = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -59,11 +64,7 @@ const mutations = {
     setPositions: (state, payload) => {
         state.positions = payload;
     },
-    setPlayersList: (state, payload) => {
-        state.players = payload;
-    },
     setDetails: (state, payload) => {
-        debugger
         state.editForm.Id = payload.id,
         state.editForm.FirstName = payload.firstName,
         state.editForm.LastName = payload.lastName,
@@ -72,11 +73,17 @@ const mutations = {
         state.editForm.BirthDate = payload.birthDate,
         state.editForm.NationalityId = payload.nationalityId,
         state.editForm.Avatar = payload.avatar,
-        state.editForm.PlayerNumber = payload.playerNumber
+        state.editForm.PlayerNumber = payload.playerNumber,
+        state.editForm.Height = payload.height,
+        state.editForm.Weight = payload.weight,
+        state.editForm.CollegeId = payload.collegeId
     },
     setNationalities: (state, payload) => {
-        state.nationalities = payload
+        state.nationalities = payload;
     },
+    setColleges: (state, payload) => {
+        state.colleges = payload;
+    }
 }
 
 const actions = {
@@ -93,10 +100,9 @@ const actions = {
             });
     },
     async editPlayer ({ state, commit, dispatch }) {
-        debugger
         try {
             await service.editPlayer(state.editForm);
-            dispatch("setPlayersList");
+            dispatch("AdministrationPlayerStore/setPlayersList", null, { root: true });
             commit("resetForm");
         } catch (err) {
             console.log(err);
@@ -114,12 +120,12 @@ const actions = {
                 commit("setNationalities", response.data);
             });
     },
-    setPlayersList: ({ commit }) => {
-        service.getPlayers()
+    setColleges: ({ commit }) => {
+        service.getCollegesToLookup()
             .then(response => {
-                commit("setPlayersList", response.data);
+                commit("setColleges", response.data);
             });
-    },
+    }
 }
 
 export default { state, getters, mutations, actions, namespaced };

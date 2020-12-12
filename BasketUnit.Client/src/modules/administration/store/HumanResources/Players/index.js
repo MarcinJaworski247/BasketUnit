@@ -12,13 +12,17 @@ const state = {
         BirthDate:  null,
         NationalityId: null,
         Avatar: '',
-        PlayerNumber: null
+        PlayerNumber: null,
+        Height: null,
+        Weight: null,
+        CollegeId: null
     },
     teams: [],
     positions: [],
     players: [],
     idToDelete: null,
-    nationalities: []
+    nationalities: [],
+    colleges: []
 }
 
 const getters = {
@@ -37,6 +41,9 @@ const getters = {
     },
     getNationalities: (state) => {
         return state.nationalities;
+    },
+    getColleges: (state) => {
+        return state.colleges;
     }
 }
 
@@ -50,7 +57,10 @@ const mutations = {
         state.addForm.BirthDate = null,
         state.addForm.NationalityId = null,
         state.addForm.Avatar = '',
-        state.addForm.PlayerNumber = null
+        state.addForm.PlayerNumber = null,
+        state.addForm.Height = null,
+        state.addForm.Weight = null,
+        state.addForm.CollegeId = null
     },
     setTeams: (state, payload) => {
         state.teams = payload;
@@ -63,6 +73,9 @@ const mutations = {
     },
     setNationalities: (state, payload) => {
         state.nationalities = payload;
+    },
+    setColleges: (state, payload) => {
+        state.colleges = payload;
     }
 }
 
@@ -107,6 +120,12 @@ const actions = {
         } catch (err) {
             console.log(err);
         }
+    },
+    setColleges: ({ commit }) => {
+        service.getCollegesToLookup()
+            .then(response => {
+                commit("setColleges", response.data);
+            });
     }
 }
 

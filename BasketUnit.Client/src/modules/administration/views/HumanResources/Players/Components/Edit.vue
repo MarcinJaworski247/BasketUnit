@@ -91,6 +91,30 @@
                     </DxSelectBox>
                 </div>
             </div>
+            <div class="row">
+                <div class="col-4">
+                    <label>Wzrost</label>
+                    <DxNumberBox v-model="Height" />
+                </div>
+                <div class="col-4">
+                    <label>Waga</label>
+                    <DxNumberBox v-model="Weight" />
+                </div>
+                <div class="col-4">
+                    <label>Uniwersytet</label>
+                    <DxSelectBox 
+                        v-model="CollegeId"
+                        :data-source="getColleges"
+                        value-expr="value"
+                        display-expr="text"
+                        :search-enabled="false"
+                        placeholder="">
+                        <DxValidator>
+                            <DxRequiredRule message="Pole jest wymagane"/>
+                        </DxValidator>
+                    </DxSelectBox>
+                </div>
+            </div>
         </div>
 
         <div class="popup-bottom">
@@ -156,7 +180,7 @@ export default {
         };
     },
     computed: {
-        ...mapGetters(store, ["getForm", "getTeams", "getPositions", "getNationalities"]),
+        ...mapGetters(store, ["getForm", "getTeams", "getPositions", "getNationalities", "getColleges"]),
         ...mapFields(store, [
             "editForm.Id",
             "editForm.FirstName",
@@ -166,11 +190,14 @@ export default {
             "editForm.BirthDate",
             "editForm.NationalityId",
             "editForm.Avatar",
-            "editForm.PlayerNumber"
+            "editForm.PlayerNumber",
+            "editForm.CollegeId",
+            "editForm.Height",
+            "editForm.Weight"
         ])
     },
     methods: {
-        ...mapActions(store, ["editPlayer", "setTeams", "setPositions", "setNationalities"]),
+        ...mapActions(store, ["editPlayer", "setTeams", "setPositions", "setNationalities", "setColleges"]),
         ...mapMutations(store, ["resetForm"]),
         closePopup: function () {
             this.$emit("closeEdit");
@@ -202,6 +229,7 @@ export default {
         this.setTeams();
         this.setPositions();
         this.setNationalities();
+        this.setColleges();
     },
     destroyed() {
         this.resetForm();

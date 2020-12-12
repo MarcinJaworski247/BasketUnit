@@ -43,5 +43,13 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.PlayerRepository.GetTeamPlayers();
         }
+        public List<PlayerInjury> GetPlayerInjuries(int playerId)
+        {
+            return RepositoriesWrapper.PlayerRepository.GetPlayerInjuries(playerId);
+        }
+        public void AddPlayerInjury(AddPlayerInjuryVM data)
+        {
+            RepositoriesWrapper.PlayerRepository.AddPlayerInjury(data);
+        }
     }
 }

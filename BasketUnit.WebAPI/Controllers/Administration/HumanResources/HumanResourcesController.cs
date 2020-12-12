@@ -26,6 +26,7 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
             this.RefereeService = refereeService;
             this.TeamService = teamService;
             this.NationalityService = nationalityService;
+            
         }
         [HttpGet("getPlayers")]
         public ActionResult GetPlayers()
@@ -152,6 +153,36 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
         {
             var data = NationalityService.GetNationalitiesToLookup();
             return Ok(data);
+        }
+        [HttpGet("getNationalitiesList")]
+        public ActionResult GetNationalitiesList()
+        {
+            var data = NationalityService.GetNationalitiesList();
+            return Ok(data);
+        }
+        [HttpGet("getNationalityDetails/{nationalityId}")]
+        public ActionResult GetNationalityDetails(int nationalityId)
+        {
+            var data = NationalityService.GetNationalityDetails(nationalityId);
+            return Ok(data);
+        }
+        [HttpPost("addNationality")]
+        public ActionResult AddNationality(AddNationalityVM model)
+        {
+            NationalityService.AddNationality(model);
+            return Ok(true);
+        }
+        [HttpPost("editNationality")]
+        public ActionResult EditNationality(EditNationalityVM model)
+        {
+            NationalityService.EditNationality(model);
+            return Ok(true);
+        }
+        [HttpPost("deleteNationality/{nationalityId}")]
+        public ActionResult DeleteNationality(int nationalityId)
+        {
+            NationalityService.DeleteNationality(nationalityId);
+            return Ok(true);
         }
     }
 }

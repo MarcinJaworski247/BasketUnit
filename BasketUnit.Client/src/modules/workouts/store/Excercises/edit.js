@@ -10,7 +10,6 @@ const state = {
         Description: '',
         WorkoutTypeId: null
     },
-    excersises: [],
     workoutTypes: []
 }
 
@@ -18,9 +17,6 @@ const getters = {
     getField,
     getForm: (state) => {
         return state.editForm;
-    },
-    getExcersisesList: (state) => {
-        return state.excersises;
     },
     getWorkoutTypes: (state) => {
         return state.workoutTypes;
@@ -34,9 +30,6 @@ const mutations = {
         state.editForm.Description = '',
         state.editForm.WorkoutTypeId = null
     },
-    setExcersisesList: (state, paylaod) => {
-        state.excersises = paylaod;
-    },
     setWorkoutTypes: (state, payload) => {
         state.workoutTypes = payload;
     },
@@ -49,12 +42,6 @@ const mutations = {
 }
 
 const actions = {
-    setExcersisesList: ({ commit }) => {
-        service.getExcersises()
-            .then(response => {
-                commit("setExcersisesList", response.data);
-            });
-    },
     setWorkoutTypes: ({ commit }) => {
         service.getWorkoutTypesToLookup()
             .then(response => {
@@ -70,7 +57,7 @@ const actions = {
     async editExcersise ({ commit, state, dispatch }) {
         try {
             await service.editExcersise(state.editForm);
-            dispatch("setExcersisesList");
+            dispatch("WorkoutsExcercisesStore/setExcersisesList", null, { root: true });
             commit("resetForm");
         } catch (err) {
             console.log(err);
