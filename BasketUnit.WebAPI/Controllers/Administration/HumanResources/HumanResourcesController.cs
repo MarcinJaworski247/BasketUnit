@@ -94,24 +94,6 @@ namespace BasketUnit.WebAPI.Controllers.Administration.HumanResources
             var data = RefereeService.EditReferee(model);
             return Ok(data);
         }
-        //[HttpGet("getPlayerDataToDetails")]
-        //public ActionResult GetPlayerDataToDetails(int playerId)
-        //{
-        //    var data = PlayerService.GetPlayerDataToDetails(playerId);
-        //    return Ok(data);
-        //}
-        //[HttpGet("getLastPlayerStatistics")]
-        //public ActionResult GetLastPlayerStatistics(int playerId)
-        //{
-        //    var data = PlayerService.GetLastPlayerStatistics(playerId);
-        //    return Ok(data);
-        //}
-        //[HttpGet("getAvarageStatsToChart")]
-        //public ActionResult GetAvarageStatsToChart(int playerId)
-        //{
-        //    var data = PlayerService.GetAvarageStatsToChart(playerId);
-        //    return Ok(data);
-        //}
         [HttpPost("addPlayer")]
         public ActionResult AddPlayer(AddPlayerVM model)
         {

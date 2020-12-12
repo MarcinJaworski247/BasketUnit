@@ -22,17 +22,5 @@ namespace BasketUnit.WebAPI.Controllers.Statistics.TeamStatistics
             var data = PlayerService.GetPlayers();
             return Ok(data);
         }
-        //[HttpGet("getPlayersStats")]
-        //public ActionResult GetPlayersStats()
-        //{
-        //    var data = PlayerService.GetPlayersStats();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getTeamStats")]
-        //public ActionResult GetTeamStats()
-        //{
-        //    var data = PlayerService.GetTeamStats();
-        //    return Ok(data);
-        //}
     }
 }

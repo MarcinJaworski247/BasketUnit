@@ -1,8 +1,7 @@
 <template>
 <div class="content">
     <div class="printers">
-    <div class="main-header mt-1 mb-2"> 
-        <!-- <h3 class="main-header-title"> Zespoły </h3> -->
+    <div class="main-header mt-1 mb-2">
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -78,16 +77,6 @@
             <DxButton @click="showEditPopupMethod(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" styling-mode="text" />
         </div>
     </DxDataGrid>
-
-    <!-- <div class="d-flex end-xs mt-5">
-        <DxButton
-            :use-submit-behavior="false"
-            type="normal"
-            styling-mode="outlined"
-            text="Wróć"
-            @click="function(){ $router.push({ name: `administration.clubs.index` }) }" />
-    </div> -->
-
     </div>
 
 
@@ -182,8 +171,6 @@ export default {
                 popupVisible: false
             }
         };
-    },
-    created() {
     },
     computed: {
         ...mapGetters(store, ["getTeamsList", "getArenas", "getCoaches"]),

@@ -35,15 +35,6 @@
             <span class="hyperLink" @click="function () { $router.push({ name: 'team.player.details', params: { playerId: data.data.id }  }) }"> {{data.data.fullName}} </span>
         </template>
 
-
-        <!-- <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
-            <router-link
-                :to="{ name: 'team.player.details', params: { playerId: data.id } }">
-                {{ data.value }}
-            </router-link>
-        </div> -->
-
-
         <DxColumn 
             data-field="nationalityId"
             alignment="left"
@@ -87,40 +78,22 @@
                 :to="{ name: 'team.player.details', params: { playerId: data.value } }">
                 <DxButton hint="Szczegóły" icon="fas fa-chevron-right" class="datagrid-button" type="normal"></DxButton>
             </router-link>
-            <!-- <DxButton @click="showEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="ml-3 datagrid-button" type="normal"/> -->
         </div>
         <DxPaging :page-size="10" />
     </DxDataGrid>
     </div>
 
-    <!-- edit popup -->
-    <!-- <DxPopup
-        id="editPopup"
-        :visible.sync="editPopupOptions.popupVisible"
-        :drag-enabled="false"
-        :show-title="true"
-        :width="500"
-        height="auto"
-        class="popup"
-        title-template="titleTemplate">
-        <div slot="titleTemplate">
-            <h3 class="popup-title-text">Edycja</h3>
-        </div>
-        <editForm @closeEdit="onEditPopupClose"></editForm>
-    </DxPopup> -->
 
 </div>
 </template>
 <script>
 import 
 {  
-    // DxPopup,
     DxButton
 } from 'devextreme-vue';
 import { DxDataGrid, DxColumn, DxFilterRow, DxPaging, DxLookup } from "devextreme-vue/data-grid"; 
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
-// import editForm from "./EditPlayer.vue";
 const store = "TeamStore";
 
 export default {
@@ -133,22 +106,11 @@ export default {
             }
         };
     },
-    created() {
-
-    },
     computed: {
         ...mapGetters(store, ["getPlayersList", "getPositionsToLookup", "getNationalities"])
     },
     methods: {
-        ...mapActions(store, ["setPlayersList", "setDetails", "setPositionsToLookup", "setNationalities"]),
-        // showEditPopup(options){
-        //     this.setDetails(options.data.Id);
-        //     this.editPopupOptions.popupVisible = true;
-        // },
-        // onEditPopupClose(){
-        //     this.editPopupOptions.popupVisible = false;
-        //     this.setPlayersList();
-        // }
+        ...mapActions(store, ["setPlayersList", "setDetails", "setPositionsToLookup", "setNationalities"])
     },
     mounted() {
         this.setPlayersList();
@@ -160,8 +122,6 @@ export default {
         DxColumn, 
         DxFilterRow,
         DxPaging,
-        // editForm,
-        // DxPopup,
         DxLookup,
         DxButton
     }

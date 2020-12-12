@@ -1,7 +1,6 @@
 <template>
     <form @submit.prevent="editPlayer">
         <DxValidationGroup :ref="`validationGroup`">
-
         <div class="form-group">
             <div class="row" style="height: 200px;">
                 <div class="col-12">
@@ -170,8 +169,6 @@ const store = "AdministrationEditPlayerStore";
 
 export default {
     name: "playerEdit",
-    created(){
-    },
     data(){
         return {
             uploadPopup: {
@@ -248,6 +245,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

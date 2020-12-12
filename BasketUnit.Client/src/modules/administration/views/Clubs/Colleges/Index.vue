@@ -57,15 +57,6 @@
         </div>
     </DxDataGrid>
 
-    <!-- <div class="d-flex end-xs mt-5">
-        <DxButton
-            :use-submit-behavior="false"
-            type="normal"
-            styling-mode="outlined"
-            text="Wróć"
-            @click="function(){ $router.push({ name: `administration.clubs.index` }) }" />
-    </div> -->
-
     </div>
 
 
@@ -159,8 +150,6 @@ export default {
                 popupVisible: false
             }
         };
-    },
-    created() {
     },
     computed: {
         ...mapGetters(store, ["getColleges"]),

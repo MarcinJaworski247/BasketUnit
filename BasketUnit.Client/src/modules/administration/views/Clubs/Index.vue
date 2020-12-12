@@ -1,6 +1,5 @@
 <template>
     <div class="content">
-        
         <DxTabPanel
             min-height="800"
             width="1200"
@@ -29,7 +28,6 @@
                 </div>
             </template>
         </DxTabPanel>
-
     </div>
 </template>
 
@@ -72,37 +70,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.tile{
-    width: 160px;
-    height: 160px;
-    border: 1px solid black;
-    margin-right: 16px;
-    border-radius: 2px;
-    float: left;
-    border-radius: 2px;
-}
-.tile:hover{
-    color: darkgrey;
-    border-color: darkgrey;
-    cursor: pointer;
-}
-.tile-image{
-    padding-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60px;
-    height: 60px;
-    font-size: 48px;
-}
-.tile-name{
-    margin-top: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    size: 16px;
-    font-weight: 700;
-    text-align: center;
-}
-
-</style>

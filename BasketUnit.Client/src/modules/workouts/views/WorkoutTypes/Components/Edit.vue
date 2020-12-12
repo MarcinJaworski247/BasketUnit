@@ -53,14 +53,6 @@ const store = "WorkoutsTypesEditStore";
 
 export default {
     name: "workoutTypeEdit",
-    created(){
-
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm"]),
         ...mapFields(store, [
@@ -88,8 +80,6 @@ export default {
             });
         }  
     },
-    mounted(){
-    },
     destroyed() {
         this.resetForm();
     },
@@ -103,6 +93,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

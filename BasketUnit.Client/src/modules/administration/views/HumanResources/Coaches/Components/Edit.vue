@@ -93,13 +93,6 @@ const store = "AdministrationEditCoachStore";
 
 export default {
     name: "coachEdit",
-    created(){
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm", "getTeams", "getNationalities"]),
         ...mapFields(store, [
@@ -151,6 +144,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

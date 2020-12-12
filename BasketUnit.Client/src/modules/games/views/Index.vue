@@ -75,14 +75,6 @@ import { mapGetters, mapActions } from "vuex";
 const store = "GamesStore";
 export default {
     name: "games",
-    data(){
-        return {
-
-        };
-    },
-    created() {
-
-    },
     computed: {
         ...mapGetters(store, ["getGamesList"])
     },

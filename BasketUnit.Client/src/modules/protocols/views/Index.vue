@@ -70,14 +70,6 @@ const store = "ProtocolsStore";
 
 export default {
     name: "protocols",
-    data() {
-        return {
-
-        };
-    },
-    created() {
-
-    },
     computed: {
         ...mapGetters(store, ["getGamesList"])
     },

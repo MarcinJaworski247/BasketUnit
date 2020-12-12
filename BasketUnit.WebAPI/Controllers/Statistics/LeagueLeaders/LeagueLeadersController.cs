@@ -16,36 +16,6 @@ namespace BasketUnit.WebAPI.Controllers.Statistics.LeagueLeaders
         {
             this.StatsService = statsService;
         }
-        //[HttpGet("getPointsLeaders")]
-        //public ActionResult GetPointsLeaders()
-        //{
-        //    var data = PlayerService.GetPointsLeaders();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getAssistsLeaders")]
-        //public ActionResult GetAssistsLeaders()
-        //{
-        //    var data = PlayerService.GetAssistsLeaders();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getReboundsLeaders")]
-        //public ActionResult GetReboundsLeaders()
-        //{
-        //    var data = PlayerService.GetReboundsLeaders();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getBlocksLeaders")]
-        //public ActionResult GetBlocksLeaders()
-        //{
-        //    var data = PlayerService.GetBlocksLeaders();
-        //    return Ok(data);
-        //}
-        //[HttpGet("getStealsLeaders")]
-        //public ActionResult GetStealsLeaders()
-        //{
-        //    var data = PlayerService.GetStealsLeaders();
-        //    return Ok(data);
-        //}
         [HttpGet("getLeadersToWidget")]
         public ActionResult GetLeadersToWidget()
         {

@@ -143,8 +143,6 @@ export default {
             }
         };
     },
-    created() {
-    },
     computed: {
         ...mapGetters(store, ["getNationalities"]),
         ...mapFields(store, ["idToDelete"])

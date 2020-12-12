@@ -1,7 +1,6 @@
 <template>
     <form @submit.prevent="editNationality">
         <DxValidationGroup :ref="`validationGroup`">
-        
         <div class="form-group">
             <div class="row" style="height: 200px;">
                 <div class="col-12">
@@ -77,9 +76,6 @@ const store = "AdministrationEditNationalityStore";
 
 export default {
     name: "nationalityEdit",
-    created(){
-
-    },
     data(){
         return {
             uploadPopup: {
@@ -123,8 +119,6 @@ export default {
             this.uploadPopup.popupVisible = false;
         }
     },
-    mounted(){
-    },
     destroyed() {
         this.resetForm();
     },
@@ -139,6 +133,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

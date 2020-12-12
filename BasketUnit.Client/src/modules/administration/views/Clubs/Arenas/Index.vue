@@ -2,7 +2,6 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <!-- <h3 class="main-header-title"> Areny </h3> -->
         <DxButton 
             :use-submit-behavior="false"
             type="default"
@@ -52,14 +51,6 @@
             <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
     </DxDataGrid>
-    <!-- <div class="d-flex end-xs mt-5">
-        <DxButton
-                :use-submit-behavior="false"
-                type="normal"
-                styling-mode="outlined"
-                text="Wróć"
-                @click="function(){ $router.push({ name: 'administration.clubs.index' }) }"/>
-    </div> -->
     </div>  
 
     <!-- add popup -->
@@ -196,9 +187,6 @@ export default {
                 notify("Usunięto", "warning", 500);
             });
         }      
-    },
-    mounted() {
-        
     },
     components: {
         DxPopup,

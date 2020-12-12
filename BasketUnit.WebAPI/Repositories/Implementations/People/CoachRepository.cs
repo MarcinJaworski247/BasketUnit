@@ -30,23 +30,6 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ListCoachesVM> GetCoaches()
         {
-            //List<Coach> coaches = MainDatabaseContext.Coaches.ToList();
-
-            //List<Team> teams = MainDatabaseContext.Teams.ToList();
-
-            // to fix!! change to left join
-            //List<ListCoachesVM> result = coaches.Join(teams, x => x.Id, y => y.CoachId, (x, y) => new ListCoachesVM()
-            //{
-            //    Id = x.Id,
-            //    FirstName = x.FirstName,
-            //    LastName = x.LastName, 
-            //    FullName = x.FirstName + " " + x.LastName,
-            //    BirthDate = x.BirthDate, 
-            //    NationalityId = x.NationalityId,
-            //    ExperienceYears = x.ExperienceYears,
-            //    TeamId = y.Id
-            //}).ToList();
-
             List<ListCoachesVM> result = MainDatabaseContext.Coaches.Include(x => x.Team).Select(x => new ListCoachesVM()
             {
                 Id = x.Id,

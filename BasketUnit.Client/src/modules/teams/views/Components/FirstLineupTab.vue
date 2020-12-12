@@ -88,14 +88,6 @@ import notify from 'devextreme/ui/notify';
 const store = "FirstLineupStore";
 export default {
     name: "firstLineup",
-    data() {
-        return {
-             
-        };
-    },
-    created() {
-
-    },
     computed: {
         ...mapGetters(store, [
             "getPlayersList", 

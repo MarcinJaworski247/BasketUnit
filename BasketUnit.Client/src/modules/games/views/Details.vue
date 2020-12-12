@@ -96,14 +96,6 @@ import { mapGetters, mapActions } from "vuex";
 const store = "GamesDetailsStore";
 export default {
     name: "gameDetails",
-    data() {
-        return {
-
-        };
-    },
-    created() {
-        
-    },
     computed: {
         ...mapGetters(store, ["getGameDetails", "getGamePlayersStats"]),
         ...mapFields(store, [

@@ -66,14 +66,6 @@ const store = "AdministrationEditArenaStore";
 
 export default {
     name: "arenaEdit",
-    created(){
-
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm"]),
         ...mapFields(store, [
@@ -101,8 +93,6 @@ export default {
             });
         }  
     },
-    mounted(){
-    },
     destroyed() {
         this.resetForm();
     },
@@ -117,6 +107,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

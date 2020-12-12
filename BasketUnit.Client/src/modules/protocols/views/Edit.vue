@@ -173,9 +173,6 @@ export default {
         popupVisible: false
         };
     },
-    created(){
-
-    },
     computed: {
         ...mapGetters(store, ["getGameStatistics"]),
         ...mapState(store, ["getForm"]),

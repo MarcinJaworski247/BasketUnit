@@ -85,9 +85,6 @@ const store = "AdministrationCollegeStore";
 
 export default {
     name: "teamAdd",
-    created(){
-
-    },
     data(){
         return {
             uploadPopup: {
@@ -132,8 +129,6 @@ export default {
             this.uploadPopup.popupVisible = false;
         }
     },
-    mounted(){
-    },
     destroyed() {
         this.resetForm();
     },
@@ -148,6 +143,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

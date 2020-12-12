@@ -53,14 +53,6 @@ const store = "WorkoutsTypesStore";
 
 export default {
     name: "workoutTypeAdd",
-    created(){
-
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm"]),
         ...mapFields(store, [
@@ -87,8 +79,6 @@ export default {
             });
         }  
     },
-    mounted(){
-    },
     destroyed() {
         this.resetForm();
     },
@@ -102,6 +92,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

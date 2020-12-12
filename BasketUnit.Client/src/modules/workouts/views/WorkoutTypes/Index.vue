@@ -2,7 +2,6 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <!-- <h3 class="main-header-title"> Rodzaje treningów </h3> -->
         <DxButton
             :use-submit-behavior="false"
             type="default"
@@ -47,15 +46,6 @@
         </div>
         <DxPaging :page-size="15" />
     </DxDataGrid>
-
-    <!-- <div class="d-flex end-xs mt-5">
-        <DxButton
-            :use-submit-behavior="false"
-            type="normal"
-            styling-mode="outlined"
-            text="Wróć"
-            @click="function(){ $router.push({ name: 'workouts.index' }) }"/>
-    </div> -->
     </div>    
 
     <!-- add popup -->
@@ -148,8 +138,6 @@ export default {
                 popupVisible: false
             }
         }
-    },
-    created() {
     },
     computed: {
         ...mapGetters(store, ["getWorkoutTypesList"]),

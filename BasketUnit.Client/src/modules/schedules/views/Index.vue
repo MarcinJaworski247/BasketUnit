@@ -42,16 +42,6 @@
             />
         </template>
 
-        <!-- <DxResource
-            :data-source="coaches"
-            :allow-multiple="false"
-            label="Trener"
-            field-expr="CoachId" />
-
-        <template #dataCellTemplate="{ getActivitiesToShow: cellData }">
-            <DataCell
-                :cell-data="cellData" />
-        </template> -->
     </DxScheduler>
 
 
@@ -86,25 +76,16 @@
 </template>
 <script>
 import {
-    //DxTextBox,
     DxButton,
-    // DxSelectBox,
-    DxPopup,
-    // DxDateBox,
-    // DxTextArea
+    DxPopup
 } from 'devextreme-vue';
 import { 
-    DxScheduler, 
-    //DxResource 
+    DxScheduler
 } from 'devextreme-vue/scheduler';
-// import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
-// import { DxValidationGroup } from "devextreme-vue/validation-group";
-//import DataCell from '../components/DataCell';
 import AppointmentTemplate from '../components/AppointmentTemplate.vue';
 import AppointmentTooltipTemplate from '../components/AppointmentTooltipTemplate.vue';
 import AddGame from '../components/AddGame.vue';
 import AddWorkout from '../components/AddWorkout.vue';
-//import ResourceCell from '../components/ResourceCell';
 import { mapGetters, mapActions, mapMutations } from "vuex";
 import { mapFields } from "vuex-map-fields";
 const store = "SchedulesStore";
@@ -114,7 +95,6 @@ export default {
         return {
             currentDate: new Date(),
             views: ['day', 'week', 'month'],
-            //groups: ['coachId'],
             addGameVisible: false,
             addWorkoutVisible: false,
             scheduler: null,
@@ -122,35 +102,12 @@ export default {
     },
     computed: {
         ...mapGetters(store, [
-            "getActivitiesToShow", 
-            // "getExcercises", 
-            // "getTeams", 
-            // "getArenas", 
-            // "getReferees"
-        ]),
-        // ...mapFields(store, [
-        //     "addGameForm.GameDateFrom",
-        //     "addGameForm.GameDateTo",
-        //     "addGameForm.HomeTeamId",
-        //     "addGameForm.AwayTeamId",
-        //     "addGameForm.ArenaId",
-        //     "addGameForm.FirstRefereeId",
-        //     "addGameForm.SecondRefereeId",
-        //     "addWorkoutForm.WorkoutDateFrom",
-        //     "addWorkoutForm.WorkoutDateTo",
-        //     "addWorkoutForm.ExcerciseId",
-        //     "addWorkoutForm.Notes"
-        // ])
+            "getActivitiesToShow"
+        ])
     },
     methods: {
         ...mapActions(store, [
-            "setActivitiesToShow", 
-            // "setExcercises", 
-            // "setTeams", 
-            // "setReferees", 
-            // "setArenas", 
-            // "addGame", 
-            // "addWorkout"
+            "setActivitiesToShow"
         ]),
         hideAddGamePopup() {
             this.addGameVisible = false;
@@ -158,7 +115,6 @@ export default {
         addGameMethod(e) {
             let validateResult = e.validationGroup.validate();
             if(validateResult.isValid) {
-                //this.addGame();
                 this.showSuccessNotify();
                 this.addGameVisible = false;
             }            
@@ -173,7 +129,6 @@ export default {
         addWorkoutMethod(e) {
             let validateResult = e.validationGroup.validate();
             if(validateResult.isValid) {
-                //this.addWorkout();
                 this.showSuccessNotify();
                 this.addWorkoutVisible = false;
             }            
@@ -187,24 +142,11 @@ export default {
     },
     mounted() {
         this.setActivitiesToShow();
-        // this.setExcercises();
-        // this.setTeams();
-        // this.setReferees();
-        // this.setArenas();
     },
     components: {
         DxScheduler,
-        //DxResource,
-        //DataCell,
-        //DxTextBox,
         DxButton,
-        //DxSelectBox,
         DxPopup,
-        // DxDateBox,
-        // DxTextArea,
-        // DxValidator,
-        // DxRequiredRule,
-        // DxValidationGroup,
         AddGame,
         AddWorkout,
         AppointmentTemplate,

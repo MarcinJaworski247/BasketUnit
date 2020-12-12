@@ -57,17 +57,11 @@ export default {
             ]
         };
     },
-    created(){
-
-    },
     computed: {
         ...mapGetters(name, ["getPlayersList", "getFirstLineupPlayers"])
     },
     methods: {
         ...mapActions(store, ["setPlayersList", "setFirstLineupPlayers"])
-    },
-    mounted(){
-        
     },
     components: {
         DxTabPanel,

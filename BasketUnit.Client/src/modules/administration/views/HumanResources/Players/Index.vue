@@ -2,7 +2,6 @@
 <div class="content">
     <div class="printers">
     <div class="main-header mt-1 mb-2"> 
-        <!-- <h3 class="main-header-title"> Zawodnicy </h3> -->
         <DxButton
             :use-submit-behavior="false"
             type="default"
@@ -40,13 +39,6 @@
             alignment="left"
             caption="Imię i nazwisko"
             data-type="string" />
-            <!-- cellTemplate="nameHyperlinkTemplate" /> -->
-        <!-- <div slot="nameHyperlinkTemplate" slot-scope="{ data }">
-            <router-link
-                :to="{ name: 'administration.humanResources.players.details', params: { id: data.value } }">
-                {{ data.value }}
-            </router-link>
-        </div> -->
         <DxColumn 
             data-field="nationalityId"
             alignment="left"
@@ -103,25 +95,11 @@
             width="100"
         />
         <div slot="actionsCellTemplate" slot-scope="{ data }">
-            <!-- <router-link
-                class="datagrid-btn"
-                :to="{ name: 'administration.humanResources.players.details', params: { id: data.value } }">
-                <i hint="Szczegóły" class="fas fa-chevron-right"></i>
-            </router-link> -->
             <DxButton @click="showPlayerEditPopup(data)" hint="Edytuj" title="Edytuj" icon="fas fa-pen" class="datagrid-button" type="normal" />
             <DxButton @click="showDeletePopup(data)" hint="Usuń" title="Usuń" icon="fas fa-trash" class="ml-3 datagrid-button" type="normal" />
         </div>
         <DxPaging :page-size="10" />
     </DxDataGrid>
-
-    <!-- <div class="d-flex end-xs mt-5">
-        <DxButton
-            :use-submit-behavior="false"
-            type="normal"
-            styling-mode="outlined"
-            text="Wróć"
-            @click="function(){ $router.push({ name: 'administration.humanResources.index' }) }"/>
-    </div> -->
     </div>    
 
     <!-- add popup -->
@@ -215,8 +193,6 @@ export default {
                 popupVisible: false
             }
         }
-    },
-    created() {
     },
     computed: {
         ...mapGetters(store, ["getPlayersList", "getTeams", "getPositions", "getNationalities", "getColleges"]),

@@ -1,7 +1,6 @@
 <template>
     <form @submit.prevent="editReferee">
         <DxValidationGroup :ref="`validationGroup`">
-
         <div class="form-group">
             <div class="row">
                 <div class="col-6">
@@ -90,13 +89,6 @@ const store = "AdministrationEditRefereeStore";
 
 export default {
     name: "refereeEdit",
-    created(){
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm", "getNationalities"]),
         ...mapFields(store, [
@@ -145,6 +137,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

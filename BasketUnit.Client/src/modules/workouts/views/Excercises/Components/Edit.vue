@@ -68,14 +68,6 @@ const store = "WorkoutsExcercisesEditStore";
 
 export default {
     name: "excersiseEdit",
-    created(){
-
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm", "getWorkoutTypes"]),
         ...mapFields(store, [
@@ -121,6 +113,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

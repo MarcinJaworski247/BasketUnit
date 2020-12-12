@@ -121,13 +121,6 @@ const store = "TeamStore";
 
 export default {
     name: "playerEdit",
-    created(){
-    },
-    data(){
-        return {
-
-        };
-    },
     computed: {
         ...mapGetters(store, ["getForm", "getPositionsToLookup"]),
         ...mapFields(store, [
@@ -162,7 +155,6 @@ export default {
         }  
     },
     mounted(){
-        //this.setDetails();
         this.setPositionsToLookup();
     },
     destroyed() {
@@ -180,6 +172,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

@@ -1,6 +1,5 @@
 <template>
     <div class="content">
-
         <DxTabPanel
             min-height="800"
             width="1200"
@@ -34,7 +33,6 @@
                 </div>
             </template>
         </DxTabPanel>
-
     </div>
 </template>
 
@@ -84,6 +82,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-</style>

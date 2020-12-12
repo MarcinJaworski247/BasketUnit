@@ -107,9 +107,6 @@ const store = "AdministrationEditTeamStore";
 
 export default {
     name: "teamEdit",
-    created(){
-
-    },
     data(){
         return {
             uploadPopup: {
@@ -175,6 +172,3 @@ export default {
     }
 };
 </script>
-<style scoped>
-
-</style>

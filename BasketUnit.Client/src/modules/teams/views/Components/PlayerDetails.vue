@@ -116,7 +116,18 @@
                             alignment="center"
                             caption="Faule"
                             data-type="number"/>
-
+                        <DxColumn 
+                            data-field="gameId"
+                            alignment="center"
+                            caption=""
+                            cell-template="actionsCellTemplate"
+                            :allow-search="false"
+                            :allow-filtering="false"
+                            width="100"
+                        />
+                        <div slot="actionsCellTemplate" slot-scope="{ data }">
+                            <DxButton @click="function(){ $router.push({ name: 'games.details', params: { gameId: data.data.gameId } }) }" hint="Szczegóły" title="Szczegóły" icon="fas fa-chevron-right" class="datagrid-button" type="normal" />
+                        </div>
                     </DxDataGrid>
                 </div>
             </div>
@@ -180,9 +191,6 @@ export default {
             popupVisible: false
         };
     },
-    created() {
-
-    },
     computed: {
         ...mapGetters(store, ["getForm", "getLastGamesStats", "getDataToCharts", "getInjuries"]),
         ...mapFields(store, [
@@ -236,7 +244,7 @@ export default {
 </script>
 
 <style scoped>
-.chart {
+/* .chart {
     height: 440px;
-}
+} */
 </style>
