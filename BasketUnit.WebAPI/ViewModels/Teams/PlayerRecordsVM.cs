@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace BasketUnit.WebAPI.ViewModels
 {
-    public class LeagueLeadersWidgetVM
+    public class PlayerRecordsVM
     {
         public string StatType { get; set; }
-        public string PlayerFullName { get; set; }
-        public string Team { get; set; }
-        public decimal Score { get; set; }
+        public int Score { get; set; }
     }
 }

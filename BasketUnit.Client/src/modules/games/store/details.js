@@ -26,6 +26,12 @@ const getters = {
     },
     getGameDetails: (state) => {
         return state.detailsForm;
+    },
+    getHomeTeamStats: (state) => {
+        return state.playersStats.filter(stat => stat.team === state.detailsForm.HomeTeam);
+    },
+    getAwayTeamStats: (state) => {
+        return state.playersStats.filter(stat => stat.team === state.detailsForm.AwayTeam);
     }
 }
 

@@ -8,6 +8,7 @@ namespace BasketUnit.WebAPI.Services
 {
     public interface IStatsService
     {
-        List<LeagueLeadersWidgetVM> GetLeadersToWidget();
+        List<TeamAveragesVM> GetTeamAverages();
+        List<ScoreAndLosePointsVM> GetTeamScoreAndLosePoints();
     }
 }

@@ -14,9 +14,13 @@ namespace BasketUnit.WebAPI.Services
         {
             this.RepositoriesWrapper = repositoriesWrapper;
         }
-        public List<LeagueLeadersWidgetVM> GetLeadersToWidget()
+        public List<TeamAveragesVM> GetTeamAverages()
         {
-            return RepositoriesWrapper.StatsRepository.GetLeadersToWidget();
+            return RepositoriesWrapper.StatsRepository.GetTeamAverages();
+        }
+        public List<ScoreAndLosePointsVM> GetTeamScoreAndLosePoints()
+        {
+            return RepositoriesWrapper.StatsRepository.GetTeamScoreAndLosePoints();
         }
     }
 }

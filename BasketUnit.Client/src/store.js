@@ -20,7 +20,6 @@ import AdministrationEditCoachStore from './modules/administration/store/HumanRe
 // Administration/HumanResources/Players
 import AdministrationPlayerStore from './modules/administration/store/HumanResources/Players/index.js'
 import AdministrationEditPlayerStore from './modules/administration/store/HumanResources/Players/edit.js'
-import AdministrationDetailsPlayerStore from './modules/administration/store/HumanResources/Players/details.js'
 
 // Administration/HumanResources/Referees
 import AdministrationRefereeStore from './modules/administration/store/HumanResources/Referees/index.js'
@@ -56,6 +55,13 @@ import GamesDetailsStore from './modules/games/store/details.js';
 import ProtocolsStore from './modules/protocols/store/index.js';
 import ProtocolsEditStore from './modules/protocols/store/edit.js';
 
+// Dashboard
+import DashboardStore from './modules/dashboard/store/index.js';
+
+// Statistics 
+import StatisticsStore from './modules/statistics/store/index.js'
+
+
 import { getField, updateField } from 'vuex-map-fields';
 
 
@@ -70,8 +76,7 @@ export default new Vuex.Store({
         AdministrationCoachStore, 
         AdministrationEditCoachStore,
         AdministrationPlayerStore, 
-        AdministrationEditPlayerStore, 
-        AdministrationDetailsPlayerStore, 
+        AdministrationEditPlayerStore,
         AdministrationRefereeStore, 
         AdministrationEditRefereeStore, 
         SchedulesStore,
@@ -91,7 +96,9 @@ export default new Vuex.Store({
         AdministrationNationalityStore,
         AdministrationEditNationalityStore,
         AdministrationCollegeStore,
-        AdministrationEditCollegeStore
+        AdministrationEditCollegeStore,
+        DashboardStore,
+        StatisticsStore
     },
     state: {
         leagueaLeaders: [],

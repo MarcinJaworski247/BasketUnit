@@ -41,7 +41,7 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<ListPlayersVM> GetTeamPlayers()
         {
-            List<ListPlayersVM> players = MainDatabaseContext.Players.Include(x => x.College).Include(x => x.Injuries).Include(x => x.TeamLineup).Include(x => x.Stats).Include(x => x.Nationality).Where(x => x.TeamLineup.FirstOrDefault().TeamId == 2).Select(x => new ListPlayersVM()
+            List<ListPlayersVM> players = MainDatabaseContext.Players.Include(x => x.College).Include(x => x.Injuries).Include(x => x.TeamLineup).Include(x => x.Stats).Include(x => x.Nationality).Where(x => x.TeamLineup.FirstOrDefault().TeamId == 1).Select(x => new ListPlayersVM()
             {
                 Id = x.Id,
                 Avatar = x.Avatar,
@@ -50,6 +50,7 @@ namespace BasketUnit.WebAPI.Repositories
                 FullName = x.FirstName + " " + x.LastName,
                 BirthDate = x.BirthDate,
                 PositionId = (int)x.Position,
+                Position = x.Position.ToString(),
                 NationalityId = x.Nationality.Id,
                 PlayerNumber = x.Number,
                 Height = x.Height,
@@ -100,18 +101,18 @@ namespace BasketUnit.WebAPI.Repositories
                 FirstName = x.FirstName, 
                 LastName = x.LastName,
                 FullName = x.FirstName + " " + x.LastName,
-                Avatar = Convert.ToBase64String(x.Avatar),
+                Avatar = x.Avatar.Length > 0 ? Convert.ToBase64String(x.Avatar) : string.Empty,
                 Position = x.Position.ToString(),
                 PlayerNumber = x.Number,
                 BirthDate = x.BirthDate,
                 NationalityId = x.NationalityId,
                 Nationality = x.Nationality.Name,
-                NationalityFlag = Convert.ToBase64String(x.Nationality.Flag),
+                NationalityFlag = x.Nationality.Flag.Length > 0 ? Convert.ToBase64String(x.Nationality.Flag) : string.Empty,
                 TeamId = x.TeamLineup.FirstOrDefault().TeamId,
                 PositionId = (int)x.Position,
                 Team = x.TeamLineup.FirstOrDefault().Team.City + " " + x.TeamLineup.FirstOrDefault().Team.Name,
                 College = x.College.City + " " + x.College.Name,
-                CollegeBadge = Convert.ToBase64String(x.College.Badge),
+                CollegeBadge = x.College.Badge.Length > 0 ? Convert.ToBase64String(x.College.Badge) : string.Empty,
                 CollegeId = x.CollegeId,
                 Height = x.Height,
                 Weight = x.Weight,
@@ -168,12 +169,12 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<DetailsPlayerVM> GetFirstLineupPlayers()
         {
-            List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 2).Select(x => new DetailsPlayerVM()
+            List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => new DetailsPlayerVM()
             {
                 FirstName = x.Player.FirstName + " " + x.Player.LastName,
                 Position = x.Player.Position.ToString(),
                 PositionId = (int)x.Player.Position,
-                Avatar = Convert.ToBase64String(x.Player.Avatar)
+                Avatar = x.Player.Avatar.Length > 0 ? Convert.ToBase64String(x.Player.Avatar) : string.Empty
             }).ToList();
 
             return data;

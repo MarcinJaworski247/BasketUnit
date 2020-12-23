@@ -3,11 +3,13 @@
     <div style="display: flex;">
     <div class="vertical-nav bg-white ml-1">
       <div class="py-4 px-3 mb-1 ">
-        <div class="media d-flex align-items-center"><i class="fas fa-basketball-ball mr-1" style="font-size: 42px;"></i>
-          <div class="media-body">
-            <h5 class="m-1">BASKET UNIT</h5>
+        <router-link :to="{ name: 'dashboard' }">
+          <div class="media d-flex align-items-center"><i class="fas fa-basketball-ball mr-1" style="font-size: 42px;"></i>
+            <div class="media-body">
+              <h5 class="m-1">BASKET UNIT</h5>
+            </div>
           </div>
-        </div>
+        </router-link>
       </div>
 
       <div class="py-4 px-3 mb-4 bg-light">
@@ -25,10 +27,18 @@
 
       <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
-          <router-link :to="{ name: 'team.index' }" class="nav-link">
+          <router-link :to="{ name: 'team.lineup' }" class="nav-link">
           <span class="nav-link text-dark mb-2">
               <i class="fas fa-users mr-1"></i>
-              Drużyna 
+              Skład 
+          </span>
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'team.firstLineup' }" class="nav-link">
+          <span class="nav-link text-dark mb-2">
+              <i class="fas fa-users mr-1"></i>
+              Pierwsza piątka 
           </span>
           </router-link>
         </li>
@@ -101,7 +111,7 @@
     </div>
     <div style="justify-content: flex-end;">
       <div style="width: 175px; height: 400px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Ostatnie mecze</div>
+        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Nadchodzące mecze</div>
         <div v-for="item in getClosestGames" :key="item.startDate" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)" class="mt-3">
           <strong>{{item.homeTeam}} vs. {{item.awayTeam}}</strong>
           <div>Arena: {{item.arena}}</div>

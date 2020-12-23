@@ -1,7 +1,7 @@
 <template>
 <div class="content">
     <div class="main-header mt-1 mb-2"> 
-        <h3 class="main-header-title"> Skład </h3>
+        <h3 class="main-header-title"> Drużyna </h3>
     </div>
 
     <DxTabPanel
@@ -46,12 +46,12 @@ export default {
             tabs: [
                 {
                     title: "Skład",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab1"
                 },
                 {
                     title: "Pierwsza piątka",
-                    icon: "far fa-users",
+                    icon: "fas fa-users",
                     template: "tab2"
                 }
             ]

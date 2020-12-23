@@ -8,7 +8,6 @@ import Clubs from '../views/Clubs/Index.vue';
 // human resources
 import Coaches from '../views/HumanResources/Coaches/Index.vue';
 import Players from '../views/HumanResources/Players/Index.vue';
-import PlayerDetails from '../views/HumanResources/Players/Details.vue';
 import Referees from '../views/HumanResources/Referees/Index.vue';
 
 // clubs
@@ -40,11 +39,6 @@ const routes = [
             path: '/administration/humanResources/players',
             name: 'administration.humanResources.players',
             component: Players
-        },
-        {
-            path: '/administration.humanResources/players/details/:playerId',
-            name: 'administration.humanResources.players.details',
-            component: PlayerDetails
         },
         {
             path: '/administration/humanResoources/referees',

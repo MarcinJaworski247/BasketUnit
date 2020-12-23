@@ -1,72 +1,136 @@
 <template>
     <div class="content">
-        <div class="printers ml-4">
-            <div class="main-header mt-4 mb-2">
-                <h3 class="main-header-title">
-                    Statystyki
-                </h3>
+        <div class="main-header mt-1 mb-2"> 
+            <h3 class="main-header-title"> Statystyki drużyny </h3>
+        </div>
+        <div class="printers">
+            <div class="row">
+                <!-- herb, nazwa druzyny -->
+                <img v-if="badge.length" style="width: 150px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+badge"/>
+                <span>{{ name }}</span>
             </div>
-            <div class="mt-4">
-                <router-link :to="{ name: 'statistics.teamStatistics.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>STATYSTYKI DRUŻYN</span>
-                        </div>
-                    </div>
-                </router-link>
-                <router-link :to="{ name: 'statistics.leagueLeaders.index' }">
-                    <div class="tile">
-                        <div class="tile-image">
-                            <span class="fas fa-users"></span>
-                        </div>
-                        <div class="tile-name">
-                            <span>LIDERZY LIGI</span>
-                        </div>
-                    </div>
-                </router-link>
+            <div class="row">
+                <!-- wykres słupkowy - średnie punkty, asysty itd. -->
+                <DxChart
+                    :data-source="getTeamAverages"
+                    title="Średnie statystyki  zespołu"
+                    >
+                    <DxCommonSeriesSettings
+                        argument-field="statType"
+                        type="bar">
+                        <DxLabel :visible="true">
+                            <DxFormat
+                                :precision="2"
+                                type="fixedPOint"/>
+                        </DxLabel>
+                    </DxCommonSeriesSettings>
+                    <DxSeries
+                        value-field="avg"/>
+                </DxChart>
+            </div>
+            <div class="row">
+                <!-- wykres spline - zdobyte i stracone punkty na przestrzeni meczów -->
+                <DxChart
+                    id="chart"
+                    :data-source="sharingStatisticsInfo"
+                    palette="Violet"
+                    title="Punkty zdobyte i stracone na przestrzeni meczów"
+                    >
+                    <DxCommonSeriesSettings
+                        :type="type"
+                        argument-field="opponent"
+                    />
+                    <DxCommonAxisSettings>
+                        <DxGrid :visible="true"/>
+                    </DxCommonAxisSettings>
+                    <DxSeries
+                        v-for="item in sources"
+                        :key="item.value"
+                        :value-field="item.value"
+                        :name="item.name"
+                    />
+                    <DxMargin :bottom="20"/>
+                    <DxArgumentAxis
+                        :allow-decimals="false"
+                        :axis-division-factor="60"
+                    >
+                        <DxLabel>
+                        <DxFormat type="decimal"/>
+                        </DxLabel>
+                    </DxArgumentAxis>
+                    <DxLegend
+                        vertical-alignment="top"
+                        horizontal-alignment="right"
+                    />
+                    <DxExport :enabled="true"/>
+                    <DxTooltip :enabled="true"/>
+                </DxChart>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { 
+    DxChart, 
+    DxSeries,
+    DxCommonSeriesSettings,
+    DxLabel,
+    DxFormat,
+    DxArgumentAxis,
+    DxCommonAxisSettings,
+    DxGrid,
+    DxExport,
+    DxLegend,
+    DxMargin,
+    DxTooltip
+} from 'devextreme-vue/chart';
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
+
+const store = "StatisticsStore";
 export default {
-    
+    name: "statistics",
+    date(){
+        return {
+            type: 'spline',
+            sources: [
+                {
+                    value: 'teamScore',
+                    name: 'Punkty zdobyte'
+                },
+                {
+                    value: 'opponentScore',
+                    name: 'Punkty stracone'
+                }
+            ]
+        };
+    },
+    computed: {
+        ...mapGetters(store, ["getTeamForm", "getTeamAverages", "getTeamScoreAndLosePoints"]),
+        ...mapFields(store, ["teamForm.name", "teamForm.badge"])
+    },
+    methods: {
+        ...mapActions(store, ["setTeamForm", "setTeamAverages", "setTeamScoreAndLosePoints"])
+    },
+    mounted(){
+        this.setTeamForm();
+        this.setTeamAverages();
+        this.setTeamScoreAndLosePoints();
+    },
+    components: {
+        DxChart, 
+        DxSeries,
+        DxCommonSeriesSettings,
+        DxLabel,
+        DxFormat,
+        DxArgumentAxis,
+        DxCommonAxisSettings,
+        DxGrid,
+        DxExport,
+        DxLegend,
+        DxMargin,
+        DxTooltip
+    }
 }
 </script>
-
-<style scoped>
-.tile{
-    width: 160px;
-    height: 160px;
-    border: 1px solid black;
-    margin-right: 16px;
-    border-radius: 2px;
-    float: left;
-}
-.tile:hover{
-    color: darkgrey;
-    border-color: darkgrey;
-    cursor: pointer;
-}
-.tile-image{
-    padding-top: 5px;
-    margin-left: auto;
-    margin-right: auto;
-    width: 60px;
-    height: 60px;
-    font-size: 48px;
-}
-.tile-name{
-    margin-top: 16px;
-    margin-left: auto;
-    margin-right: auto;
-    size: 16px;
-    font-weight: 700;
-    text-align: center;
-}
-
-</style>

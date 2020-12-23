@@ -80,6 +80,7 @@ namespace BasketUnit.WebAPI.Repositories
             team.Name = model.Name;
             team.CoachId = model.CoachId;
             team.ArenaId = model.ArenaId;
+            team.Badge = model.Badge;
 
             MainDatabaseContext.Teams.Update(team);
             MainDatabaseContext.SaveChanges();
@@ -114,7 +115,7 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<SelectModelBinder<int>> GetPlayersByPosition(int position)
         {
-            List<Player> players = MainDatabaseContext.Players.Include(x => x.TeamLineup).ThenInclude(y => y.Team).Where(x => x.Position == (Enums.Position)position && x.TeamLineup.FirstOrDefault().TeamId == 2).ToList();
+            List<Player> players = MainDatabaseContext.Players.Include(x => x.TeamLineup).ThenInclude(y => y.Team).Where(x => x.Position == (Enums.Position)position && x.TeamLineup.FirstOrDefault().TeamId == 1).ToList();
             List<SelectModelBinder<int>> result = players.Select(x => new SelectModelBinder<int>()
             {
                 Value = x.Id,
@@ -138,38 +139,38 @@ namespace BasketUnit.WebAPI.Repositories
         {
             // to do team  parameter
 
-            List<TeamFirstLineup> teamFirstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 2).ToList();
+            List<TeamFirstLineup> teamFirstLineup = MainDatabaseContext.TeamFirstLineups.Where(x => x.TeamId == 1).ToList();
             MainDatabaseContext.TeamFirstLineups.RemoveRange(teamFirstLineup);
             MainDatabaseContext.SaveChanges();
 
             TeamFirstLineup pointGuard = new TeamFirstLineup
             {
                 PlayerId = (int)model.PointGuardId,
-                TeamId = 2
+                TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(pointGuard);
             TeamFirstLineup shootingGuard = new TeamFirstLineup
             {
                 PlayerId = (int)model.ShootingGuardId,
-                TeamId = 2
+                TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(shootingGuard);
             TeamFirstLineup smallForward = new TeamFirstLineup
             {
                 PlayerId = (int)model.SmallForwardId,
-                TeamId = 2
+                TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(smallForward);
             TeamFirstLineup powerForward = new TeamFirstLineup
             {
                 PlayerId = (int)model.PowerForwardId,
-                TeamId = 2
+                TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(powerForward);
             TeamFirstLineup center = new TeamFirstLineup
             {
                 PlayerId = (int)model.CenterId,
-                TeamId = 2
+                TeamId = 1
             };
             MainDatabaseContext.TeamFirstLineups.Add(center);
             MainDatabaseContext.SaveChanges();
@@ -184,7 +185,7 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public FirstLineupVM GetFirstLineupIds()
         {
-            List<TeamFirstLineup> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 2).ToList();
+            List<TeamFirstLineup> teamFirstLineups = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).ToList();
             FirstLineupVM firstLineupVM = new FirstLineupVM
             {
                 PointGuardId = teamFirstLineups.Where(x => x.Player.Position == Enums.Position.PointGuard).Select(x => x.PlayerId).FirstOrDefault(),
@@ -198,7 +199,7 @@ namespace BasketUnit.WebAPI.Repositories
         public List<ClosestGamesWidgetVM> GetClosestGamesToWidget()
         {
             List<ClosestGamesWidgetVM> closestGamesWidgetVMs = new List<ClosestGamesWidgetVM>();
-            List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Date).Take(5).ToList();
+            List<Game> games = MainDatabaseContext.Games.OrderByDescending(x => x.Date).Take(3).ToList();
             foreach(var item in games)
             {
                 List<GameTeams> gt = MainDatabaseContext.GameTeams.Where(x => x.GameId == item.Id).ToList();
@@ -215,6 +216,196 @@ namespace BasketUnit.WebAPI.Repositories
                 closestGamesWidgetVMs.Add(game);
             }
             return closestGamesWidgetVMs;
+        }
+        public List<LastGamesVM> GetLastGamesToDashboard()
+        {
+            List<LastGamesVM> data = MainDatabaseContext
+                .Games
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .Where(x => x.Date < DateTime.Now && ( x.GameTeams.First().TeamId == 1 || x.GameTeams.Last().TeamId == 1))
+                .Select(x => new LastGamesVM()
+                {
+                    Id = x.Id,
+                    HomeTeam = x.GameTeams[0].Team,
+                    AwayTeam = x.GameTeams[1].Team,
+                })
+                .OrderByDescending(x => x.Id)
+                .Take(4)
+                .ToList();
+
+            foreach(var item in data)
+            {
+                item.OpponentTeam = item.HomeTeam.Id != 1 ? item.HomeTeam : item.AwayTeam;
+            }
+            foreach(var item in data)
+            {
+                item.Badge = Convert.ToBase64String(item.OpponentTeam.Badge);
+            }
+            foreach(var item in data)
+            {
+                int myTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup.First().TeamId == 1)
+                    .Select(x => x.Points).Sum();
+                int opponentTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup.First().TeamId != 1)
+                    .Select(x => x.Points).Sum();
+                item.Score = myTeamPoints.ToString() + " : " + opponentTeamPoints.ToString();
+                item.IsWin = myTeamPoints > opponentTeamPoints;
+            }
+            return data;
+        }
+        public List<FutureGamesVM> GetFutureGamesToDashboard()
+        {
+            List<FutureGamesVM> data = MainDatabaseContext.Games
+                .Include(x => x.Arena)
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .Where(x => x.Date > DateTime.Now && (x.GameTeams.First().Id == 1 || x.GameTeams.Last().Id == 1))
+                .Select(x => new FutureGamesVM()
+                {
+                    Id = x.Id,
+                    HomeTeam = x.GameTeams[0].Team,
+                    AwayTeam = x.GameTeams[1].Team,
+                    Arena = x.Arena.Name,
+                    Date = x.Date
+                })
+                .OrderBy(x => x.Date)
+                .Take(4)
+                .ToList();
+            foreach (var item in data)
+            {
+                item.OpponentTeam = item.HomeTeam.Id != 1 ? item.HomeTeam : item.AwayTeam;
+            }
+            foreach (var item in data)
+            {
+                item.Badge = Convert.ToBase64String(item.OpponentTeam.Badge);
+            }
+            return data;
+        }
+        public List<InjuredPlayersVM> GetInjuredPlayersToDashboard()
+        {
+            return MainDatabaseContext.PlayerInjuries
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.InjuredTo > DateTime.Now)
+                .Select(x => new InjuredPlayersVM()
+                {
+                    Id = x.PlayerId,
+                    FullName = x.Player.FirstName + " " + x.Player.LastName,
+                    Avatar = Convert.ToBase64String(x.Player.Avatar),
+                    Injury = x.Injury
+                }).ToList();
+        }
+        public TeamFormVM GetTeamForm()
+        {
+            return MainDatabaseContext.Teams.Select(x => new TeamFormVM()
+            {
+                Badge = Convert.ToBase64String(x.Badge),
+                Name = x.City + " " + x.Name
+            }).FirstOrDefault();
+        }
+        public List<PlayerAveragesVM> GetPlayerAvgs(int playerId)
+        {
+            List<PlayerAveragesVM> playerAvgs = new List<PlayerAveragesVM>();
+
+            List<int> points = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Points).ToList();
+            PlayerAveragesVM pointsAvg = new PlayerAveragesVM
+            {
+                StatType = "Points",
+                Avg = (decimal)points.Average()
+            };
+            playerAvgs.Add(pointsAvg);
+
+            List<int> asssist = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Assists).ToList();
+            PlayerAveragesVM assistsAvg = new PlayerAveragesVM
+            {
+                StatType = "Assists",
+                Avg = (decimal)asssist.Average()
+            };
+            playerAvgs.Add(assistsAvg);
+
+            List<int> rebounds = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Rebounds).ToList();
+            PlayerAveragesVM reboundsAvg = new PlayerAveragesVM
+            {
+                StatType = "Rebounds",
+                Avg = (decimal)rebounds.Average()
+            };
+            playerAvgs.Add(reboundsAvg);
+
+            List<int> steals = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Steals).ToList();
+            PlayerAveragesVM stealsAvg = new PlayerAveragesVM
+            {
+                StatType = "Steals",
+                Avg = (decimal)steals.Average()
+            };
+            playerAvgs.Add(stealsAvg);
+
+            List<int> blocks = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Blocks).ToList();
+            PlayerAveragesVM blocksAvg = new PlayerAveragesVM
+            {
+                StatType = "Blocks",
+                Avg = (decimal)blocks.Average()
+            };
+            playerAvgs.Add(blocksAvg);
+
+            return playerAvgs;
+        }
+        public List<PlayerRecordsVM> GetPlayerRecords(int playerId)
+        {
+            
+        }
+        public List<GamePlayerStatsVM> GetAllPlayerGames(int playerId)
+        {
+            List<GamePlayerStatsVM> data = MainDatabaseContext.Stats
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Include(x => x.Game)
+                .OrderByDescending(x => x.Id)
+                .Where(x => x.PlayerId == playerId)
+                .Select(x => new GamePlayerStatsVM()
+                {
+                    GameId = x.GameId,
+                    Points = x.Points,
+                    Assists = x.Assists,
+                    Rebounds = x.Rebounds,
+                    Steals = x.Steals,
+                    Blocks = x.Blocks,
+                    Fouls = x.Fouls,
+                    GameTime = x.Game.Date,
+                    Opponent = x.Game.GameTeams.Where(y => y.TeamId != 1 && y.GameId == x.GameId).Select(y => y.Team.Name).FirstOrDefault()
+                }).ToList();
+
+            return data;
+        }
+        public List<DataToSpiderWebVM> GetDataToSpiderWeb(int playerId)
+        {
+            
+        }
+        public List<FutureWorkoutsVM> GetFutureWorkouts()
+        {
+            return MainDatabaseContext.TeamScheduleActivities
+                .Include(x => x.TeamSchedule)
+                .ThenInclude(y => y.Team)
+                .Include(x => x.Workout)
+                .Where(x => x.TeamSchedule.TeamId == 1 && x.StartDate > DateTime.Now)
+                .OrderByDescending(x => x.StartDate)
+                .Take(4)
+                .Select(x => new FutureWorkoutsVM()
+                {
+                    Workout = x.Workout.Name,
+                    Date = x.StartDate
+                }).ToList();
         }
     }
 }

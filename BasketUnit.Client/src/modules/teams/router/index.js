@@ -1,5 +1,7 @@
 import Index from '../views/Index.vue';
-import PlayerDetails from '../views/Components/PlayerDetails.vue';
+import PlayerDetails from '../views/Components/PlayerDetailsTabPanel.vue';
+import Lineup from '../views/Components/LineupTab.vue';
+import FirstLineup from '../views/Components/FirstLineupTab.vue';
 
 const routes = [
     {
@@ -11,6 +13,16 @@ const routes = [
         path: `/team/player/:playerId`,
         name: `team.player.details`,
         component: PlayerDetails
+    },
+    {
+        path: `/team/lineup`,
+        name: `team.lineup.index`,
+        component: Lineup
+    },
+    {
+        path: `/team/firstLineup`,
+        name: `team.firstLineup.index`,
+        component: FirstLineup
     }
 ]
 

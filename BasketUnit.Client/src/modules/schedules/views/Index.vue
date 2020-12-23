@@ -1,5 +1,8 @@
 <template>
 <div class="content">
+    <div class="main-header mt-1 mb-2"> 
+        <h3 class="main-header-title"> Kalendarz </h3>
+    </div>
     <div class="mb-1">
         <DxButton 
             :use-submit-behavior="false"

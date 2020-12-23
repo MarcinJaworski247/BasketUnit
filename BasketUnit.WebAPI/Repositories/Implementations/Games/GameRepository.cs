@@ -113,7 +113,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .Include(x => x.GameTeams)
                 .ThenInclude(y => y.Team)
                 .OrderByDescending(x => x.Id)
-                .Take(5)
+                .Take(3)
                 .Select(x => new ClosestGamesWidgetVM() {
                     StartDate = x.Date,
                     HomeTeam = x.GameTeams[0].Team.City + " " + x.GameTeams[0].Team.Name,
@@ -184,8 +184,8 @@ namespace BasketUnit.WebAPI.Repositories
                 HomeTeamId = game.GameTeams[0].TeamId,
                 AwayTeam = game.GameTeams[1].Team.City + " " + game.GameTeams[1].Team.Name,
                 AwayTeamId = game.GameTeams[1].TeamId,
-                HomeTeamBadge = Convert.ToBase64String(game.GameTeams[0].Team.Badge), 
-                AwayTeamBadge = Convert.ToBase64String(game.GameTeams[1].Team.Badge),
+                HomeTeamBadge = game.GameTeams[0].Team.Badge.Length > 0 ? Convert.ToBase64String(game.GameTeams[0].Team.Badge) : string.Empty, 
+                AwayTeamBadge = game.GameTeams[1].Team.Badge.Length > 0 ? Convert.ToBase64String(game.GameTeams[1].Team.Badge) : string.Empty,
                 GameDate = game.Date,
                 FirstReferee = game.GameReferees[0].Referee.FirstName + " " + game.GameReferees[0].Referee.LastName,
                 SecondReferee = game.GameReferees[1].Referee.FirstName + " " + game.GameReferees[1].Referee.LastName,

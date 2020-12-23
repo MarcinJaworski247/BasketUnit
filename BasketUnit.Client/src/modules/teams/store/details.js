@@ -31,7 +31,11 @@ const state = {
         PlayerId: null,
         AddInjury: '',
         AddInjuredTo: null
-    }
+    },
+    playerAvgs: [],
+    playerRecords: [],
+    allPlayerGames: [],
+    dataToSpiderWeb: []
 }
 
 const getters = {
@@ -47,6 +51,18 @@ const getters = {
     },
     getInjuries: (state) => {
         return state.injuries;
+    },
+    getPlayerAvgs: (state) => {
+        return state.playerAvgs;
+    },
+    getPlayerRecords: (state) => {
+        return state.playerRecords;
+    },
+    getAllPlayerGames: (state) => {
+        return state.allPlayerGames;
+    },
+    getDataToSpiderWeb: (state) => {
+        return state.dataToSpiderWeb;
     }
 }
 
@@ -84,6 +100,18 @@ const mutations = {
         state.injuriesAdd.PlayerId = null;
         state.injuriesAdd.AddInjury = '';
         state.injuriesAdd.AddInjury = null;
+    },
+    setPlayerAvgs: (state, payload) => {
+        state.setPlayerAvgs = payload;
+    },
+    setPlayerRecords: (state, payload) => {
+        state.playerRecords = payload;
+    },
+    setAllPlayerGames: (state, payload) => {
+        state.allPlayerGames = payload;
+    },
+    setDataToSpiderWeb: (state, payload) => {
+        state.dataToSpiderWeb = payload;
     }
 }
 
@@ -121,6 +149,30 @@ const actions = {
         } catch (err) {
             console.log(err);
         }
+    },
+    setPlayerAvgs: ({ commit }) => {
+        service.getPlayerAvgs(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setPlayerAvgs", response.data);
+            });
+    },
+    setPlayerRecords: ({ commit }) => {
+        service.getPlayerRecords(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setPlayerRecords", response.data);
+            });
+    },
+    setAllPlayerGames: ({ commit }) => {
+        service.getAllPlayerGames(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setAllPlayerGames", response.data);
+            });
+    },
+    setDataToSpiderWeb: ({ commit }) => {
+        service.getDataToSpiderWeb(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setDataToSpiderWeb", response.data);
+            });
     }
 }
 

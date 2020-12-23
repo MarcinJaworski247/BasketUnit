@@ -41,8 +41,19 @@ class teamsService {
         return axios.get(`/team/getPlayerInjuries/${playerId}`);
     }
     addInjury(data) {
-        debugger
         return axios.post("/team/addPlayerInjury", data);
+    }
+    getPlayerAvgs(playerId) {
+        return axios.get(`/team/getPlayerAvgs/${playerId}`);
+    }
+    getPlayerRecords(playerId) {
+        return axios.get(`/team/getPlayerRecords/${playerId}`);
+    }
+    getAllPlayerGames(playerId) {
+        return axios.get(`/team/getAllPlayerGames/${playerId}`);
+    }
+    getDataToSpiderWeb(playerId) {
+        return axios.get(`/team/getDataToSpiderWeb/${playerId}`);
     }
 }
 

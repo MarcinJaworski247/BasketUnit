@@ -92,5 +92,31 @@ namespace BasketUnit.WebAPI.Controllers.Team
             PlayerService.AddPlayerInjury(data);
             return Ok(true);
         }
+
+
+        [HttpGet("getPlayerAvgs/{playerId}")]
+        public ActionResult GetPlayerAvgs(int playerId)
+        {
+            var data = TeamService.GetPlayerAvgs(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getPlayerRecords/{playerId}")]
+        public ActionResult GetPlayerRecords(int playerId)
+        {
+            var data = TeamService.GetPlayerRecords(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getAllPlayerGames/{playerId}")]
+        public ActionResult GetAllPlayerGames(int playerId)
+        {
+            var data = TeamService.GetAllPlayerGames(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getDataToSpiderWeb/{playerId}")]
+        public ActionResult GetDataToSpiderWeb(int playerId)
+        {
+            var data = TeamService.GetDataToSpiderWeb(playerId);
+            return Ok(data);
+        }
     }
 }

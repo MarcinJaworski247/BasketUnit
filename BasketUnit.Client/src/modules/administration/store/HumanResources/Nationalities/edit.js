@@ -26,6 +26,7 @@ const mutations = {
         state.editForm.Flag = ''
     },
     setDetails: (state, payload) => {
+        debugger
         state.editForm.Id = payload.id,
         state.editForm.Name = payload.name,
         state.editForm.Flag = payload.flag

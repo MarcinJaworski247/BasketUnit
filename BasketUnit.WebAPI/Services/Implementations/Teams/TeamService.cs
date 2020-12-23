@@ -82,5 +82,41 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.TeamRepository.GetClosestGamesToWidget();
         }
+        public List<LastGamesVM> GetLastGamesToDashboard()
+        {
+            return RepositoriesWrapper.TeamRepository.GetLastGamesToDashboard();
+        }
+        public List<FutureGamesVM> GetFutureGamesToDashboard()
+        {
+            return RepositoriesWrapper.TeamRepository.GetFutureGamesToDashboard();
+        }
+        public List<InjuredPlayersVM> GetInjuredPlayersToDashboard()
+        {
+            return RepositoriesWrapper.TeamRepository.GetInjuredPlayersToDashboard();
+        }
+        public TeamFormVM GetTeamForm()
+        {
+            return RepositoriesWrapper.TeamRepository.GetTeamForm();
+        }
+        public List<PlayerAveragesVM> GetPlayerAvgs(int playerId)
+        {
+            return RepositoriesWrapper.TeamRepository.GetPlayerAvgs(playerId);
+        }
+        public List<PlayerRecordsVM> GetPlayerRecords(int playerId)
+        {
+            return RepositoriesWrapper.TeamRepository.GetPlayerRecords(playerId);
+        }
+        public List<GamePlayerStatsVM> GetAllPlayerGames(int playerId)
+        {
+            return RepositoriesWrapper.TeamRepository.GetAllPlayerGames(playerId);
+        }
+        public List<DataToSpiderWebVM> GetDataToSpiderWeb(int playerId)
+        {
+            return RepositoriesWrapper.TeamRepository.GetDataToSpiderWeb(playerId);
+        }
+        public List<FutureWorkoutsVM> GetFutureWorkouts()
+        {
+            return RepositoriesWrapper.TeamRepository.GetFutureWorkouts();
+        }
     }
 }

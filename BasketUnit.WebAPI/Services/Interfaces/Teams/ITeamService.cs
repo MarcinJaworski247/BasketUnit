@@ -24,5 +24,14 @@ namespace BasketUnit.WebAPI.Services
         FirstLineupVM GetFirstLineupIds();
         List<DetailsPlayerVM> GetFirstLineupPlayers();
         List<ClosestGamesWidgetVM> GetClosestGamesToWidget();
+        List<LastGamesVM> GetLastGamesToDashboard();
+        List<FutureGamesVM> GetFutureGamesToDashboard();
+        List<InjuredPlayersVM> GetInjuredPlayersToDashboard();
+        TeamFormVM GetTeamForm();
+        List<PlayerAveragesVM> GetPlayerAvgs(int playerId);
+        List<PlayerRecordsVM> GetPlayerRecords(int playerId);
+        List<GamePlayerStatsVM> GetAllPlayerGames(int playerId);
+        List<DataToSpiderWebVM> GetDataToSpiderWeb(int playerId);
+        List<FutureWorkoutsVM> GetFutureWorkouts();
     }
 }

@@ -5,11 +5,11 @@
                 <div style="text-align: center; font-size: 24px; font-weight: bold;" class="mt-4">
                     <div>
                         
-                        <img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+HomeTeamBadge"/>
+                        <img v-if="HomeTeamBadge.length" style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+HomeTeamBadge"/>
                         {{ HomeTeam }}
                         {{ HomeTeamScore }}  :  {{ AwayTeamScore }}
                         {{ AwayTeam }}
-                        <img style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+AwayTeamBadge"/>
+                        <img v-if="AwayTeamBadge.length" style="width: 100px;" v-bind:src="'data:image/jpeg;base64,'+AwayTeamBadge"/>
                         
                     </div>
                     <div class="mt-4">
@@ -18,57 +18,55 @@
                         <h4>Sędziowie: {{ FirstReferee }},  {{ SecondReferee }}</h4>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <h4 class="mb-4">Statystyki </h4>
-                    <DxDataGrid
-                        id="homegridContainer"
-                        :data-source="getGamePlayersStats"
-                        :show-borders="true"
-                        key-expr="fullName"
-                        :row-alternation-enabled="true"
-                        class="main-datagrid">
-                        <DxColumn
-                            data-field="fullName"
-                            caption="Zawodnik"
-                            alignment="left"
-                            data-type="string"/>
-                        <DxColumn
-                            data-field="team"
-                            caption="Drużyna"
-                            alignment="left"
-                            data-type="string"/>
-                        <DxColumn
-                            data-field="points"
-                            caption="Punkty"
-                            alignment="center"
-                            data-type="number"/>
-                        <DxColumn
-                            data-field="assists"
-                            caption="Asysty"
-                            alignment="center"
-                            data-type="number"/>
-                        <DxColumn
-                            data-field="rebounds"
-                            caption="Zbiórki"
-                            alignment="center"
-                            data-type="number"/>
-                        <DxColumn
-                            data-field="steals"
-                            caption="Przechwyty"
-                            alignment="center"
-                            data-type="number"/>
-                        <DxColumn
-                            data-field="blocks"
-                            caption="Bloki"
-                            alignment="center"
-                            data-type="number"/>
-                        <DxColumn
-                            data-field="fouls"
-                            caption="Faule"
-                            alignment="center"
-                            data-type="number"/>
-
-                    </DxDataGrid>
+                <div class="row mt-3">
+                    <div class="col-6">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Zawodnik</th>
+                                    <th>Punkty</th>
+                                    <th>Asysty</th>
+                                    <th>Zbiórki</th>
+                                    <th>Przechwyty</th>
+                                    <th>Bloki</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="stat in getHomeTeamStats" v-bind:key="stat.fullName">
+                                    <td>{{ stat.fullName }}</td>
+                                    <td>{{ stat.points }}</td>
+                                    <td>{{ stat.assists }}</td>
+                                    <td>{{ stat.rebounds }}</td>
+                                    <td>{{ stat.steals }}</td>
+                                    <td>{{ stat.blocks }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Bloki</th>
+                                    <th>Przechwyty</th>
+                                    <th>Zbiórki</th>
+                                    <th>Asysty</th>
+                                    <th>Punkty</th>
+                                    <th>Zawodnik</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="stat in getAwayTeamStats" v-bind:key="stat.fullName">
+                                    <td>{{ stat.blocks }}</td>
+                                    <td>{{ stat.steals }}</td>
+                                    <td>{{ stat.rebounds }}</td>
+                                    <td>{{ stat.assists }}</td>
+                                    <td>{{ stat.points }}</td>
+                                    <td>{{ stat.fullName }}</td>            
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 
             </div>
@@ -84,10 +82,6 @@
     </div>
 </template>
 <script>
-import {
-    DxDataGrid, 
-    DxColumn,
-} from 'devextreme-vue/data-grid';
 import { 
     DxButton
 } from 'devextreme-vue';
@@ -97,7 +91,7 @@ const store = "GamesDetailsStore";
 export default {
     name: "gameDetails",
     computed: {
-        ...mapGetters(store, ["getGameDetails", "getGamePlayersStats"]),
+        ...mapGetters(store, ["getGameDetails", "getGamePlayersStats", "getHomeTeamStats", "getAwayTeamStats"]),
         ...mapFields(store, [
             "detailsForm.HomeTeam",
             "detailsForm.AwayTeam",
@@ -114,14 +108,14 @@ export default {
     methods: {
         ...mapActions(store, ["setGameDetails", "setGamePlayersStats"])
     },
-    mounted() {
-        this.setGameDetails();
-        this.setGamePlayersStats();
+    created() {
+        this.setGameDetails()
+            .then(()=>{
+                this.setGamePlayersStats();
+            });
     },
     components: {
-        DxButton,
-        DxDataGrid, 
-        DxColumn
+        DxButton
     }
 }
 </script>
