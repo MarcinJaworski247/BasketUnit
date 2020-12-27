@@ -13,13 +13,17 @@ const state = {
         Steals: null,
         Blocks: null,
         Fouls: null
-    }
+    },
+    gameStatistics: []
 }
 
 const getters = {
     getField,
     getForm: (state) => {
         return state.editForm;
+    },
+    getGameStatistics: (state) => {
+        return state.gameStatistics;
     }
 }
 
@@ -46,6 +50,9 @@ const mutations = {
         state.editForm.Steals = null,
         state.editForm.Blocks = null,
         state.editForm.Fouls = null
+    },
+    setGameStatistics: (state, payload) => {
+        state.gameStatistics = payload;
     }
 }
 
@@ -64,6 +71,12 @@ const actions = {
         } catch(err) {
             console.log(err);
         } 
+    },
+    setGameStatistics: ({ commit }) => {
+        service.getGameStatistics(router.currentRoute.params.gameId)
+            .then(response => {
+                commit("setGameStatistics", response.data);
+            });
     }
 }
 

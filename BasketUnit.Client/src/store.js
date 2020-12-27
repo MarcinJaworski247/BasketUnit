@@ -33,8 +33,8 @@ import AdministrationEditNationalityStore from './modules/administration/store/H
 import SchedulesStore from './modules/schedules/store/index.js'
 
 // Statistics
-import TeamStatisticsStore from './modules/statistics/store/TeamStatistics/index.js'
-import LeagueLeadersStore from './modules/statistics/store/LeagueLeaders/index.js'
+//import TeamStatisticsStore from './modules/statistics/store/TeamStatistics/index.js'
+//import LeagueLeadersStore from './modules/statistics/store/LeagueLeaders/index.js'
 
 // Team
 import TeamStore from './modules/teams/store/index.js'
@@ -80,8 +80,8 @@ export default new Vuex.Store({
         AdministrationRefereeStore, 
         AdministrationEditRefereeStore, 
         SchedulesStore,
-        TeamStatisticsStore, 
-        LeagueLeadersStore, 
+        //TeamStatisticsStore, 
+        //LeagueLeadersStore, 
         TeamStore, 
         WorkoutsExcercisesStore,
         WorkoutsExcercisesEditStore, 

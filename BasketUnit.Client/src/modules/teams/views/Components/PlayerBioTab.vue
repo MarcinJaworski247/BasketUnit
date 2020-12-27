@@ -170,13 +170,13 @@ import {
     DxDataGrid, 
     DxColumn,
 } from 'devextreme-vue/data-grid'
-import { 
-    DxChart, 
-    DxSeries,
-    DxCommonSeriesSettings,
-    DxLabel,
-    DxFormat
-} from 'devextreme-vue/chart';
+// import { 
+//     DxChart, 
+//     DxSeries,
+//     DxCommonSeriesSettings,
+//     DxLabel,
+//     DxFormat
+// } from 'devextreme-vue/chart';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 
@@ -232,11 +232,11 @@ export default {
         DxButton,
         DxDataGrid, 
         DxColumn,
-        DxChart, 
-        DxSeries,
-        DxCommonSeriesSettings,
-        DxLabel,
-        DxFormat,
+        // DxChart, 
+        // DxSeries,
+        // DxCommonSeriesSettings,
+        // DxLabel,
+        // DxFormat,
         InjuriesPopup
     }
 }

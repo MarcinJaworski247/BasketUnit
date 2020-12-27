@@ -1,5 +1,8 @@
 <template>
 <div class="content">
+    <div class="main-header mt-1 mb-2"> 
+        <h3 class="main-header-title"> Skład </h3>
+    </div>
     <div class="printers mt-4 mb-2">
         <div v-for="player in getPlayersList" v-bind:key="player.id">
             <router-link

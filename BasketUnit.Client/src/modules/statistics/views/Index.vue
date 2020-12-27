@@ -3,42 +3,39 @@
         <div class="main-header mt-1 mb-2"> 
             <h3 class="main-header-title"> Statystyki drużyny </h3>
         </div>
-        <div class="printers">
-            <div class="row">
-                <!-- herb, nazwa druzyny -->
-                <img v-if="badge.length" style="width: 150px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+badge"/>
-                <span>{{ name }}</span>
-            </div>
-            <div class="row">
-                <!-- wykres słupkowy - średnie punkty, asysty itd. -->
-                <DxChart
-                    :data-source="getTeamAverages"
-                    title="Średnie statystyki  zespołu"
-                    >
-                    <DxCommonSeriesSettings
-                        argument-field="statType"
-                        type="bar">
-                        <DxLabel :visible="true">
-                            <DxFormat
-                                :precision="2"
-                                type="fixedPOint"/>
-                        </DxLabel>
-                    </DxCommonSeriesSettings>
-                    <DxSeries
-                        value-field="avg"/>
-                </DxChart>
-            </div>
-            <div class="row">
+        <div class="printers" style="width: 800px;">
+                    <div>
+                    <!-- herb, nazwa druzyny -->
+                        <img v-if="badge.length" style="width: 150px; margin: auto; display: block;" v-bind:src="'data:image/jpeg;base64,'+badge"/>
+                        <span>{{ name }}</span>
+                    </div>
+                    <!-- wykres słupkowy - średnie punkty, asysty itd. -->
+                    <DxChart
+                        :data-source="getTeamAverages"
+                        title="Średnie statystyki  zespołu"
+                        >
+                        <DxCommonSeriesSettings
+                            argument-field="statType"
+                            type="bar">
+                            <DxLabel :visible="true">
+                                <DxFormat
+                                    :precision="2"
+                                    type="fixedPoint"/>
+                            </DxLabel>
+                        </DxCommonSeriesSettings>
+                        <DxSeries
+                            value-field="avg"
+                            name=" "/>
+                    </DxChart>
                 <!-- wykres spline - zdobyte i stracone punkty na przestrzeni meczów -->
                 <DxChart
-                    id="chart"
-                    :data-source="sharingStatisticsInfo"
+                    :data-source="getTeamScoreAndLosePoints"
                     palette="Violet"
                     title="Punkty zdobyte i stracone na przestrzeni meczów"
                     >
                     <DxCommonSeriesSettings
-                        :type="type"
-                        argument-field="opponent"
+                        type="spline"
+                        argument-field="opponentName"
                     />
                     <DxCommonAxisSettings>
                         <DxGrid :visible="true"/>
@@ -62,10 +59,8 @@
                         vertical-alignment="top"
                         horizontal-alignment="right"
                     />
-                    <DxExport :enabled="true"/>
                     <DxTooltip :enabled="true"/>
                 </DxChart>
-            </div>
         </div>
     </div>
 </template>
@@ -80,7 +75,6 @@ import {
     DxArgumentAxis,
     DxCommonAxisSettings,
     DxGrid,
-    DxExport,
     DxLegend,
     DxMargin,
     DxTooltip
@@ -89,11 +83,11 @@ import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 
 const store = "StatisticsStore";
+
 export default {
     name: "statistics",
-    date(){
+    data(){
         return {
-            type: 'spline',
             sources: [
                 {
                     value: 'teamScore',
@@ -127,7 +121,6 @@ export default {
         DxArgumentAxis,
         DxCommonAxisSettings,
         DxGrid,
-        DxExport,
         DxLegend,
         DxMargin,
         DxTooltip

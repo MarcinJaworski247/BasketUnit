@@ -12,4 +12,4 @@ class statisticsService {
     }
 }
 
-export default new teamsService();
+export default new statisticsService();

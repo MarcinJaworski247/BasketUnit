@@ -131,72 +131,112 @@ namespace BasketUnit.WebAPI.Repositories
                 .Include(x => x.Game)
                 .ThenInclude(y => y.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.First().TeamId == 1 || x.Game.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.Game.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
+                .Select(x => x.Points).Sum();
+
+            int pointsSum = MainDatabaseContext.Stats
+                .Include(x => x.Game)
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.Game.Date < DateTime.Now)
                 .Select(x => x.Points).Sum();
 
             int assistsAvg = MainDatabaseContext.Stats
                 .Include(x => x.Game)
                 .ThenInclude(y => y.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.First().TeamId == 1 || x.Game.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.Game.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
+                .Select(x => x.Assists).Sum();
+
+            int assistsSum = MainDatabaseContext.Stats
+                .Include(x => x.Game)
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.Game.Date < DateTime.Now)
                 .Select(x => x.Assists).Sum();
 
             int reboundsAvg = MainDatabaseContext.Stats
                 .Include(x => x.Game)
                 .ThenInclude(y => y.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.First().TeamId == 1 || x.Game.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.Game.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
+                .Select(x => x.Rebounds).Sum();
+
+            int reboundsSum = MainDatabaseContext.Stats
+                .Include(x => x.Game)
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.Game.Date < DateTime.Now)
                 .Select(x => x.Rebounds).Sum();
 
             int stealsAvg = MainDatabaseContext.Stats
                 .Include(x => x.Game)
                 .ThenInclude(y => y.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.First().TeamId == 1 || x.Game.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.Game.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
+                .Select(x => x.Steals).Sum();
+
+            int stealsSum = MainDatabaseContext.Stats
+                .Include(x => x.Game)
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.Game.Date < DateTime.Now)
                 .Select(x => x.Steals).Sum();
 
             int blocksAvg = MainDatabaseContext.Stats
                 .Include(x => x.Game)
                 .ThenInclude(y => y.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.First().TeamId == 1 || x.Game.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Game.Date < DateTime.Now && (x.Game.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.Game.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
+                .Select(x => x.Blocks).Sum();
+
+            int blocksSum = MainDatabaseContext.Stats
+                .Include(x => x.Game)
+                .Include(x => x.Player)
+                .ThenInclude(y => y.TeamLineup)
+                .ThenInclude(z => z.Team)
+                .Where(x => x.Player.TeamLineup.First().TeamId == 1 && x.Game.Date < DateTime.Now)
                 .Select(x => x.Blocks).Sum();
 
             int gamesAmount = MainDatabaseContext.Games
                 .Include(x => x.GameTeams)
                 .ThenInclude(z => z.Team)
-                .Where(x => x.Date < DateTime.Now && (x.GameTeams.First().TeamId == 1 || x.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Date < DateTime.Now && (x.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
                 .Select(x => x.Id).Count();
 
             List<TeamAveragesVM> result = new List<TeamAveragesVM>();
             TeamAveragesVM points = new TeamAveragesVM
             {
-                StatType = "Points",
-                Avg = pointsAvg / gamesAmount
+                StatType = "Punkty",
+                Avg = pointsSum / gamesAmount
             };
             result.Add(points);
             TeamAveragesVM assists = new TeamAveragesVM
             {
-                StatType = "Assists",
-                Avg = assistsAvg / gamesAmount
+                StatType = "Asysty",
+                Avg = assistsSum / gamesAmount
             };
             result.Add(assists);
             TeamAveragesVM rebounds = new TeamAveragesVM
             {
-                StatType = "Rebounds",
-                Avg = reboundsAvg / gamesAmount
+                StatType = "Zbiórki",
+                Avg = reboundsSum / gamesAmount
             };
             result.Add(rebounds);
             TeamAveragesVM steals = new TeamAveragesVM
             {
-                StatType = "Steals",
-                Avg = stealsAvg / gamesAmount
+                StatType = "Przechwyty",
+                Avg = stealsSum / gamesAmount
             };
             result.Add(steals);
             TeamAveragesVM blocks = new TeamAveragesVM
             {
-                StatType = "Blocks",
-                Avg = blocksAvg / gamesAmount
+                StatType = "Bloki",
+                Avg = blocksSum / gamesAmount
             };
             result.Add(blocks);
             return result;
@@ -207,12 +247,13 @@ namespace BasketUnit.WebAPI.Repositories
                 .Games
                 .Include(x => x.GameTeams)
                 .ThenInclude(y => y.Team)
-                .Where(x => x.Date < DateTime.Now && (x.GameTeams.First().TeamId == 1 || x.GameTeams.Last().TeamId == 1))
+                .Where(x => x.Date < DateTime.Now && (x.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
                 .Select(x => new ScoreAndLosePointsVM()
                 {
                     Id = x.Id,
                     HomeTeam = x.GameTeams[0].Team,
                     AwayTeam = x.GameTeams[1].Team,
+                    Date = x.Date
                 })
                 .ToList();
 
@@ -235,7 +276,10 @@ namespace BasketUnit.WebAPI.Repositories
                     .Select(x => x.Points).Sum();
                 item.TeamScore = myTeamPoints;
                 item.OpponentScore = opponentTeamPoints;
-                item.OpponentName = item.HomeTeam.Id == 1 ? item.AwayTeam.City + " " + item.AwayTeam.Name : item.HomeTeam.City + " " + item.HomeTeam.Name; 
+                item.OpponentName = (item.HomeTeam.Id == 1 ? item.AwayTeam.City + " " + item.AwayTeam.Name : item.HomeTeam.City + " " + item.HomeTeam.Name) + " " + item.Date;
+                item.AwayTeam = null;
+                item.HomeTeam = null;
+
             }
             return data;
         }

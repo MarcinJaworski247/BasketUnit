@@ -8,6 +8,6 @@ namespace BasketUnit.WebAPI.ViewModels
     public class DataToSpiderWebVM
     {
         public string Arg { get; set; }
-        public decimal Avg { get; set; }
+        public decimal Val { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 <template>
 <div class="container">
+        <div class="main-header mt-1 mb-2"> 
+            <h3 class="main-header-title"> Pierwsza piątka </h3>
+        </div>
     <div class="row mt-4 mb-4">
     <div class="col-xs-6 mr-4 mt-4">
         <label class="mt-4">Point Guard</label>

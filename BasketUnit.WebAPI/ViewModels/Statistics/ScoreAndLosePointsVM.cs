@@ -14,5 +14,6 @@ namespace BasketUnit.WebAPI.ViewModels
         public string OpponentName { get; set; }
         public int TeamScore { get; set; }
         public int OpponentScore { get; set; }
+        public DateTime? Date { get; set; }
     }
 }

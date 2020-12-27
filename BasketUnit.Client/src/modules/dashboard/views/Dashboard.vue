@@ -3,26 +3,32 @@
         <div class="printers">
             <div class="row">
                 <div class="row">
-                    <span>Ostatnie mecze</span>
-                    <div v-for="item in getLastGames" v-bind:key="item.id" class="col-3" v-bind:class="{loseTile : !item.isWin, winTile : item.isWin}">
-                        <img style="height: 300px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
-                        <span>{{ item.score }}</span>
+                    <div class="col-12">
+                        <span>Ostatnie mecze</span>
+                        <div v-for="item in getLastGames" v-bind:key="item.id"  v-bind:class="{loseTile : !item.isWin, winTile : item.isWin}">
+                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
+                            <h3>{{ item.score }}</h3>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <span>Nadchodzące mecze</span>
-                    <div v-for="item in getFutureGames" v-bind:key="item.id" class="col-3">
-                        <img style="height: 300px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
-                        <span>{{ item.date }}</span>
-                        <span>{{ item.arena }}</span>
+                    <div class="col-12">
+                        <span>Nadchodzące mecze</span>
+                        <div v-for="item in getFutureGames" v-bind:key="item.id" class="col-3">
+                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
+                            <span>{{ item.date }}</span>
+                            <span>{{ item.arena }}</span>
+                        </div>
                     </div>
                 </div>
                 <div class="row">
-                    <span>Kontuzje</span>
-                    <div v-for="item in getInjuredPlayers" v-bind:key="item.id" class="col-4">
-                        <img style="height: 300px;" v-bind:src="'data:image/jpeg;base64,' + item.avatar"/>
-                        <span>{{ item.fullName }}</span>
-                        <span>{{ item.injury }}</span>
+                    <div class="col-12">
+                        <span>Kontuzje</span>
+                        <div v-for="item in getInjuredPlayers" v-bind:key="item.id" class="injured-player">
+                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.avatar"/>
+                            <h4>{{ item.fullName }}</h4>
+                            <h4>{{ item.injury }}</h4>
+                        </div>
                     </div>
                 </div>
                 <!-- <div class="row">
@@ -32,11 +38,13 @@
                     <span>Tabela ligowa</span>
                 </div> -->
                 <div class="row">
-                    <span>Nadchodzące treningi</span>
-                    <div v-for="item in getFutureWorkouts" v-bind:key="item.startDate" class="col-4">
-                        
-                        <span>{{ item.workout }}</span>
-                        <span>{{ item.startDate }}</span>
+                    <div class="col-12">
+                        <span>Nadchodzące treningi</span>
+                        <div v-for="item in getFutureWorkouts" v-bind:key="item.date" class="future-workout">
+                            <h2><i class="fas fa-running"></i></h2>
+                            <h3>{{ item.workout }}</h3>
+                            <h4>{{ item.date }}</h4>
+                        </div>
                     </div>
                 </div> 
             </div>
@@ -115,9 +123,15 @@ export default {
     margin-top: 24px;
 }
 .winTile{
-    border-color: green;
+    border: 5px solid green;
 }
 .loseTile{
-    border-color: red;
+    border: 5px solid red;
+}
+.injured-player{
+    border: 2px solid blue;
+}
+.future-workout{
+    border: 2px solid blueviolet;
 }
 </style>

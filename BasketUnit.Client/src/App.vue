@@ -27,7 +27,7 @@
 
       <ul class="nav flex-column bg-white mb-0">
         <li class="nav-item">
-          <router-link :to="{ name: 'team.lineup' }" class="nav-link">
+          <router-link :to="{ name: 'team.lineup.index' }" class="nav-link">
           <span class="nav-link text-dark mb-2">
               <i class="fas fa-users mr-1"></i>
               Skład 
@@ -35,10 +35,18 @@
           </router-link>
         </li>
         <li class="nav-item">
-          <router-link :to="{ name: 'team.firstLineup' }" class="nav-link">
+          <router-link :to="{ name: 'team.firstLineup.index' }" class="nav-link">
           <span class="nav-link text-dark mb-2">
               <i class="fas fa-users mr-1"></i>
               Pierwsza piątka 
+          </span>
+          </router-link>
+        </li>
+        <li class="nav-item">
+          <router-link :to="{ name: 'statistics.index' }" class="nav-link">
+          <span class="nav-link text-dark mb-2">
+              <i class="far fa-chart-bar mr-1"></i>
+              Statystyki
           </span>
           </router-link>
         </li>
