@@ -103,7 +103,6 @@ const mutations = {
         state.injuriesAdd.AddInjury = null;
     },
     setPlayerAvgs: (state, payload) => {
-        debugger
         state.playerAvgs = payload;
     },
     setPlayerRecords: (state, payload) => {
@@ -153,7 +152,6 @@ const actions = {
         }
     },
     setPlayerAvgs: ({ commit }) => {
-        debugger
         service.getPlayerAvgs(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setPlayerAvgs", response.data);

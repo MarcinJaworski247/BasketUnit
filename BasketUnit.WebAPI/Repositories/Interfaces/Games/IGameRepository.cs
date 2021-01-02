@@ -20,5 +20,6 @@ namespace BasketUnit.WebAPI.Repositories
         List<GameStatsListVM> GetGamePlayersStats(int gameId);
         GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId);
         void SaveGamePlayerStatistics(GamePlayerStatisticsVM data);
+        List<ListAllGamesVM> GetGamesProtocolsList();
     }
 }

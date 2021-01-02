@@ -51,5 +51,9 @@ namespace BasketUnit.WebAPI.Services
         {
             RepositoriesWrapper.GameRepository.SaveGamePlayerStatistics(data);
         }
+        public List<ListAllGamesVM> GetGamesProtocolsList()
+        {
+            return RepositoriesWrapper.GameRepository.GetGamesProtocolsList();
+        }
     }
 }

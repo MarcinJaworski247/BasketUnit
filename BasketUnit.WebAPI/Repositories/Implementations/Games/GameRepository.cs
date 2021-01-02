@@ -112,7 +112,8 @@ namespace BasketUnit.WebAPI.Repositories
             List<ClosestGamesWidgetVM> data = MainDatabaseContext.Games
                 .Include(x => x.GameTeams)
                 .ThenInclude(y => y.Team)
-                .OrderByDescending(x => x.Id)
+                .Where(x => x.Date > DateTime.Now)
+                .OrderByDescending(x => x.Date)
                 .Take(3)
                 .Select(x => new ClosestGamesWidgetVM() {
                     StartDate = x.Date,
@@ -132,6 +133,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .Include(x => x.GameReferees)
                 .ThenInclude(z => z.Referee)
                 .Include(x => x.Arena)
+                .Where(x => x.Date < DateTime.Now)
                 .Select(x => new ListAllGamesVM
                 {
                     Id = x.Id,
@@ -267,6 +269,52 @@ namespace BasketUnit.WebAPI.Repositories
 
             MainDatabaseContext.Stats.Update(stats);
             MainDatabaseContext.SaveChanges();
+        }
+        public List<ListAllGamesVM> GetGamesProtocolsList()
+        {
+            List<ListAllGamesVM> data = MainDatabaseContext
+                .Games
+                .Include(x => x.GameTeams)
+                .ThenInclude(y => y.Team)
+                .Include(x => x.GameReferees)
+                .ThenInclude(z => z.Referee)
+                .Include(x => x.Arena)
+                .Select(x => new ListAllGamesVM
+                {
+                    Id = x.Id,
+                    HomeTeam = x.GameTeams[0].Team.City + " " + x.GameTeams[0].Team.Name,
+                    HomeTeamId = x.GameTeams[0].Team.Id,
+                    AwayTeam = x.GameTeams[1].Team.City + " " + x.GameTeams[1].Team.Name,
+                    AwayTeamId = x.GameTeams[1].Team.Id,
+                    Arena = x.Arena.Name,
+                    Date = x.Date
+                }).ToList();
+
+            foreach (var item in data)
+            {
+                List<int> homeTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup.FirstOrDefault().Team.Id == item.HomeTeamId)
+                    .Select(x => x.Points).ToList();
+
+                item.HomeTeamPoints = homeTeamPoints.Sum();
+
+                List<int> awayTeamPoints = MainDatabaseContext
+                    .Stats
+                    .Include(x => x.Player)
+                    .ThenInclude(y => y.TeamLineup)
+                    .ThenInclude(z => z.Team)
+                    .Where(x => x.GameId == item.Id && x.Player.TeamLineup.FirstOrDefault().Team.Id == item.AwayTeamId)
+                    .Select(x => x.Points).ToList();
+
+                item.AwayTeamPoints = awayTeamPoints.Sum();
+
+            }
+
+            return data;
         }
     }
 }

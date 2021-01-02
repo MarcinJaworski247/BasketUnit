@@ -1,52 +1,51 @@
 <template>
     <div class="content">
         <div class="printers">
-            <div class="row">
-                <div class="row">
-                    <div class="col-12">
-                        <span>Ostatnie mecze</span>
+            <div style="display: flex;">
+                <div class="last-games-row">
+                    <div class="row-header">Ostatnie mecze</div>
+                    <div class="flexxin">
                         <div v-for="item in getLastGames" v-bind:key="item.id"  v-bind:class="{loseTile : !item.isWin, winTile : item.isWin}">
-                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
-                            <h3>{{ item.score }}</h3>
+                            <img style="width: 80px; max-height: 80px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
+                            <div class="score">{{ item.score }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span>Nadchodzące mecze</span>
-                        <div v-for="item in getFutureGames" v-bind:key="item.id" class="col-3">
-                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
-                            <span>{{ item.date }}</span>
-                            <span>{{ item.arena }}</span>
+
+                <div class="future-games-row">
+                    <div class="row-header">Nadchodzące mecze</div>
+                    <div class="flexxin">
+                        <div v-for="item in getFutureGames" v-bind:key="item.id" class="future-game">
+                            <img style="width: 70px;  max-height: 70px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
+                            <div class="future-game-desc">{{ item.date }}</div>
+                            <div class="future-game-desc">{{ item.arena }}</div>
                         </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-12">
-                        <span>Kontuzje</span>
+            </div>
+
+            <div style="display: flex;">
+                <div class="injured-players-row">
+                    <div class="row-header">Kontuzje</div>
+                    <div class="flexxin">
                         <div v-for="item in getInjuredPlayers" v-bind:key="item.id" class="injured-player">
-                            <img style="height: 100px;" v-bind:src="'data:image/jpeg;base64,' + item.avatar"/>
-                            <h4>{{ item.fullName }}</h4>
-                            <h4>{{ item.injury }}</h4>
+                            <img style="width: 80px;  max-height: 80px;" v-bind:src="'data:image/jpeg;base64,' + item.avatar"/>
+                            <div class="player-name">{{ item.fullName }}</div>
+                            <div class="player-injury">{{ item.injury }}</div>
                         </div>
                     </div>
                 </div>
-                <!-- <div class="row">
-                    <span>Statystyki drużyny</span>
-                </div>
-                <div class="row">
-                    <span>Tabela ligowa</span>
-                </div> -->
-                <div class="row">
-                    <div class="col-12">
-                        <span>Nadchodzące treningi</span>
+
+                <div class="future-workouts-row">
+                    <div class="row-header">Nadchodzące treningi</div>
+                    <div class="flexxin">
                         <div v-for="item in getFutureWorkouts" v-bind:key="item.date" class="future-workout">
-                            <h2><i class="fas fa-running"></i></h2>
-                            <h3>{{ item.workout }}</h3>
-                            <h4>{{ item.date }}</h4>
+                            <div class="workout-icon"><i class="fas fa-running"></i></div>
+                            <div class="workout-name">{{ item.workout }}</div>
+                            <div class="workout-date">{{ item.date }}</div>
                         </div>
                     </div>
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -87,51 +86,122 @@ export default {
 }
 </script>
 <style type="scss" scoped>
-.last-games-tile{
-    width: 300px;
-    height: 100px;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-top: 24px;
-}
-.future-games-tile{
-    width: 300px;
-    height: 100px;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-top: 24px;
-}
-.injured-players-tile{
-    width: 150px;
-    height: 100px;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-top: 24px;
-}
-.team-statistics-tile{
-    width: 450px;
-    height: 200px;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-top: 24px;
-}
-.league-table-tile{
-    width: 450px;
-    height: 200px;
-    border: 1px solid black;
-    border-radius: 2px;
-    margin-top: 24px;
-}
 .winTile{
     border: 5px solid green;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    padding-top: 10px;
 }
 .loseTile{
     border: 5px solid red;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    padding-top: 10px;
 }
 .injured-player{
-    border: 2px solid blue;
+    border: 5px solid rgb(31, 31, 131);
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
 }
 .future-workout{
-    border: 2px solid blueviolet;
+    border: 5px solid rgb(31, 31, 131);;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+}
+.future-game{
+    border: 5px solid rgb(31, 31, 131);;
+    border-radius: 10px;
+    background: #fff;
+    text-align: center;
+    margin-right: 20px;
+    height: 150px;
+    width: 150px;
+    padding-top: 10px;
+}
+.last-games-row{
+    background: rgb(245, 245, 245);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 50px;
+    margin-top: 0px;
+    width: 100%;
+    margin-right: 10px;
+    /* display: flex; */
+}
+.future-games-row{
+    background: rgb(245, 245, 245);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 50px;
+    width: 100%;
+    /* display: flex; */
+}
+.injured-players-row{
+    background: rgb(245, 245, 245);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 50px;
+    width: 100%;
+    margin-right: 10px;
+    /* display: flex; */
+}
+.future-workouts-row{
+    background: rgb(245, 245, 245);
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 50px;
+    width: 100%;
+    /* display: flex; */
+}
+.row-header{
+    font-size: 24px;
+    color: rgb(31, 31, 131);
+    margin-bottom: 10px;
+}
+.workout-icon{
+    font-size: 42px;
+}
+.score{
+    font-weight: 600;
+    font-size: 24px;
+}
+.player-name{
+    font-weight: 600;
+    font-size: 20px;
+}
+.player-injury{
+    font-weight: 400;
+    font-size: 16px;
+}
+.workout-name{
+    font-weight: 600;
+    font-size: 20px;
+}
+.workout-date{
+    font-weight: 400;
+    font-size: 16px;
+}
+.future-game-desc{
+    font-weight: 400;
+    font-size: 14px;
+}
+.flexxin{
+    display: flex;
 }
 </style>

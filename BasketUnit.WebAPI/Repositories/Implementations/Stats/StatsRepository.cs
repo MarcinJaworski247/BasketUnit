@@ -108,8 +108,8 @@ namespace BasketUnit.WebAPI.Repositories
                 .ThenInclude(y => y.TeamLineup)
                 .ThenInclude(z => z.Team)
                 .Include(x => x.Game)
-                .OrderByDescending(x => x.Id)
-                .Where(x => x.PlayerId == playerId )
+                .OrderByDescending(x => x.Game.Date)
+                .Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now)
                 .Select(x => new GamePlayerStatsVM()
             {
                 GameId = x.GameId,
@@ -121,7 +121,7 @@ namespace BasketUnit.WebAPI.Repositories
                 Fouls = x.Fouls,
                 GameTime = x.Game.Date,
                 Opponent = x.Game.GameTeams.Where(y => y.TeamId != playerTeamId && y.GameId == x.GameId).Select(y => y.Team.Name).FirstOrDefault()
-            }).ToList();
+            }).Take(3).ToList();
 
             return data;
         }

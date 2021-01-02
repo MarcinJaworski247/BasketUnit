@@ -231,7 +231,7 @@ namespace BasketUnit.WebAPI.Repositories
                     AwayTeam = x.GameTeams[1].Team,
                 })
                 .OrderByDescending(x => x.Id)
-                .Take(4)
+                .Take(3)
                 .ToList();
 
             foreach(var item in data)
@@ -274,7 +274,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .Include(x => x.Arena)
                 .Include(x => x.GameTeams)
                 .ThenInclude(y => y.Team)
-                .Where(x => x.Date > DateTime.Now && (x.GameTeams.OrderBy(x => x.Id).First().Id == 1 || x.GameTeams.OrderBy(x => x.Id).Last().Id == 1))
+                .Where(x => x.Date > DateTime.Now && (x.GameTeams.OrderBy(x => x.Id).First().TeamId == 1 || x.GameTeams.OrderBy(x => x.Id).Last().TeamId == 1))
                 .Select(x => new FutureGamesVM()
                 {
                     Id = x.Id,
@@ -284,7 +284,7 @@ namespace BasketUnit.WebAPI.Repositories
                     Date = x.Date
                 })
                 .OrderBy(x => x.Date)
-                .Take(4)
+                .Take(3)
                 .ToList();
             foreach (var item in data)
             {
@@ -293,6 +293,9 @@ namespace BasketUnit.WebAPI.Repositories
             foreach (var item in data)
             {
                 item.Badge = Convert.ToBase64String(item.OpponentTeam.Badge);
+                item.HomeTeam = null;
+                item.AwayTeam = null;
+                item.OpponentTeam = null;
             }
             return data;
         }
@@ -309,7 +312,10 @@ namespace BasketUnit.WebAPI.Repositories
                     FullName = x.Player.FirstName + " " + x.Player.LastName,
                     Avatar = Convert.ToBase64String(x.Player.Avatar),
                     Injury = x.Injury
-                }).ToList();
+                })
+                .OrderBy(x => x.Id)
+                .Take(3)
+                .ToList();
         }
         public TeamFormVM GetTeamForm()
         {
@@ -414,7 +420,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .ThenInclude(z => z.Team)
                 .Include(x => x.Game)
                 .OrderByDescending(x => x.Id)
-                .Where(x => x.PlayerId == playerId)
+                .Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now)
                 .Select(x => new GamePlayerStatsVM()
                 {
                     GameId = x.GameId,
@@ -483,7 +489,10 @@ namespace BasketUnit.WebAPI.Repositories
                 {
                     Workout = x.Workout.Name,
                     Date = x.StartDate
-                }).ToList();
+                })
+                .OrderBy(x => x.Date)
+                .Take(3)
+                .ToList();
         }
     }
 }

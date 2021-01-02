@@ -1,166 +1,144 @@
 <template>
   <div id="app">
-    <div style="display: flex;">
-    <div class="vertical-nav bg-white ml-1">
-      <div class="py-4 px-3 mb-1 ">
-        <router-link :to="{ name: 'dashboard' }">
-          <div class="media d-flex align-items-center"><i class="fas fa-basketball-ball mr-1" style="font-size: 42px;"></i>
-            <div class="media-body">
-              <h5 class="m-1">BASKET UNIT</h5>
+    <div class="wrapper">
+      <div class="sidebar">
+        <div>
+          <router-link :to="{ name: 'dashboard' }">
+            <div class="sidebar-header">
+              <i
+                class="fas fa-basketball-ball mr-1 logo"
+              ></i>
+              <div>
+                <h5>BASKET UNIT</h5>
+              </div>
             </div>
-          </div>
-        </router-link>
-      </div>
-
-      <div class="py-4 px-3 mb-4 bg-light">
-        <div class="media d-flex align-items-center">
-            <!-- <img v-bind:src="userData.UserAvatar" width="65" class="mr-3 rounded-circle img-thumbnail shadow-sm"> -->
-          <div class="media-body">
-            <!-- <h6 class="m-0">{{ userData.FullName }}</h6> -->
-            <!-- <p class="font-weight-light text-muted mb-0">{{ userData.Function }}</p> -->
-            <span><i class="fas fa-sign-out-alt"></i></span>
-          </div>
+          </router-link>
         </div>
-      </div>
 
-      <!-- <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p> -->
-
-      <ul class="nav flex-column bg-white mb-0">
-        <li class="nav-item">
-          <router-link :to="{ name: 'team.lineup.index' }" class="nav-link">
-          <span class="nav-link text-dark mb-2">
-              <i class="fas fa-users mr-1"></i>
-              Skład 
-          </span>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'team.firstLineup.index' }" class="nav-link">
-          <span class="nav-link text-dark mb-2">
-              <i class="fas fa-users mr-1"></i>
-              Pierwsza piątka 
-          </span>
-          </router-link>
-        </li>
-        <li class="nav-item">
-          <router-link :to="{ name: 'statistics.index' }" class="nav-link">
-          <span class="nav-link text-dark mb-2">
-              <i class="far fa-chart-bar mr-1"></i>
-              Statystyki
-          </span>
-          </router-link>
-        </li>
-        <!-- <li class="nav-item mb-3">
-          <router-link :to="{ name: 'statistics.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-chart-bar mr-1"></i>
-              Statystyki
-          </span>
-          </router-link>
-        </li> -->
-        <li class="nav-item mb-3">
-          <router-link :to="{ name: 'schedules.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-calendar-alt mr-1"></i>
-              Kalendarz
-          </span>
-          </router-link>
-        </li>
-        <li class="nav-item mb-3">
-          <router-link :to="{ name: 'workouts.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-dumbbell mr-1"></i>
-              Treningi
-            </span>
+        <!-- left nav bar -->
+        <ul>
+          <li>
+            <router-link :to="{ name: 'team.lineup.index' }">
+              <span>
+                <i class="fas fa-users mr-1"></i>
+                Skład
+              </span>
             </router-link>
-        </li>
-        <li class="nav-item mb-3">
-          <router-link :to="{ name: 'games.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-basketball-ball mr-1"></i>
-              Mecze
-            </span>
+          </li>
+          <li>
+            <router-link :to="{ name: 'team.firstLineup.index' }">
+              <span>
+                <i class="fas fa-user-friends mr-1"></i>
+                Pierwsza piątka
+              </span>
             </router-link>
-        </li>
-        <li class="nav-item mb-3">
-          <router-link :to="{ name: 'protocols.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-file-alt mr-1"></i>
-              Protokoły
-            </span>
+          </li>
+          <li>
+            <router-link :to="{ name: 'statistics.index' }">
+              <span>
+                <i class="far fa-chart-bar mr-1"></i>
+                Statystyki
+              </span>
             </router-link>
-        </li>
-        <!-- <li class="nav-item mb-3">
-          <router-link :to="{ name: 'administration.index' }" class="nav-link">
-          <span class="nav-link text-dark">
-              <i class="fas fa-flag mr-1"></i>
-              Protokoły
-            </span>
+          </li>
+          <li>
+            <router-link :to="{ name: 'schedules.index' }">
+              <span>
+                <i class="fas fa-calendar-alt mr-1"></i>
+                Kalendarz
+              </span>
             </router-link>
-        </li> -->
-        <li class="nav-item mb-3">
-          <router-link :to="{ name: 'administration.index' }" class="nav-link">
-            <span class="text-dark">
+          </li>
+          <li>
+            <router-link :to="{ name: 'workouts.index' }">
+              <span>
+                <i class="fas fa-dumbbell mr-1"></i>
+                Treningi
+              </span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'games.index' }">
+              <span>
+                <i class="fas fa-basketball-ball mr-1"></i>
+                Mecze
+              </span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'protocols.index' }">
+              <span>
+                <i class="fas fa-file-alt mr-1"></i>
+                Protokoły
+              </span>
+            </router-link>
+          </li>
+          <li>
+            <router-link :to="{ name: 'administration.index' }">
+              <span>
                 <i class="fas fa-cog mr-1"></i>
                 Administracja
               </span>
-          </router-link>
-        </li>
-      </ul>
-        <!-- <div>
-          <div>
-            <img v-bind:src="userData.TeamBadge" width="65">
-          </div>
-          <span>{{ userData.TeamName }}</span>
-        </div>   -->
-    </div>
-    <div class="container mt-4 pl-2 pr-2" style="width: auto;">
-      <router-view />
-    </div>
-    <div style="justify-content: flex-end;">
-      <div style="width: 175px; height: 400px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; border-radius: 3px; margin-top: 100px; ">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue">Nadchodzące mecze</div>
-        <div v-for="item in getClosestGames" :key="item.startDate" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)" class="mt-3">
-          <strong>{{item.homeTeam}} vs. {{item.awayTeam}}</strong>
-          <div>Arena: {{item.arena}}</div>
-          <div>Data: {{item.startDate}}</div>
-        </div>
-      </div>
-      <div style="width: 175px; height: 375px; margin-right: 50px; border: 2px solid rgba(104, 103, 102, 0.096) ; margin-top: 50px; border-radius: 3px;">
-        <div style="margin-top: 10px; text-align: center; font-weight: bold; color: blue;">Liderzy ligi</div>
-        <!-- <div v-for="item in getLeaugueLeaders" :key="item.statType">
-          <strong>{{item.statType}}</strong>
-          {{item.fullNamePlayer}}
-          {{item.team}}
-          {{item.score}}
+            </router-link>
+          </li>
+        </ul>
+
+        <!-- <div class="sidebar-footer">
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-facebook-f"></i>
+          <i class="fab fa-facebook-f"></i>
         </div> -->
-        <div  class="mt-3 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
-          <div><strong>Punkty</strong></div>
-          <div>Kevin Durant, Nets</div>
-          <div>31.1 </div>
-        </div>
-        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
-          <div><strong>Asysty</strong></div>
-          <div>Ben Simmons, 76ers</div>
-          <div>11.2 </div>
-        </div>
-        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
-          <div><strong>Zbiórki</strong></div>
-          <div>Zion Williamson, Pelicans</div>
-          <div>12.4 </div>
-        </div>
-        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
-          <div><strong>Przechwyty</strong></div>
-          <div>LeBron James, Lakers</div>
-          <div>3.6 </div>
-        </div>
-        <div class="mt-1 ml-1" style="border-bottom: 1px solid rgba(104, 103, 102, 0.096)">
-          <div><strong>Bloki</strong></div>
-          <div>Anthony Davis, Lakers</div>
-          <div>2.4 </div>
-        </div>
+
       </div>
-    </div>
+
+      <!-- content -->
+      <div class="main-content">
+        
+          <router-view />
+        
+      </div>
+
+      <!-- widgets -->
+      <div class="widgets-bar">
+        <div class="future-games-widget">
+          <div class="future-games-header">Nadchodzące mecze</div>
+          <div v-for="item in getClosestGames" :key="item.startDate" class="future-games-item">
+            <div class="future-games-teams">{{ item.homeTeam }} vs. {{ item.awayTeam }}</div>
+            <div class="future-games-desc">Arena: <strong>{{ item.arena }}</strong></div>
+            <div class="future-games-desc">Data: <strong>{{ item.startDate }}</strong></div>
+          </div>
+        </div>
+
+        <div class="league-leaders-widget">
+          <div class="league-leaders-header">Liderzy ligi</div>
+          <div class="league-leaders-item">
+            <div class="stat-header"><strong>Punkty</strong></div>
+            <div class="stat-player-name">Kevin Durant, Nets</div>
+            <div class="stat-avg">31.1</div>
+          </div>
+          <div class="league-leaders-item">
+            <div class="stat-header"><strong>Asysty</strong></div>
+            <div class="stat-player-name">Ben Simmons, 76ers</div>
+            <div class="stat-avg">11.2</div>
+          </div>
+          <div class="league-leaders-item">
+            <div class="stat-header"><strong>Zbiórki</strong></div>
+            <div class="stat-player-name">Zion Williamson, Pelicans</div>
+            <div class="stat-avg">12.4</div>
+          </div>
+          <div class="league-leaders-item">
+            <div class="stat-header"><strong>Przechwyty</strong></div>
+            <div class="stat-player-name">LeBron James, Lakers</div>
+            <div class="stat-avg">3.6</div>
+          </div>
+          <div class="league-leaders-item">
+            <div class="stat-header"><strong>Bloki</strong></div>
+            <div class="stat-player-name">Anthony Davis, Lakers</div>
+            <div class="stat-avg">2.4</div>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 </template>
@@ -170,32 +148,187 @@ import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 
 export default {
-  name: 'App',
+  name: "App",
   computed: {
-    ...mapGetters(["getLeaugueLeaders", "getClosestGames"])
+    ...mapGetters(["getLeaugueLeaders", "getClosestGames"]),
   },
   methods: {
-    ...mapActions(["setLeagueaLeaders", "setClosestGames"])
+    ...mapActions(["setLeagueaLeaders", "setClosestGames"]),
   },
-  created(){
-    this.setLeagueaLeaders();
+  created() {
+    //this.setLeagueaLeaders();
     this.setClosestGames();
-  }
+  },
 };
 </script>
 
 <style scoped>
-
-.vertical-nav {
-  min-width: 200px;
-  width: 200px;
-  height: 100vh;
-  position: fixed;
-  top: 0;
-  left: 0;
-  box-shadow: 3px 3px 10px rgba(104, 103, 102, 0.096);
-  transition: all 0.4s;
-  font-size: 16px;
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
 }
 
+body{
+  background: rgb(238, 238, 238);
+}
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+.wrapper .sidebar{
+  position: fixed;
+  width: 200px;
+  height: 100%;
+  background: rgb(233, 233, 233);
+  padding: 30px 0;
+  text-decoration: none;
+}
+
+.wrapper .sidebar h5{
+  color: rgb(31, 31, 131);
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  font-size: 20px;
+}
+
+.wrapper .sidebar ul li a{
+  color: rgb(31, 31, 131);
+  display: block; 
+}
+
+.wrapper .sidebar ul li a .far .fas{
+  width: 35px;
+}
+
+.wrapper .sidebar .far .fas{
+  width: 4px;
+}
+
+.wrapper .sidebar ul li:hover{
+  background: rgb(247, 248, 248);
+  color: rgb(31, 31, 131);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.wrapper .sidebar ul li:hover a{
+  color: rgb(31, 31, 131);
+  text-decoration: none;
+}
+
+.wrapper .sidebar .sidebar-header:hover{
+  text-decoration: none;
+}
+
+.wrapper .sidebar .sidebar-footer{
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+}
+
+.wrapper .main-content{
+  width: 100%;
+  margin-left: 200px;
+  margin-right: 300px;
+  /* background: rgb(238, 238, 238); */
+  /* display: flex; */
+  height: 100%;
+  padding-left: 100px;
+  padding-top: 50px;
+  padding-right: 100px;
+  padding-bottom: 50px;
+}
+
+.wrapper .widgets-bar{
+  width: 300px;
+  position: fixed;
+  right: 0;
+  padding: 30px 0;
+  background: rgb(233, 233, 233);
+  height: 100%;
+}
+
+.wrapper .sidebar .sidebar-header{
+  text-align: center;
+  border-bottom: 1px solid rgb(31, 31, 131);
+  margin-bottom: 38px;
+}
+
+.wrapper .sidebar .logo{
+  font-size: 82px;
+  color: rgb(31, 31, 131);
+}
+
+.future-games-widget{
+  border: 3px solid rgb(31, 31, 131);
+  border-radius: 5px;
+  width: 250px;
+  margin: auto;
+  padding: 10px;
+  background: #fff;
+}
+
+.future-games-header{
+  font-size: 18px;
+  color: rgb(31, 31, 131);
+  font-weight: 600;
+  border-bottom: 1px solid rgb(31, 31, 131);
+  margin-bottom: 10px;
+}
+
+.future-games-item{
+  border-bottom: 1px solid rgb(31, 31, 131);
+  margin-bottom: 10px;
+}
+
+.league-leaders-widget{
+  border: 3px solid rgb(31, 31, 131);
+  border-radius: 5px;
+  width: 250px;
+  margin: auto;
+  padding: 10px;
+  margin-top: 40px;
+  background: #fff;
+}
+
+.league-leaders-header{
+  font-size: 18px;
+  color: rgb(31, 31, 131);
+  font-weight: 600;
+  border-bottom: 1px solid rgb(31, 31, 131);
+  margin-bottom: 10px;
+}
+
+.league-leaders-item{
+  border-bottom: 1px solid rgb(31, 31, 131);
+  margin-bottom: 4px;
+}
+.future-games-teams{
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+.future-games-desc{
+  font-size: 14px;
+}
+.stat-header{
+  font-size: 16px;
+}
+.stat-player-name{
+  font-size: 16px;
+}
+.stat-avg{
+  font-size: 16px;
+  color: rgb(31, 31, 131);
+}
 </style>

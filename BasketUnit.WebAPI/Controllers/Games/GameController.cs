@@ -53,5 +53,11 @@ namespace BasketUnit.WebAPI.Controllers.Games
             GameService.SaveGamePlayerStatistics(data);
             return Ok(true);
         }
+        [HttpGet("getGamesProtocolsList")]
+        public ActionResult GetGamesProtocolsList()
+        {
+            var data = GameService.GetGamesProtocolsList();
+            return Ok(data);
+        }
     }
 }

@@ -2,14 +2,12 @@ import axios from "../../../http-common";
 
 class protocolsService {
     getGamesList() {
-        return axios.get("/game/getGamesList")
+        return axios.get("/game/getGamesProtocolsList")
     }
     getGameStatistics(gameId) {
-        debugger
         return axios.get(`/game/getGameStatistics/${gameId}`);
     }
     getGamePlayerStatistics(playerId, gameId) {
-        debugger
         return axios.get(`/game/getGamePlayerStatistics/${playerId}/${gameId}`);
     }
     saveGamePlayerStatistics(data) {
