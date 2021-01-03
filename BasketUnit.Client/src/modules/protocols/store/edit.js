@@ -66,7 +66,7 @@ const actions = {
     async saveGamePlayerStatistics ({ commit, dispatch, state }) {
         try {
             await service.saveGamePlayerStatistics(state.editForm);
-            dispatch("ProtocolsStore/setGamePlayerStatistics", null, { root: true });
+            dispatch("setGameStatistics");
             commit("resetForm");
         } catch(err) {
             console.log(err);

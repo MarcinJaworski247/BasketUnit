@@ -36,7 +36,7 @@
           <li>
             <router-link :to="{ name: 'statistics.index' }">
               <span>
-                <i class="far fa-chart-bar mr-1"></i>
+                <i class="fas fa-chart-line mr-1"></i>
                 Statystyki
               </span>
             </router-link>
@@ -183,16 +183,24 @@ body{
   position: fixed;
   width: 200px;
   height: 100%;
-  background: rgb(233, 233, 233);
+  background: rgb(245, 245, 245);
   padding: 30px 0;
   text-decoration: none;
+  margin-left: 10px;
+  margin-top: 10px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
 }
 
 .wrapper .sidebar h5{
-  color: rgb(31, 31, 131);
+  color: #ff8000;
   text-align: center;
   margin-bottom: 30px;
   margin-top: 20px;
+}
+
+.wrapper .sidebar h5 a:hover{
+  text-decoration: none;
 }
 
 .wrapper .sidebar ul li{
@@ -201,7 +209,7 @@ body{
 }
 
 .wrapper .sidebar ul li a{
-  color: rgb(31, 31, 131);
+  color: 	#4d4d4d;
   display: block; 
 }
 
@@ -215,13 +223,13 @@ body{
 
 .wrapper .sidebar ul li:hover{
   background: rgb(247, 248, 248);
-  color: rgb(31, 31, 131);
+  color: #ff8000;
   border-top-right-radius: 10px;
   border-bottom-right-radius: 10px;
 }
 
 .wrapper .sidebar ul li:hover a{
-  color: rgb(31, 31, 131);
+  color: #ff8000;
   text-decoration: none;
 }
 
@@ -255,63 +263,69 @@ body{
   position: fixed;
   right: 0;
   padding: 30px 0;
-  background: rgb(233, 233, 233);
+  background: rgb(245, 245, 245);
   height: 100%;
+  margin-left: 10px;
+  margin-top: 10px;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
 }
 
 .wrapper .sidebar .sidebar-header{
   text-align: center;
-  border-bottom: 1px solid rgb(31, 31, 131);
+  border-bottom: 1px solid #4d4d4d;
   margin-bottom: 38px;
 }
 
 .wrapper .sidebar .logo{
   font-size: 82px;
-  color: rgb(31, 31, 131);
+  color: #ff8000;
 }
 
 .future-games-widget{
-  border: 3px solid rgb(31, 31, 131);
+  border: 3px solid #ff8000;
   border-radius: 5px;
   width: 250px;
   margin: auto;
   padding: 10px;
   background: #fff;
+  box-shadow: 2px 2px #ffb368;
 }
 
 .future-games-header{
   font-size: 18px;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
   font-weight: 600;
-  border-bottom: 1px solid rgb(31, 31, 131);
+  border-bottom: 1px solid #ff8000;
   margin-bottom: 10px;
 }
 
 .future-games-item{
-  border-bottom: 1px solid rgb(31, 31, 131);
+  border-bottom: 1px solid #ff8000;
   margin-bottom: 10px;
 }
 
 .league-leaders-widget{
-  border: 3px solid rgb(31, 31, 131);
+  border: 3px solid #ff8000;
   border-radius: 5px;
   width: 250px;
   margin: auto;
   padding: 10px;
   margin-top: 40px;
   background: #fff;
+  box-shadow: 2px 2px #ffb368;
 }
 
 .league-leaders-header{
   font-size: 18px;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
   font-weight: 600;
-  border-bottom: 1px solid rgb(31, 31, 131);
+  border-bottom: 1px solid #ff8000;
   margin-bottom: 10px;
 }
 
 .league-leaders-item{
-  border-bottom: 1px solid rgb(31, 31, 131);
+  border-bottom: 1px solid #ff8000;
   margin-bottom: 4px;
 }
 .future-games-teams{
@@ -329,6 +343,6 @@ body{
 }
 .stat-avg{
   font-size: 16px;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
 }
 </style>

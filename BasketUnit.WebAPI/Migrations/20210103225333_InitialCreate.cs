@@ -782,8 +782,7 @@ namespace BasketUnit.WebAPI.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Games_ArenaId",
                 table: "Games",
-                column: "ArenaId",
-                unique: true);
+                column: "ArenaId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Games_CreatedById",

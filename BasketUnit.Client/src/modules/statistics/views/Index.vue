@@ -137,7 +137,7 @@ export default {
 </script>
 <style scoped>
 .main-header-title{
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;;
   font-size: 32px;
 }
 .centered-div{

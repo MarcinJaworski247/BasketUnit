@@ -269,7 +269,7 @@ export default {
   display: flex;
 }
 .stat-tile {
-  border: 1px solid rgb(31, 31, 131);
+  border: 1px solid #4d4d4d;
   border-radius: 5px;
   width: 110px;
   height: 100px;
@@ -284,17 +284,17 @@ export default {
 }
 .stat-tile .avg {
   font-size: 32px;
-  color: rgb(31, 31, 131);
+  color: #ff8000;
 }
 .player-tile{
   margin-top: 32px;
 }
 .player-tile img{
-  border: 1px solid rgb(31, 31, 131);
+  border: 1px solid #4d4d4d;;
   border-radius: 5px;
 }
 .little-header{
-  color: rgb(31, 31, 131)
+  color: #4d4d4d;
 }
 #pie{
   width: 800px;

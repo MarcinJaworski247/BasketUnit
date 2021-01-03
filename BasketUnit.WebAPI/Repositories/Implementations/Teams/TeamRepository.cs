@@ -329,7 +329,7 @@ namespace BasketUnit.WebAPI.Repositories
         {
             List<PlayerAveragesVM> playerAvgs = new List<PlayerAveragesVM>();
 
-            List<int> points = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Points).ToList();
+            List<int> points = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Points).ToList();
             PlayerAveragesVM pointsAvg = new PlayerAveragesVM
             {
                 StatType = "Punkty",
@@ -337,7 +337,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(pointsAvg);
 
-            List<int> asssist = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Assists).ToList();
+            List<int> asssist = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Assists).ToList();
             PlayerAveragesVM assistsAvg = new PlayerAveragesVM
             {
                 StatType = "Asysty",
@@ -345,7 +345,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(assistsAvg);
 
-            List<int> rebounds = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Rebounds).ToList();
+            List<int> rebounds = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Rebounds).ToList();
             PlayerAveragesVM reboundsAvg = new PlayerAveragesVM
             {
                 StatType = "Zbiórki",
@@ -353,7 +353,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(reboundsAvg);
 
-            List<int> steals = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Steals).ToList();
+            List<int> steals = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Steals).ToList();
             PlayerAveragesVM stealsAvg = new PlayerAveragesVM
             {
                 StatType = "Przechwyty",
@@ -361,7 +361,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(stealsAvg);
 
-            List<int> blocks = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Blocks).ToList();
+            List<int> blocks = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Blocks).ToList();
             PlayerAveragesVM blocksAvg = new PlayerAveragesVM
             {
                 StatType = "Bloki",
@@ -439,35 +439,35 @@ namespace BasketUnit.WebAPI.Repositories
         public List<DataToSpiderWebVM> GetDataToSpiderWeb(int playerId)
         {
             List<DataToSpiderWebVM> data = new List<DataToSpiderWebVM>();
-            List<int> pointsList = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Points).ToList();
+            List<int> pointsList = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Points).ToList();
             DataToSpiderWebVM points = new DataToSpiderWebVM
             {
                 Arg = "Punkty",
                 Val = (decimal)pointsList.Average()
             };
             data.Add(points);
-            List<int> assistsList = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Assists).ToList();
+            List<int> assistsList = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Assists).ToList();
             DataToSpiderWebVM assists = new DataToSpiderWebVM
             {
                 Arg = "Asysty",
                 Val = (decimal)assistsList.Average()
             };
             data.Add(assists);
-            List<int> reboundsList = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Rebounds).ToList();
+            List<int> reboundsList = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Rebounds).ToList();
             DataToSpiderWebVM rebounds = new DataToSpiderWebVM
             {
                 Arg = "Zbiórki",
                 Val = (decimal)reboundsList.Average()
             };
             data.Add(rebounds);
-            List<int> stealsList = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Steals).ToList();
+            List<int> stealsList = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Steals).ToList();
             DataToSpiderWebVM steals = new DataToSpiderWebVM
             {
                 Arg = "Przechwyty",
                 Val = (decimal)stealsList.Average()
             };
             data.Add(steals);
-            List<int> blocksList = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Blocks).ToList();
+            List<int> blocksList = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Blocks).ToList();
             DataToSpiderWebVM blocks = new DataToSpiderWebVM
             {
                 Arg = "Bloki",

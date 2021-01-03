@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BasketUnit.WebAPI.Migrations
 {
     [DbContext(typeof(MainDatabaseContext))]
-    [Migration("20201211225356_InitialCreate")]
+    [Migration("20210103225333_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,8 +272,7 @@ namespace BasketUnit.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArenaId")
-                        .IsUnique();
+                    b.HasIndex("ArenaId");
 
                     b.HasIndex("CreatedById");
 
@@ -997,8 +996,8 @@ namespace BasketUnit.WebAPI.Migrations
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Game", b =>
                 {
                     b.HasOne("BasketUnit.WebAPI.Models.Arena", "Arena")
-                        .WithOne("Game")
-                        .HasForeignKey("BasketUnit.WebAPI.Models.Game", "ArenaId")
+                        .WithMany("Games")
+                        .HasForeignKey("ArenaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1361,7 +1360,7 @@ namespace BasketUnit.WebAPI.Migrations
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Arena", b =>
                 {
-                    b.Navigation("Game");
+                    b.Navigation("Games");
 
                     b.Navigation("Team");
                 });

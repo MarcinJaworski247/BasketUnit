@@ -21,7 +21,7 @@ namespace BasketUnit.WebAPI.Repositories
         {
             List<PlayerDetailsChartVM> playerAvgs = new List<PlayerDetailsChartVM>();
 
-            List<int> points = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Points).ToList();
+            List<int> points = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Points).ToList();
             PlayerDetailsChartVM pointsAvg = new PlayerDetailsChartVM
             {
                 StatType = "Points",
@@ -30,7 +30,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(pointsAvg);
 
-            List<int> asssist = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Assists).ToList();
+            List<int> asssist = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Assists).ToList();
             PlayerDetailsChartVM assistsAvg = new PlayerDetailsChartVM
             {
                 StatType = "Assists",
@@ -39,7 +39,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(assistsAvg);
 
-            List<int> rebounds = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Rebounds).ToList();
+            List<int> rebounds = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Rebounds).ToList();
             PlayerDetailsChartVM reboundsAvg = new PlayerDetailsChartVM
             {
                 StatType = "Rebounds",
@@ -48,7 +48,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(reboundsAvg);
 
-            List<int> steals = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Steals).ToList();
+            List<int> steals = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Steals).ToList();
             PlayerDetailsChartVM stealsAvg = new PlayerDetailsChartVM
             {
                 StatType = "Steals",
@@ -57,7 +57,7 @@ namespace BasketUnit.WebAPI.Repositories
             };
             playerAvgs.Add(stealsAvg);
 
-            List<int> blocks = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId).Select(x => x.Blocks).ToList();
+            List<int> blocks = MainDatabaseContext.Stats.Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).Select(x => x.Blocks).ToList();
             PlayerDetailsChartVM blocksAvg = new PlayerDetailsChartVM
             {
                 StatType = "Blocks",
@@ -70,11 +70,11 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<PlayerDetailsChartVM> GetTeamAvgsToChartData(List<PlayerDetailsChartVM> playerStats, List<int> teamPlayersIds)
         {
-            List<int> points = MainDatabaseContext.Stats.Where(x => teamPlayersIds.Contains(x.PlayerId)).Select(x => x.Points).ToList();
-            List<int> assists = MainDatabaseContext.Stats.Where(x => teamPlayersIds.Contains(x.PlayerId)).Select(x => x.Assists).ToList();
-            List<int> rebounds = MainDatabaseContext.Stats.Where(x => teamPlayersIds.Contains(x.PlayerId)).Select(x => x.Rebounds).ToList();
-            List<int> steals = MainDatabaseContext.Stats.Where(x => teamPlayersIds.Contains(x.PlayerId)).Select(x => x.Steals).ToList();
-            List<int> blocks = MainDatabaseContext.Stats.Where(x => teamPlayersIds.Contains(x.PlayerId)).Select(x => x.Blocks).ToList();
+            List<int> points = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => teamPlayersIds.Contains(x.PlayerId) && x.Game.Date < DateTime.Now).Select(x => x.Points).ToList();
+            List<int> assists = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => teamPlayersIds.Contains(x.PlayerId) && x.Game.Date < DateTime.Now).Select(x => x.Assists).ToList();
+            List<int> rebounds = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => teamPlayersIds.Contains(x.PlayerId) && x.Game.Date < DateTime.Now).Select(x => x.Rebounds).ToList();
+            List<int> steals = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => teamPlayersIds.Contains(x.PlayerId) && x.Game.Date < DateTime.Now).Select(x => x.Steals).ToList();
+            List<int> blocks = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => teamPlayersIds.Contains(x.PlayerId) && x.Game.Date < DateTime.Now).Select(x => x.Blocks).ToList();
 
             foreach(var item in playerStats)
             {

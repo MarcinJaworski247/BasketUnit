@@ -87,7 +87,7 @@ export default {
 </script>
 <style type="scss" scoped>
 .winTile{
-    border: 5px solid green;
+    border: 3px solid green;
     border-radius: 10px;
     background: #fff;
     text-align: center;
@@ -95,9 +95,10 @@ export default {
     height: 150px;
     width: 150px;
     padding-top: 10px;
+    box-shadow: 2px 2px rgb(0, 160, 0);
 }
 .loseTile{
-    border: 5px solid red;
+    border: 3px solid red;
     border-radius: 10px;
     background: #fff;
     text-align: center;
@@ -105,27 +106,30 @@ export default {
     height: 150px;
     width: 150px;
     padding-top: 10px;
+    box-shadow: 2px 2px rgb(255, 92, 92);
 }
 .injured-player{
-    border: 5px solid rgb(31, 31, 131);
+    border: 3px solid #ff8000;
     border-radius: 10px;
     background: #fff;
     text-align: center;
     margin-right: 20px;
     height: 150px;
     width: 150px;
+    box-shadow: 2px 2px #ffb368;
 }
 .future-workout{
-    border: 5px solid rgb(31, 31, 131);;
+    border: 3px solid #ff8000;
     border-radius: 10px;
     background: #fff;
     text-align: center;
     margin-right: 20px;
     height: 150px;
     width: 150px;
+    box-shadow: 2px 2px #ffb368;
 }
 .future-game{
-    border: 5px solid rgb(31, 31, 131);;
+    border: 3px solid #ff8000;
     border-radius: 10px;
     background: #fff;
     text-align: center;
@@ -133,6 +137,7 @@ export default {
     height: 150px;
     width: 150px;
     padding-top: 10px;
+    box-shadow: 2px 2px #ffb368;
 }
 .last-games-row{
     background: rgb(245, 245, 245);
@@ -143,6 +148,7 @@ export default {
     width: 100%;
     margin-right: 10px;
     /* display: flex; */
+    box-shadow: 2px 2px #cecece;
 }
 .future-games-row{
     background: rgb(245, 245, 245);
@@ -151,6 +157,7 @@ export default {
     margin-bottom: 50px;
     width: 100%;
     /* display: flex; */
+    box-shadow: 2px 2px #cecece;
 }
 .injured-players-row{
     background: rgb(245, 245, 245);
@@ -160,6 +167,7 @@ export default {
     width: 100%;
     margin-right: 10px;
     /* display: flex; */
+    box-shadow: 2px 2px #cecece;
 }
 .future-workouts-row{
     background: rgb(245, 245, 245);
@@ -168,10 +176,11 @@ export default {
     margin-bottom: 50px;
     width: 100%;
     /* display: flex; */
+    box-shadow: 2px 2px #cecece;
 }
 .row-header{
     font-size: 24px;
-    color: rgb(31, 31, 131);
+    color: #4d4d4d;
     margin-bottom: 10px;
 }
 .workout-icon{

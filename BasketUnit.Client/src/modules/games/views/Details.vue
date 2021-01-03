@@ -151,7 +151,7 @@ export default {
 .score{
   font-size: 24px;
   font-weight: 800;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
   margin-right: 40px;
   margin-left: 40px;
 }
@@ -164,9 +164,9 @@ export default {
   text-align: center;
 }
 .player-name{
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
 }
-tr:hover {background-color:#f5f5f5;}
+tr:hover {background-color:#fde2a6;}
 tr:nth-child(even) {background-color: #f7f7f7;}
 table{
   text-align: center;

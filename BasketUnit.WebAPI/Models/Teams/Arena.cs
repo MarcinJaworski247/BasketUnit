@@ -11,6 +11,6 @@ namespace BasketUnit.WebAPI.Models
         public long Capacity { get; set; }
         public string Address { get; set; }
         public virtual Team Team { get; set; }
-        public virtual Game Game { get; set; }
+        public virtual List<Game> Games { get; set; }
     }
 }

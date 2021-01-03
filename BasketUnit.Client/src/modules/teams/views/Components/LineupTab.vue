@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
 .tile {
-  border: 2px solid rgb(31, 31, 131);
+  border: 2px solid #4d4d4d;
   border-radius: 10px;
   height: 250px;
   width: 250px;
@@ -77,21 +77,33 @@ export default {
   text-align: center;
   background: #fff;
   margin-top: 10px;
+  margin-bottom: 10px;
+  box-shadow: 2px 2px #cecece;
 }
+.tile:hover{
+  border-color: #ff8000;
+  text-decoration: none;
+  box-shadow: 2px 2px #ffb368;
+}
+
 .flexxin {
   display: flex;
   flex-wrap: wrap;
 }
 .player-name {
   font-size: 20px;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
+  border-top: 1px solid #4d4d4d;
+  margin-top: 10px;
+  line-height: 50px;
 }
+
 .player-desc {
   font-size: 18px;
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
 }
 .main-header-title {
-  color: rgb(31, 31, 131);
+  color: #4d4d4d;
   font-size: 32px;
 }
 </style>

@@ -16,7 +16,7 @@ namespace BasketUnit.WebAPI.Configurations
                 .HasOne(x => x.Team)
                 .WithOne(y => y.Arena);
             builder
-                .HasOne(x => x.Game)
+                .HasMany(x => x.Games)
                 .WithOne(y => y.Arena);
         }
     }

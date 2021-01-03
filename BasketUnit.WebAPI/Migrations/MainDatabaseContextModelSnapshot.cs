@@ -270,8 +270,7 @@ namespace BasketUnit.WebAPI.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ArenaId")
-                        .IsUnique();
+                    b.HasIndex("ArenaId");
 
                     b.HasIndex("CreatedById");
 
@@ -995,8 +994,8 @@ namespace BasketUnit.WebAPI.Migrations
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Game", b =>
                 {
                     b.HasOne("BasketUnit.WebAPI.Models.Arena", "Arena")
-                        .WithOne("Game")
-                        .HasForeignKey("BasketUnit.WebAPI.Models.Game", "ArenaId")
+                        .WithMany("Games")
+                        .HasForeignKey("ArenaId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -1359,7 +1358,7 @@ namespace BasketUnit.WebAPI.Migrations
 
             modelBuilder.Entity("BasketUnit.WebAPI.Models.Arena", b =>
                 {
-                    b.Navigation("Game");
+                    b.Navigation("Games");
 
                     b.Navigation("Team");
                 });

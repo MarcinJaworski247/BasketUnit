@@ -264,13 +264,13 @@ export default {
 .player-tile {
 }
 .player-tile img {
-  border: 1px solid rgb(31, 31, 131);
+  border: 1px solid #4d4d4d;;
   border-radius: 5px;
 }
 .personal-info{
   font-size: 18px;
 }
 .little-header{
-  color: rgb(31, 31, 131)
+  color: #4d4d4d;
 }
 </style>
