@@ -289,10 +289,12 @@ namespace BasketUnit.WebAPI.Repositories
             foreach (var item in data)
             {
                 item.OpponentTeam = item.HomeTeam.Id != 1 ? item.HomeTeam : item.AwayTeam;
+                item.IsHome = item.HomeTeam.Id == 1 ? true : false;
             }
             foreach (var item in data)
             {
                 item.Badge = Convert.ToBase64String(item.OpponentTeam.Badge);
+                item.OpponentId = item.OpponentTeam.Id;
                 item.HomeTeam = null;
                 item.AwayTeam = null;
                 item.OpponentTeam = null;
@@ -478,7 +480,8 @@ namespace BasketUnit.WebAPI.Repositories
         }
         public List<FutureWorkoutsVM> GetFutureWorkouts()
         {
-            return MainDatabaseContext.TeamScheduleActivities
+            var data = MainDatabaseContext.TeamScheduleActivities.Include(x => x.Workout).ToList();
+            List<FutureWorkoutsVM> result = MainDatabaseContext.TeamScheduleActivities
                 .Include(x => x.TeamSchedule)
                 .ThenInclude(y => y.Team)
                 .Include(x => x.Workout)
@@ -493,6 +496,7 @@ namespace BasketUnit.WebAPI.Repositories
                 .OrderBy(x => x.Date)
                 .Take(3)
                 .ToList();
+            return result;
         }
     }
 }

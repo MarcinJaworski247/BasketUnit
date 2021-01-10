@@ -6,12 +6,15 @@
        {{ this.templateTooltipModel.appointmentData.subject }}
       </div>
     <div>
-        <div v-if="this.templateTooltipModel.appointmentData.excercise">{{ this.templateTooltipModel.appointmentData.excercise }}</div>
-        <div>
-          <img v-if="this.templateTooltipModel.appointmentData.homeTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.homeTeamBadge" style="width: 50px; margin-right: 24px;"/>
-          <img v-if="this.templateTooltipModel.appointmentData.awayTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.awayTeamBadge"  style="width: 50px;"/>
+        <div v-if="this.templateTooltipModel.appointmentData.excercise">
+          <div><i class="fas fa-running" style="font-size: 32px; margin-bottom: 4px;"></i></div>
+          <div style="font-size: 22px;">{{ this.templateTooltipModel.appointmentData.excercise }}</div>
         </div>
-        <div v-if="this.templateTooltipModel.appointmentData.teams">{{ this.templateTooltipModel.appointmentData.teams }}</div>
+        <div>
+          <img v-if="this.templateTooltipModel.appointmentData.homeTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.homeTeamBadge" style="width: 75px; margin-right: 24px;"/>
+          <img v-if="this.templateTooltipModel.appointmentData.awayTeamBadge" v-bind:src="'data:image/jpeg;base64,'+this.templateTooltipModel.appointmentData.awayTeamBadge"  style="width: 75px;"/>
+        </div>
+        <div style="font-size: 18px; word-wrap: break-word;" v-if="this.templateTooltipModel.appointmentData.teams">{{ this.templateTooltipModel.appointmentData.teams }}</div>
         <div v-if="this.templateTooltipModel.appointmentData.arena">{{ this.templateTooltipModel.appointmentData.arena }}</div>
       </div>
       <div>
@@ -48,13 +51,14 @@ export default {
 </script>
 <style scoped>
   .appointment-content {
-    width: 360px;
+    width: 560px;
+    height: 160px;
     margin-top: 3px;
   }
 
   .dx-popup-content .appointment-content {
     margin-top: 7px;
-    height: 50px;
+    height: 100px;
   }
 
   .appointment-badge {

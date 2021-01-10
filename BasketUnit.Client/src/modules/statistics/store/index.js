@@ -9,7 +9,8 @@ const state = {
         badge: ''
     },
     teamAverages: [],
-    teamScoreAndLosePoints: []
+    teamScoreAndLosePoints: [],
+    futureGames: []
 }
 
 const getters = {
@@ -19,6 +20,9 @@ const getters = {
     },
     getTeamScoreAndLosePoints: (state) => {
         return state.teamScoreAndLosePoints;
+    },
+    getFutureGames: (state) => {
+        return state.futureGames;
     }
 }
 
@@ -33,6 +37,9 @@ const mutations = {
     setTeamForm: (state, payload) => {
         state.teamForm.name = payload.name;
         state.teamForm.badge = payload.badge;
+    },
+    setFutureGames: (state, payload) => {
+        state.futureGames = payload;
     }
 }
 
@@ -53,6 +60,12 @@ const actions = {
         service.getTeamForm()
             .then(response => {
                 commit("setTeamForm", response.data);
+            });
+    },
+    setFutureGames: ({ commit }) => {
+        service.getFutureGames()
+            .then(response => {
+                commit("setFutureGames", response.data);
             });
     }
 }

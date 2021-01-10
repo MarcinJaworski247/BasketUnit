@@ -105,7 +105,7 @@
           <div v-for="item in getClosestGames" :key="item.startDate" class="future-games-item">
             <div class="future-games-teams">{{ item.homeTeam }} vs. {{ item.awayTeam }}</div>
             <div class="future-games-desc">Arena: <strong>{{ item.arena }}</strong></div>
-            <div class="future-games-desc">Data: <strong>{{ item.startDate }}</strong></div>
+            <div class="future-games-desc">Data: <strong>{{ item.startDate | formatDate }}</strong></div>
           </div>
         </div>
 

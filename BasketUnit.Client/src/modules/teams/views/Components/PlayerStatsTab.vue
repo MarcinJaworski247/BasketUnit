@@ -14,6 +14,24 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-12">
+          <div class="condition-tile">
+            <div><h3 class="little-header">Forma zawodnika: <span id="popoverLink" @click="showWithShadingOptions"><i class="fas fa-info-circle text-info"></i></span></h3></div>
+            <div class="condition" v-if="getPlayerCondition === 0">
+              <span class="declining-arrow">&#8600;</span>
+            </div>
+            <div class="condition" v-else-if="getPlayerCondition === 1">
+              <span class="stable-arrow">&#8594;</span>
+            </div>
+            <div class="condition" v-else-if="getPlayerCondition === 2">
+              <span class="rising-arrow">&#8599;</span>
+            </div>
+          </div>
+        </div>
+        
+
+      </div>
+      <div class="row">
         <div class="col-3">
           <h3 class="little-header">Średnie statystyki</h3>
           <div>
@@ -34,6 +52,7 @@
             :data-source="getDataToSpiderWeb"
             type="doughnut"
             title=""
+            class="pt-4"
             palette="Harmony Light"
             id="pie"
           >
@@ -109,6 +128,7 @@
               alignment="center"
               caption="Data"
               data-type="date"
+              format="dd/MM/yyyy"
             />
             <DxColumn
               data-field="points"
@@ -168,11 +188,17 @@
           </DxDataGrid>
         </div>
       </div>
-
-      <!-- <div class="row mt-4"> -->
-        
-      <!-- </div> -->
     </div>
+    <DxPopover
+          :width="300"
+          :visible="withShadingOptionsVisible"
+          :shading="true"
+          target="#popoverLink"
+          position="top"
+          shading-color="rgba(0, 0, 0, 0.5)"
+        >
+          Forma zawodnika obliczana jest według poniższego wzoru:
+    </DxPopover>
     <div class="d-flex end-xs mt-5 mb-4">
       <DxButton
         :use-submit-behavior="false"
@@ -194,13 +220,10 @@ import {
 import { DxDataGrid, DxColumn } from "devextreme-vue/data-grid";
 import DxPieChart, {
   DxLegend,
-  //DxSeries,
-  //DxTooltip,
-  //DxFormat,
-  //DxLabel,
   DxConnector,
   DxExport,
 } from "devextreme-vue/pie-chart";
+import { DxPopover } from 'devextreme-vue/popover';
 import { DxButton } from "devextreme-vue";
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
@@ -214,6 +237,7 @@ export default {
           name: "",
         },
       ],
+      withShadingOptionsVisible: false
     };
   },
   computed: {
@@ -223,6 +247,7 @@ export default {
       "getPlayerRecords",
       "getAllPlayerGames",
       "getDataToSpiderWeb",
+      "getPlayerCondition"
     ]),
     ...mapFields(store, [
       "detailsForm.FirstName",
@@ -237,7 +262,12 @@ export default {
       "setPlayerRecords",
       "setAllPlayerGames",
       "setDataToSpiderWeb",
+      "setPlayerCondition"
     ]),
+    showWithShadingOptions() {
+      debugger
+      this.withShadingOptionsVisible = true;
+    }
   },
   mounted() {
     this.setDataToChart();
@@ -245,6 +275,7 @@ export default {
     this.setAllPlayerGames();
     this.setPlayerAvgs();
     this.setDataToSpiderWeb();
+    this.setPlayerCondition();
   },
   components: {
     DxChart,
@@ -254,13 +285,11 @@ export default {
     DxFormat,
     DxDataGrid,
     DxColumn,
-    //DxPolarChart,
-    //DxExport,
-    //DxTooltip,
     DxPieChart,
     DxConnector,
     DxLegend,
     DxButton,
+    DxPopover
   },
 };
 </script>
@@ -271,8 +300,8 @@ export default {
 .stat-tile {
   border: 1px solid #4d4d4d;
   border-radius: 5px;
-  width: 110px;
-  height: 100px;
+  width: 90px;
+  height: 90px;
   margin-right: 10px;
   text-align: center;
   padding-top: 20px;
@@ -280,7 +309,7 @@ export default {
 }
 .stat-tile span {
   font-weight: 600;
-  font-size: 20px;
+  font-size: 16px;
 }
 .stat-tile .avg {
   font-size: 32px;
@@ -297,6 +326,42 @@ export default {
   color: #4d4d4d;
 }
 #pie{
-  width: 800px;
+  width: 700px;
+}
+.declining-arrow{
+  color: red;
+  font-size: 56px;
+  font-weight: 700;
+  text-align: center;
+}
+.stable-arrow{
+  color: black;
+  font-size: 56px;
+  font-weight: 700;
+}
+.rising-arrow{
+  color: green;
+  font-size: 56px;
+  font-weight: 700;
+}
+h4{
+  color: #4d4d4d;
+}
+#popoverLink{
+  font-size: 18px;
+}
+#popoverLink:hover{
+  text-decoration: underline;
+  cursor: pointer;
+}
+.condition-tile{
+  border: 1px solid black;
+  padding: 8px;
+  border-radius: 5px;
+  margin-bottom: 8px;
+  width: 250px;
+}
+.condition{
+  text-align: center;
 }
 </style>

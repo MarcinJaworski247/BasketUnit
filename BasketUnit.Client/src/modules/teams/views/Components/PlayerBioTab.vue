@@ -18,7 +18,7 @@
         </div>
         <div class="col-3">
           <div>
-            <div class="personal-info">Data urodzenia: {{ BirthDate }}</div>
+            <div class="personal-info">Data urodzenia: {{ BirthDate | formatDate }}</div>
           </div>
           <div>
             <div class="personal-info">Wzrost [cm]: {{ Height }}</div>
@@ -83,6 +83,7 @@
               alignment="center"
               caption="Data"
               data-type="date"
+              format="dd/MM"
             />
             <DxColumn
               data-field="points"

@@ -38,6 +38,7 @@
           alignment="center"
           caption="Data"
           data-type="date"
+          format="dd/MM/yyyy"
         />
         <DxColumn
           data-field="id"

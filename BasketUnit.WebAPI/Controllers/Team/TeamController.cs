@@ -15,10 +15,12 @@ namespace BasketUnit.WebAPI.Controllers.Team
     {
         private readonly IPlayerService PlayerService;
         private readonly ITeamService TeamService;
-        public TeamController(IPlayerService playerService, ITeamService teamService)
+        private readonly IStatsService StatsService;
+        public TeamController(IPlayerService playerService, ITeamService teamService, IStatsService statsService)
         {
             this.PlayerService = playerService;
             this.TeamService = teamService;
+            this.StatsService = statsService;
         }
         [HttpGet("getPlayersList")]
         public ActionResult GetPlayersList()
@@ -92,8 +94,6 @@ namespace BasketUnit.WebAPI.Controllers.Team
             PlayerService.AddPlayerInjury(data);
             return Ok(true);
         }
-
-
         [HttpGet("getPlayerAvgs/{playerId}")]
         public ActionResult GetPlayerAvgs(int playerId)
         {
@@ -116,6 +116,18 @@ namespace BasketUnit.WebAPI.Controllers.Team
         public ActionResult GetDataToSpiderWeb(int playerId)
         {
             var data = TeamService.GetDataToSpiderWeb(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getPlayerCondition/{playerId}")]
+        public ActionResult GetPlayerCondition(int playerId)
+        {
+            var data = StatsService.GetPlayerCondition(playerId);
+            return Ok(data);
+        }
+        [HttpGet("getSubstitutePlayers")]
+        public ActionResult GetSubstitutePlayers()
+        {
+            var data = PlayerService.GetSubstitutePlayers();
             return Ok(data);
         }
     }

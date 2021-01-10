@@ -36,5 +36,17 @@ namespace BasketUnit.WebAPI.Controllers.Statistics
             var data = StatsService.GetTeamScoreAndLosePoints();
             return Ok(data);
         }
+        //[HttpGet("predictGameResult/{gameId}")]
+        //public ActionResult PredictGameResult(int gameId)
+        //{
+        //    var result = StatsService.PredictGameResult();
+        //    return Ok(result);
+        //}
+        [HttpGet("getFutureGames")]
+        public ActionResult GetFutureGames()
+        {
+            var data = TeamService.GetFutureGamesWithPrediction();
+            return Ok(data);
+        }
     }
 }

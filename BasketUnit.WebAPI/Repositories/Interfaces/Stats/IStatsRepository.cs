@@ -14,5 +14,6 @@ namespace BasketUnit.WebAPI.Repositories
         List<GamePlayerStatsVM> GetPlayerLastGameStats(int playerId, int playerTeamId);
         List<TeamAveragesVM> GetTeamAverages();
         List<ScoreAndLosePointsVM> GetTeamScoreAndLosePoints();
+        PlayerStatsAveragesVM GetAveragesToCalculateCondition(int playerId, int gamesSpan);
     }
 }

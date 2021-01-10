@@ -10,6 +10,9 @@ class statisticsService {
     getTeamForm() {
         return axios.get("/statistics/getTeamForm");
     }
+    getFutureGames() {
+        return axios.get("/statistics/getFutureGames")
+    }
 }
 
 export default new statisticsService();

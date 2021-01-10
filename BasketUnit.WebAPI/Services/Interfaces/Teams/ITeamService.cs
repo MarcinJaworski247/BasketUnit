@@ -33,5 +33,6 @@ namespace BasketUnit.WebAPI.Services
         List<GamePlayerStatsVM> GetAllPlayerGames(int playerId);
         List<DataToSpiderWebVM> GetDataToSpiderWeb(int playerId);
         List<FutureWorkoutsVM> GetFutureWorkouts();
+        List<FutureGamesVM> GetFutureGamesWithPrediction();
     }
 }

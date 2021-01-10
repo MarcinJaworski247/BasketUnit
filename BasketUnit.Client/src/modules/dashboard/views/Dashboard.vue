@@ -17,7 +17,7 @@
                     <div class="flexxin">
                         <div v-for="item in getFutureGames" v-bind:key="item.id" class="future-game">
                             <img style="width: 70px;  max-height: 70px;" v-bind:src="'data:image/jpeg;base64,' + item.badge"/>
-                            <div class="future-game-desc">{{ item.date }}</div>
+                            <div class="future-game-desc">{{ item.date | formatDate }}</div>
                             <div class="future-game-desc">{{ item.arena }}</div>
                         </div>
                     </div>
@@ -42,7 +42,7 @@
                         <div v-for="item in getFutureWorkouts" v-bind:key="item.date" class="future-workout">
                             <div class="workout-icon"><i class="fas fa-running"></i></div>
                             <div class="workout-name">{{ item.workout }}</div>
-                            <div class="workout-date">{{ item.date }}</div>
+                            <div class="workout-date">{{ item.date | formatDate }}</div>
                         </div>
                     </div>
                 </div>
@@ -184,7 +184,7 @@ export default {
     margin-bottom: 10px;
 }
 .workout-icon{
-    font-size: 42px;
+    font-size: 36px;
 }
 .score{
     font-weight: 600;

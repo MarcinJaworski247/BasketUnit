@@ -316,5 +316,11 @@ namespace BasketUnit.WebAPI.Repositories
 
             return data;
         }
+        public bool IsGameDayAfterDay(int teamId, DateTime gameDate)
+        {
+            List<Game> teamGames = MainDatabaseContext.GameTeams.Include(x => x.Game).Where(x => x.TeamId == teamId).Select(x => x.Game).ToList();
+            bool result = teamGames.Any(x => x.Date.Date == gameDate.AddDays(-1).Date);
+            return result;
+        }
     }
 }

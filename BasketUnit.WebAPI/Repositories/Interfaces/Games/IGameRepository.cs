@@ -21,5 +21,6 @@ namespace BasketUnit.WebAPI.Repositories
         GamePlayerStatisticsVM GetGamePlayerStatistics(int playerId, int gameId);
         void SaveGamePlayerStatistics(GamePlayerStatisticsVM data);
         List<ListAllGamesVM> GetGamesProtocolsList();
+        bool IsGameDayAfterDay(int teamId, DateTime gameDate);
     }
 }

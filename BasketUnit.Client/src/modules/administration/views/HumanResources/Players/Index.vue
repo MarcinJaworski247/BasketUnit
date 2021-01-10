@@ -60,6 +60,7 @@
           data-type="date"
           alignment="center"
           caption="Data urodzenia"
+          format="dd/MM/yyyy"
         />
         <DxColumn data-field="positionId" alignment="left" caption="Pozycja">
           <DxLookup

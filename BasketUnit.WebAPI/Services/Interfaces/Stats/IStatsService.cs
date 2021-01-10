@@ -1,4 +1,5 @@
-﻿using BasketUnit.WebAPI.ViewModels;
+﻿using BasketUnit.WebAPI.Enums;
+using BasketUnit.WebAPI.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,5 +11,7 @@ namespace BasketUnit.WebAPI.Services
     {
         List<TeamAveragesVM> GetTeamAverages();
         List<ScoreAndLosePointsVM> GetTeamScoreAndLosePoints();
+        PlayerCondition GetPlayerCondition(int playerId);
+        //void PredictGameResult(int gameId);
     }
 }

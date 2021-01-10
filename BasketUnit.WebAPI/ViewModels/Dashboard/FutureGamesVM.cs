@@ -15,5 +15,8 @@ namespace BasketUnit.WebAPI.ViewModels
         public Team? HomeTeam { get; set; }
         public Team? AwayTeam { get; set; }
         public Team? OpponentTeam { get; set; }
+        public int OpponentId { get; set; }
+        public bool IsHome { get; set; }
+        public float? PredictionResult { get; set; }
     }
 }

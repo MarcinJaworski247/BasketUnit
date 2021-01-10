@@ -171,10 +171,12 @@ namespace BasketUnit.WebAPI.Repositories
         {
             List<DetailsPlayerVM> data = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => new DetailsPlayerVM()
             {
+                Id = x.PlayerId,
                 FirstName = x.Player.FirstName + " " + x.Player.LastName,
                 Position = x.Player.Position.ToString(),
                 PositionId = (int)x.Player.Position,
-                Avatar = x.Player.Avatar.Length > 0 ? Convert.ToBase64String(x.Player.Avatar) : string.Empty
+                Avatar = x.Player.Avatar.Length > 0 ? Convert.ToBase64String(x.Player.Avatar) : string.Empty,
+                PlayerNumber = x.Player.Number
             }).ToList();
 
             return data;
@@ -193,6 +195,21 @@ namespace BasketUnit.WebAPI.Repositories
             };
             MainDatabaseContext.PlayerInjuries.Add(playerInjury);
             MainDatabaseContext.SaveChanges();
+        }
+        public List<DetailsPlayerVM> GetSubstitutePlayers()
+        {
+            List<int> firstLineupIds = MainDatabaseContext.TeamFirstLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => x.PlayerId).ToList();
+            List<DetailsPlayerVM> lineup = MainDatabaseContext.TeamLineups.Include(x => x.Player).Where(x => x.TeamId == 1).Select(x => new DetailsPlayerVM()
+            {
+                Id = x.PlayerId,
+                FirstName = x.Player.FirstName + " " + x.Player.LastName,
+                Position = x.Player.Position.ToString(),
+                PositionId = (int)x.Player.Position,
+                Avatar = x.Player.Avatar.Length > 0 ? Convert.ToBase64String(x.Player.Avatar) : string.Empty,
+                PlayerNumber = x.Player.Number
+            }).ToList();
+            lineup = lineup.Where(x => !firstLineupIds.Any(y => y == x.Id)).ToList();
+            return lineup;
         }
     }
 }

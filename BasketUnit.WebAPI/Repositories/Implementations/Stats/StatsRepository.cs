@@ -276,12 +276,52 @@ namespace BasketUnit.WebAPI.Repositories
                     .Select(x => x.Points).Sum();
                 item.TeamScore = myTeamPoints;
                 item.OpponentScore = opponentTeamPoints;
-                item.OpponentName = (item.HomeTeam.Id == 1 ? item.AwayTeam.City + " " + item.AwayTeam.Name : item.HomeTeam.City + " " + item.HomeTeam.Name) + " " + item.Date;
+                item.OpponentName = (item.HomeTeam.Id == 1 ? item.AwayTeam.City + " " + item.AwayTeam.Name : item.HomeTeam.City + " " + item.HomeTeam.Name) + " " + item.Date.ToString();
                 item.AwayTeam = null;
                 item.HomeTeam = null;
 
             }
             return data;
+        }
+        public PlayerStatsAveragesVM GetAveragesToCalculateCondition(int playerId, int gamesSpan)
+        {
+            PlayerStatsAveragesVM result = new PlayerStatsAveragesVM();
+            if (gamesSpan == 0)
+            {
+                List<int> points = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Skip(2).Take(3).Select(x => x.Points).ToList();
+                List<int> assists = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Skip(2).Take(3).Select(x => x.Assists).ToList();
+                List<int> rebounds = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Skip(2).Take(3).Select(x => x.Rebounds).ToList();
+                List<int> steals = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Skip(2).Take(3).Select(x => x.Steals).ToList();
+                List<int> blocks = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Skip(2).Take(3).Select(x => x.Blocks).ToList();
+
+                result.Points = points.Average();
+                result.Assists = assists.Average();
+                result.Rebounds = rebounds.Average();
+                result.Steals = steals.Average();
+                result.Blocks = blocks.Average();
+
+                return result;
+            }
+            else if(gamesSpan == 1)
+            {
+                List<int> points = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Take(2).Select(x => x.Points).ToList();
+                List<int> assists = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Take(2).Select(x => x.Assists).ToList();
+                List<int> rebounds = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Take(2).Select(x => x.Rebounds).ToList();
+                List<int> steals = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Take(2).Select(x => x.Steals).ToList();
+                List<int> blocks = MainDatabaseContext.Stats.Include(x => x.Game).Where(x => x.PlayerId == playerId && x.Game.Date < DateTime.Now).OrderByDescending(x => x.Game.Date).Take(2).Select(x => x.Blocks).ToList();
+
+                result.Points = points.Average();
+                result.Assists = assists.Average();
+                result.Rebounds = rebounds.Average();
+                result.Steals = steals.Average();
+                result.Blocks = blocks.Average();
+
+                return result;
+            }
+            else
+            {
+                return null;
+            }
         }
     }
 }

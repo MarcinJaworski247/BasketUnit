@@ -51,5 +51,9 @@ namespace BasketUnit.WebAPI.Services
         {
             RepositoriesWrapper.PlayerRepository.AddPlayerInjury(data);
         }
+        public List<DetailsPlayerVM> GetSubstitutePlayers()
+        {
+            return RepositoriesWrapper.PlayerRepository.GetSubstitutePlayers();
+        }
     }
 }

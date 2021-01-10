@@ -19,7 +19,7 @@
                 v-bind:src="'data:image/jpeg;base64,' + AwayTeamBadge"
               />
             <div class="mt-4 info">
-              <h4>Data: {{ GameDate }}</h4>
+              <h4>Data: {{ GameDate | formatDate }}</h4>
               <h4>Arena: {{ Arena }}</h4>
               <h4>Sędziowie: {{ FirstReferee }}, {{ SecondReferee }}</h4>
             </div>

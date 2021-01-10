@@ -55,6 +55,12 @@ class teamsService {
     getDataToSpiderWeb(playerId) {
         return axios.get(`/team/getDataToSpiderWeb/${playerId}`);
     }
+    getPlayerCondition(playerId) {
+        return axios.get(`/team/getPlayerCondition/${playerId}`);
+    }
+    getSubstitutePlayers() {
+        return axios.get("/team/getSubstitutePlayers");
+    }
 }
 
 export default new teamsService();

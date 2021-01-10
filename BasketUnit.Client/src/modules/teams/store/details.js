@@ -35,7 +35,8 @@ const state = {
     playerAvgs: [],
     playerRecords: [],
     allPlayerGames: [],
-    dataToSpiderWeb: []
+    dataToSpiderWeb: [],
+    playerCondition: null
 }
 
 const getters = {
@@ -53,7 +54,6 @@ const getters = {
         return state.injuries;
     },
     getPlayerAvgs: (state) => {
-        debugger
         return state.playerAvgs;
     },
     getPlayerRecords: (state) => {
@@ -64,6 +64,9 @@ const getters = {
     },
     getDataToSpiderWeb: (state) => {
         return state.dataToSpiderWeb;
+    },
+    getPlayerCondition: (state) => {
+        return state.playerCondition;
     }
 }
 
@@ -113,6 +116,9 @@ const mutations = {
     },
     setDataToSpiderWeb: (state, payload) => {
         state.dataToSpiderWeb = payload;
+    },
+    setPlayerCondition: (state, payload) => {
+        state.playerCondition = payload;
     }
 }
 
@@ -173,6 +179,12 @@ const actions = {
         service.getDataToSpiderWeb(router.currentRoute.params.playerId)
             .then(response => {
                 commit("setDataToSpiderWeb", response.data);
+            });
+    },
+    setPlayerCondition: ({ commit }) => {
+        service.getPlayerCondition(router.currentRoute.params.playerId)
+            .then(response => {
+                commit("setPlayerCondition", response.data);
             });
     }
 }

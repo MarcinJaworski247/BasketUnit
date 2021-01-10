@@ -19,7 +19,7 @@ namespace BasketUnit.WebAPI.Configurations
             builder
                 .HasMany(x => x.TeamScheduleActivities)
                 .WithOne(y => y.Workout)
-                .HasForeignKey(x => x.TeamScheduleId);
+                .HasForeignKey(x => x.WorkoutId);
         }
     }
 }

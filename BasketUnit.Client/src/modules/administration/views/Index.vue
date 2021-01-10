@@ -40,7 +40,7 @@ export default {
     return {
       tabs: [
         {
-          title: "Human Resources",
+          title: "Zasoby ludzkie",
           icon: "fas fa-users",
           template: "tab1",
         },

@@ -19,6 +19,7 @@ import '@fortawesome/fontawesome-free/js/all.js'
 
 import VueLazyload from 'vue-lazyload'
 
+import moment from 'moment';
 
 
 Vue.use(BootstrapVue);
@@ -27,6 +28,11 @@ Vue.use(VueLazyload, {
   lazyComponent: true
 })
 
+Vue.filter('formatDate', function(value) {
+    if (value) {
+        return moment(String(value)).format('DD-MM-YYYY')
+    }
+});
 
 Vue.config.productionTip = false
 

@@ -118,5 +118,21 @@ namespace BasketUnit.WebAPI.Services
         {
             return RepositoriesWrapper.TeamRepository.GetFutureWorkouts();
         }
+        public List<FutureGamesVM> GetFutureGamesWithPrediction()
+        {
+            List<FutureGamesVM> futureGames = RepositoriesWrapper.TeamRepository.GetFutureGamesToDashboard();
+            //GameDetailsVM game = RepositoriesWrapper.GameRepository.GetGameDetails(gameId);
+            foreach (var game in futureGames)
+            {
+                GameData gameToPredict = new GameData
+                {
+                    OpponentId = game.OpponentId,
+                    IsHome = game.IsHome
+                };
+                gameToPredict.IsDayAfterDay = RepositoriesWrapper.GameRepository.IsGameDayAfterDay(teamId: 1, gameDate: game.Date);
+                game.PredictionResult = MachineLearningService.PredictGame(gameToPredict);
+            }
+            return futureGames;
+        }
     }
 }
