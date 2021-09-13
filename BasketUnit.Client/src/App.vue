@@ -101,11 +101,9 @@ export default {
   list-style: none;
   text-decoration: none;
 }
-
 body {
   background: rgb(238, 238, 238);
 }
-
 .wrapper {
   display: flex;
   position: relative;
@@ -122,60 +120,18 @@ body {
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
 }
-
 .wrapper .sidebar h5 {
   color: #ff8000;
   text-align: center;
   margin-bottom: 30px;
   margin-top: 20px;
 }
-
 .wrapper .sidebar h5 a:hover {
   text-decoration: none;
 }
-
-/* .wrapper .sidebar ul li {
-  padding: 15px;
-  font-size: 20px;
-} */
-
-/* .wrapper .sidebar ul li a {
-  color: #4d4d4d;
-  display: block;
-} */
-
-/* .wrapper .sidebar ul li a .far .fas {
-  width: 35px;
-} */
-
-/* .wrapper .sidebar .far .fas {
-  width: 4px;
-} */
-
-/* .wrapper .sidebar ul li:hover {
-  background: rgb(247, 248, 248);
-  color: #ff8000;
-  border-top-right-radius: 10px;
-  border-bottom-right-radius: 10px;
-} */
-
-/* .wrapper .sidebar ul li:hover a {
-  color: #ff8000;
-  text-decoration: none;
-} */
-
 .wrapper .sidebar .sidebar-header:hover {
   text-decoration: none;
 }
-
-/* .wrapper .sidebar .sidebar-footer {
-  position: absolute;
-  bottom: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-} */
-
 .wrapper .main-content {
   width: 100%;
   margin-left: 200px;
@@ -188,7 +144,6 @@ body {
   padding-right: 100px;
   padding-bottom: 50px;
 }
-
 .wrapper .widgets-bar {
   width: 300px;
   position: fixed;
@@ -201,46 +156,13 @@ body {
   border-top-right-radius: 15px;
   border-top-left-radius: 15px;
 }
-
 .wrapper .sidebar .sidebar-header {
   text-align: center;
   border-bottom: 1px solid #4d4d4d;
   margin-bottom: 38px;
 }
-
 .wrapper .sidebar .logo {
   font-size: 82px;
   color: #ff8000;
 }
-
-/* .future-games-widget{
-  border: 3px solid #ff8000;
-  border-radius: 5px;
-  width: 250px;
-  margin: auto;
-  padding: 10px;
-  background: #fff;
-  box-shadow: 2px 2px #ffb368;
-}
-
-.future-games-header{
-  font-size: 18px;
-  color: #4d4d4d;
-  font-weight: 600;
-  border-bottom: 1px solid #ff8000;
-  margin-bottom: 10px;
-}
-
-.future-games-item{
-  border-bottom: 1px solid #ff8000;
-  margin-bottom: 10px;
-} */
-
-/* .future-games-teams {
-  font-size: 16px;
-  margin-bottom: 4px;
-}
-.future-games-desc {
-  font-size: 14px;
-} */
 </style>

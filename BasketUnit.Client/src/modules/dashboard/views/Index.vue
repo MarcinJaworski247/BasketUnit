@@ -16,7 +16,7 @@
 import { mapGetters, mapActions } from "vuex";
 
 // store
-const store = "DashboardStore";
+const STORE = "DashboardStore";
 
 // components
 import LastGamesList from "@/components/Dashboard/LastGames/LastGamesList";
@@ -27,7 +27,7 @@ import UpcomingPracticesList from "@/components/Dashboard/UpcomingPractices/Upco
 export default {
   name: "dashboard",
   computed: {
-    ...mapGetters(store, [
+    ...mapGetters(STORE, [
       "getLastGames",
       "getFutureGames",
       "getInjuredPlayers",
@@ -35,7 +35,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(store, [
+    ...mapActions(STORE, [
       "setLastGames",
       "setFutureGames",
       "setInjuredPlayers",

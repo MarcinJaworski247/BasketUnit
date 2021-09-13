@@ -1,18 +1,18 @@
-import axios from "../../../http-common";
+import api from "../../../http-common";
 
 class protocolsService {
-    getGamesList() {
-        return axios.get("/game/getGamesProtocolsList")
-    }
-    getGameStatistics(gameId) {
-        return axios.get(`/game/getGameStatistics/${gameId}`);
-    }
-    getGamePlayerStatistics(playerId, gameId) {
-        return axios.get(`/game/getGamePlayerStatistics/${playerId}/${gameId}`);
-    }
-    saveGamePlayerStatistics(data) {
-        return axios.post("/game/saveGamePlayerStatistics", data);
-    }
+  getGamesList() {
+    return api.get("/game/getGamesProtocolsList");
+  }
+  getGameStatistics(gameId) {
+    return api.get(`/game/getGameStatistics/${gameId}`);
+  }
+  getGamePlayerStatistics(playerId, gameId) {
+    return api.get(`/game/getGamePlayerStatistics/${playerId}/${gameId}`);
+  }
+  saveGamePlayerStatistics(data) {
+    return api.post("/game/saveGamePlayerStatistics", data);
+  }
 }
 
 export default new protocolsService();

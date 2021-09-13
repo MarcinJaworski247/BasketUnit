@@ -1,11 +1,11 @@
-import Index from '../views/Dashboard.vue';
+import Index from "../views/Index.vue";
 
 const routes = [
-    {
-        path: `/dashboard`,
-        name: `dashboard`,
-        component: Index
-    }
-]
+  {
+    path: `/dashboard`,
+    name: `dashboard`,
+    component: Index,
+  },
+];
 
 export default routes;
