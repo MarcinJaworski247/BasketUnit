@@ -83,11 +83,7 @@
           </li>
         </ul>
 
-        <!-- <div class="sidebar-footer">
-          <i class="fab fa-facebook-f"></i>
-          <i class="fab fa-facebook-f"></i>
-          <i class="fab fa-facebook-f"></i>
-        </div> -->
+        
 
       </div>
 
