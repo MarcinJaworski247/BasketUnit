@@ -1,66 +1,66 @@
-import axios from "../../../http-common";
+import api from "../../../http-common";
 
 class teamsService {
-    getPlayersList() {
-        return axios.get("/team/getPlayersList");
-    }
-    getFirstLineupPlayers() {
-        return axios.get("/team/getFirstLineupPlayers");
-    }
-    getPlayerDetails(playerId) {
-        return axios.get(`/team/getPlayerDetails/${playerId}`);
-    }
-    editPlayer(data) {
-        return axios.post("/team/editPlayer", data)
-    }
-    getPositionsToLookup() {
-        return axios.get("/administration/humanResources/getPositionsToLookup");
-    }
-    getPlayersByPosition(positionId) {
-        return axios.get(`/team/getPlayersByPosition/${positionId}`);
-    }
-    getFirstLineupPlayer(positionId) {
-        return axios.get(`/team/getFirstLineupPlayer/${positionId}`);
-    }
-    saveFirstLineup(data) {
-        return axios.post("/team/saveFirstLineup", data);
-    }
-    getNationalitiesToLookup() {
-        return axios.get("/administration/humanResources/getNationalities");
-    }
-    getLastGamesStats(playerId) {
-        return axios.get(`/team/getPlayerLastGamesStats/${playerId}`);
-    }    
-    getDataToPlayerDetailsChart(playerId) {
-        return axios.get(`/team/getDataToPlayerDetailsChart/${playerId}`);
-    }
-    getEditForm() {
-        return axios.get("/team/getEditForm");
-    }
-    getPlayerInjuries(playerId) {
-        return axios.get(`/team/getPlayerInjuries/${playerId}`);
-    }
-    addInjury(data) {
-        return axios.post("/team/addPlayerInjury", data);
-    }
-    getPlayerAvgs(playerId) {
-        return axios.get(`/team/getPlayerAvgs/${playerId}`);
-    }
-    getPlayerRecords(playerId) {
-        return axios.get(`/team/getPlayerRecords/${playerId}`);
-    }
-    getAllPlayerGames(playerId) {
-        return axios.get(`/team/getAllPlayerGames/${playerId}`);
-    }
-    getDataToSpiderWeb(playerId) {
-        return axios.get(`/team/getDataToSpiderWeb/${playerId}`);
-    }
-    getPlayerCondition(playerId) {
-        return axios.get(`/team/getPlayerCondition/${playerId}`);
-    }
-    getSubstitutePlayers() {
-        return axios.get("/team/getSubstitutePlayers");
-    }
+  getPlayersList() {
+    return api.get("/team/getPlayersList");
+  }
+  getFirstLineupPlayers() {
+    return api.get("/team/getFirstLineupPlayers");
+  }
+  getPlayerDetails(playerId) {
+    return api.get(`/team/getPlayerDetails/${playerId}`);
+  }
+  editPlayer(data) {
+    return api.post("/team/editPlayer", data);
+  }
+  getPositionsToLookup() {
+    return api.get("/administration/humanResources/getPositionsToLookup");
+  }
+  getPlayersByPosition(positionId) {
+    return api.get(`/team/getPlayersByPosition/${positionId}`);
+  }
+  getFirstLineupPlayer(positionId) {
+    return api.get(`/team/getFirstLineupPlayer/${positionId}`);
+  }
+  saveFirstLineup(data) {
+    return api.post("/team/saveFirstLineup", data);
+  }
+  getNationalitiesToLookup() {
+    return api.get("/administration/humanResources/getNationalities");
+  }
+  getLastGamesStats(playerId) {
+    return api.get(`/team/getPlayerLastGamesStats/${playerId}`);
+  }
+  getDataToPlayerDetailsChart(playerId) {
+    return api.get(`/team/getDataToPlayerDetailsChart/${playerId}`);
+  }
+  getEditForm() {
+    return api.get("/team/getEditForm");
+  }
+  getPlayerInjuries(playerId) {
+    return api.get(`/team/getPlayerInjuries/${playerId}`);
+  }
+  addInjury(data) {
+    return api.post("/team/addPlayerInjury", data);
+  }
+  getPlayerAvgs(playerId) {
+    return api.get(`/team/getPlayerAvgs/${playerId}`);
+  }
+  getPlayerRecords(playerId) {
+    return api.get(`/team/getPlayerRecords/${playerId}`);
+  }
+  getAllPlayerGames(playerId) {
+    return api.get(`/team/getAllPlayerGames/${playerId}`);
+  }
+  getDataToSpiderWeb(playerId) {
+    return api.get(`/team/getDataToSpiderWeb/${playerId}`);
+  }
+  getPlayerCondition(playerId) {
+    return api.get(`/team/getPlayerCondition/${playerId}`);
+  }
+  getSubstitutePlayers() {
+    return api.get("/team/getSubstitutePlayers");
+  }
 }
 
 export default new teamsService();

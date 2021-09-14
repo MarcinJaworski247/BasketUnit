@@ -11,18 +11,20 @@
                 v-bind:src="'data:image/jpeg;base64,' + HomeTeamBadge"
               />
               <span class="team-name">{{ HomeTeam }}</span>
-              <span class="score">{{ HomeTeamScore }} : {{ AwayTeamScore }}</span>
+              <span class="score"
+                >{{ HomeTeamScore }} : {{ AwayTeamScore }}</span
+              >
               <span class="team-name">{{ AwayTeam }}</span>
               <img
                 v-if="AwayTeamBadge.length"
                 style="width: 150px;"
                 v-bind:src="'data:image/jpeg;base64,' + AwayTeamBadge"
               />
-            <div class="mt-4 info">
-              <h4>Data: {{ GameDate | formatDate }}</h4>
-              <h4>Arena: {{ Arena }}</h4>
-              <h4>Sędziowie: {{ FirstReferee }}, {{ SecondReferee }}</h4>
-            </div>
+              <div class="mt-4 info">
+                <h4>Data: {{ GameDate | formatDate }}</h4>
+                <h4>Arena: {{ Arena }}</h4>
+                <h4>Sędziowie: {{ FirstReferee }}, {{ SecondReferee }}</h4>
+              </div>
             </div>
           </div>
         </div>
@@ -83,7 +85,12 @@
           type="normal"
           styling-mode="outlined"
           text="Wróć"
-          @click="function() { $router.push({ name: 'games.index' }); }"/>
+          @click="
+            () => {
+              $router.push({ name: 'games.index' });
+            }
+          "
+        />
       </div>
     </div>
   </div>
@@ -129,46 +136,50 @@ export default {
 };
 </script>
 <style scoped>
-.main-header-title{
+.main-header-title {
   color: rgb(31, 31, 131);
   font-size: 32px;
 }
-.teams{
+.teams {
   display: flex;
   justify-content: center;
 }
-.left-div{
+.left-div {
   align-content: flex-start;
 }
-.right-div{
+.right-div {
   align-content: flex-end;
 }
-.flexxin{
+.flexxin {
   display: flex;
   flex-grow: 1;
   justify-content: space-between;
 }
-.score{
+.score {
   font-size: 24px;
   font-weight: 800;
   color: #4d4d4d;
   margin-right: 40px;
   margin-left: 40px;
 }
-.team-name{
-  font-size: 24px; 
+.team-name {
+  font-size: 24px;
   margin-right: 20px;
   margin-left: 20px;
 }
-.info{
+.info {
   text-align: center;
 }
-.player-name{
+.player-name {
   color: #4d4d4d;
 }
-tr:hover {background-color:#fde2a6;}
-tr:nth-child(even) {background-color: #f7f7f7;}
-table{
+tr:hover {
+  background-color: #fde2a6;
+}
+tr:nth-child(even) {
+  background-color: #f7f7f7;
+}
+table {
   text-align: center;
 }
 </style>

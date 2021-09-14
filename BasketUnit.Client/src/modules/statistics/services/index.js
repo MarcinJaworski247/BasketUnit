@@ -1,18 +1,18 @@
-import axios from "../../../http-common";
+import api from "../../../http-common";
 
 class statisticsService {
-    getTeamAverages() {
-        return axios.get("/statistics/getTeamAverages");
-    }
-    getTeamScoreAndLosePoints() {
-        return axios.get("/statistics/getTeamScoreAndLosePoints");
-    }
-    getTeamForm() {
-        return axios.get("/statistics/getTeamForm");
-    }
-    getFutureGames() {
-        return axios.get("/statistics/getFutureGames")
-    }
+  getTeamAverages() {
+    return api.get("/statistics/getTeamAverages");
+  }
+  getTeamScoreAndLosePoints() {
+    return api.get("/statistics/getTeamScoreAndLosePoints");
+  }
+  getTeamForm() {
+    return api.get("/statistics/getTeamForm");
+  }
+  getFutureGames() {
+    return api.get("/statistics/getFutureGames");
+  }
 }
 
 export default new statisticsService();

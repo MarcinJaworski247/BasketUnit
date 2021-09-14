@@ -79,18 +79,22 @@
   </div>
 </template>
 <script>
+import { mapGetters, mapActions } from "vuex";
+
+// DevExtre,e
 import { DxButton } from "devextreme-vue";
 import { DxDataGrid, DxColumn, DxFilterRow } from "devextreme-vue/data-grid";
-import { mapFields } from "vuex-map-fields";
-import { mapGetters, mapActions } from "vuex";
-const store = "GamesStore";
+
+// store
+const STORE = "GamesStore";
+
 export default {
   name: "games",
   computed: {
-    ...mapGetters(store, ["getGamesList"]),
+    ...mapGetters(STORE, ["getGamesList"]),
   },
   methods: {
-    ...mapActions(store, ["setGamesList"]),
+    ...mapActions(STORE, ["setGamesList"]),
   },
   mounted() {
     this.setGamesList();
@@ -104,7 +108,7 @@ export default {
 };
 </script>
 <style scoped>
-.main-header-title{
+.main-header-title {
   color: #4d4d4d;
   font-size: 32px;
 }

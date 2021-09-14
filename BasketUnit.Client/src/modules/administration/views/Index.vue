@@ -60,7 +60,7 @@ export default {
 };
 </script>
 <style scoped>
-.main-header-title{
+.main-header-title {
   color: #4d4d4d;
   font-size: 32px;
 }
