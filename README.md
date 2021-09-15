@@ -2,7 +2,7 @@
 Basketball team management web application
 
 ### Tech stack:
-![tech-stack](https://user-images.githubusercontent.com/52715998/133473378-15617cba-49e3-4bd9-81c5-f3ca727fd4ea.png)
+![tech-stack](https://user-images.githubusercontent.com/52715998/133474062-f7c634e5-56f7-4bc0-a202-f44b64ef6991.png)
 
 ### Screenshots:
 ![dashboard](https://user-images.githubusercontent.com/52715998/133473367-18b7bd85-d246-4d94-84ea-38a795259766.png)
