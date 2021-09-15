@@ -140,15 +140,20 @@
   </div>
 </template>
 <script>
-import { DxSelectBox, DxButton } from "devextreme-vue";
 import { mapFields } from "vuex-map-fields";
-import { mapGetters, mapActions, mapState } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+
+// DevExtreme
+import { DxSelectBox, DxButton } from "devextreme-vue";
 import notify from "devextreme/ui/notify";
-const store = "FirstLineupStore";
+
+// store
+const STORE = "FirstLineupStore";
+
 export default {
   name: "firstLineup",
   computed: {
-    ...mapGetters(store, [
+    ...mapGetters(STORE, [
       "getPlayersList",
       "getPointGuards",
       "getShootingGuards",
@@ -158,7 +163,7 @@ export default {
       "getForm",
       "getFirstLineupPlayers",
     ]),
-    ...mapFields(store, [
+    ...mapFields(STORE, [
       "editForm.pointGuardId",
       "editForm.shootingGuardId",
       "editForm.smallForwardId",
@@ -167,7 +172,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(store, [
+    ...mapActions(STORE, [
       "setPlayersList",
       "setPointGuards",
       "setShootingGuards",
@@ -211,7 +216,7 @@ export default {
 }
 
 .court-background-image {
-  background-image: url("../../../../assets/court.png");
+  background-image: url("../../../assets/court.png");
   background-repeat: no-repeat;
 }
 
@@ -222,9 +227,8 @@ export default {
   border-radius: 50px;
   background-color: rgb(243, 234, 234);
   text-align: center;
-  /* opacity: 0.8; */
 }
-.main-header-title{
+.main-header-title {
   color: #4d4d4d;
   font-size: 32px;
 }

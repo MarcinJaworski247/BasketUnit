@@ -18,7 +18,9 @@
         </div>
         <div class="col-3">
           <div>
-            <div class="personal-info">Data urodzenia: {{ BirthDate | formatDate }}</div>
+            <div class="personal-info">
+              Data urodzenia: {{ BirthDate | formatDate }}
+            </div>
           </div>
           <div>
             <div class="personal-info">Wzrost [cm]: {{ Height }}</div>
@@ -38,15 +40,14 @@
           </div>
         </div>
         <div class="col-3">
-          
           <div>
             <h4>Narodowość:</h4>
-          <h4>{{ " " + Nationality }}</h4>
-          <img
-            v-if="NationalityFlag.length"
-            style="width: 150px;"
-            v-bind:src="'data:image/jpeg;base64,' + NationalityFlag"
-          />
+            <h4>{{ " " + Nationality }}</h4>
+            <img
+              v-if="NationalityFlag.length"
+              style="width: 150px;"
+              v-bind:src="'data:image/jpeg;base64,' + NationalityFlag"
+            />
           </div>
         </div>
         <div class="col-3">
@@ -64,83 +65,7 @@
       <div class="row mt-2">
         <div class="col-12">
           <h3 class="little-header">Statystyki z ostatnich meczów</h3>
-          <DxDataGrid
-            id="gridContainer"
-            :data-source="getLastGamesStats"
-            key-expr="opponent"
-            :allow-column-reordering="true"
-            :row-alternation-enabled="true"
-            class="main-datagrid"
-          >
-            <DxColumn
-              data-field="opponent"
-              alignment="left"
-              caption="Przeciwko"
-              data-type="string"
-            />
-            <DxColumn
-              data-field="gameTime"
-              alignment="center"
-              caption="Data"
-              data-type="date"
-              format="dd/MM"
-            />
-            <DxColumn
-              data-field="points"
-              alignment="center"
-              caption="Punkty"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="assists"
-              alignment="center"
-              caption="Asysty"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="rebounds"
-              alignment="center"
-              caption="Zbiórki"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="steals"
-              alignment="center"
-              caption="Przechwyty"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="blocks"
-              alignment="center"
-              caption="Bloki"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="fouls"
-              alignment="center"
-              caption="Faule"
-              data-type="number"
-            />
-            <DxColumn
-              data-field="gameId"
-              alignment="center"
-              caption=""
-              cell-template="actionsCellTemplate"
-              :allow-search="false"
-              :allow-filtering="false"
-              width="100"
-            />
-            <div slot="actionsCellTemplate" slot-scope="{ data }">
-              <DxButton
-                @click="function() {$router.push({name: 'games.details',params: { gameId: data.data.gameId }, });}"
-                hint="Szczegóły"
-                title="Szczegóły"
-                icon="fas fa-chevron-right"
-                class="datagrid-button"
-                type="normal"
-              />
-            </div>
-          </DxDataGrid>
+          <LastGamesDataGrid />
         </div>
       </div>
     </div>
@@ -150,7 +75,11 @@
         type="normal"
         styling-mode="outlined"
         text="Wróć"
-        @click="function() {$router.push({ name: 'team.index' });}"
+        @click="
+          () => {
+            $router.push({ name: 'team.index' });
+          }
+        "
       />
     </div>
 
@@ -177,21 +106,19 @@
 </template>
 
 <script>
-import { DxButton, DxPopup } from "devextreme-vue";
-import { DxDataGrid, DxColumn } from "devextreme-vue/data-grid";
-// import {
-//     DxChart,
-//     DxSeries,
-//     DxCommonSeriesSettings,
-//     DxLabel,
-//     DxFormat
-// } from 'devextreme-vue/chart';
 import { mapFields } from "vuex-map-fields";
 import { mapGetters, mapActions } from "vuex";
 
-import InjuriesPopup from "./InjuriesPopup.vue";
+// DevExtreme
+import { DxButton, DxPopup } from "devextreme-vue";
 
-const store = "TeamPlayerDetailsStore";
+// components
+import InjuriesPopup from "./InjuriesPopup.vue";
+import LastGamesDataGrid from "./LastGamesDataGrid";
+
+// store
+const STORE = "TeamPlayerDetailsStore";
+
 export default {
   name: "playerDetails",
   data() {
@@ -200,13 +127,8 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(store, [
-      "getForm",
-      "getLastGamesStats",
-      "getDataToCharts",
-      "getInjuries",
-    ]),
-    ...mapFields(store, [
+    ...mapGetters(STORE, ["getForm", "getDataToCharts", "getInjuries"]),
+    ...mapFields(STORE, [
       "detailsForm.Id",
       "detailsForm.FirstName",
       "detailsForm.LastName",
@@ -227,12 +149,7 @@ export default {
     ]),
   },
   methods: {
-    ...mapActions(store, [
-      "setDetails",
-      "setLastGamesStats",
-      "setDataToChart",
-      "setInjuries",
-    ]),
+    ...mapActions(STORE, ["setDetails", "setDataToChart", "setInjuries"]),
     showInjuriesPopup() {
       this.popupVisible = true;
     },
@@ -242,36 +159,26 @@ export default {
   },
   mounted() {
     this.setDetails();
-    this.setLastGamesStats();
     this.setDataToChart();
     this.setInjuries();
   },
   components: {
     DxPopup,
     DxButton,
-    DxDataGrid,
-    DxColumn,
-    // DxChart,
-    // DxSeries,
-    // DxCommonSeriesSettings,
-    // DxLabel,
-    // DxFormat,
     InjuriesPopup,
+    LastGamesDataGrid,
   },
 };
 </script>
-
 <style scoped>
-.player-tile {
-}
 .player-tile img {
-  border: 1px solid #4d4d4d;;
+  border: 1px solid #4d4d4d;
   border-radius: 5px;
 }
-.personal-info{
+.personal-info {
   font-size: 18px;
 }
-.little-header{
+.little-header {
   color: #4d4d4d;
 }
 </style>

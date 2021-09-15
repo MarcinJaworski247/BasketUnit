@@ -42,21 +42,26 @@
   </form>
 </template>
 <script>
+import { mapActions, mapMutations } from "vuex";
+import { mapFields } from "vuex-map-fields";
+
+// DevExtreme
 import { DxDateBox, DxTextBox, DxButton } from "devextreme-vue";
 import { DxValidator, DxRequiredRule } from "devextreme-vue/validator";
 import { DxValidationGroup } from "devextreme-vue/validation-group";
 import notify from "devextreme/ui/notify";
-import { mapGetters, mapActions, mapMutations } from "vuex";
-import { mapFields } from "vuex-map-fields";
-const store = "TeamPlayerDetailsStore";
+
+// store
+const STORE = "TeamPlayerDetailsStore";
+
 export default {
   name: "injuryAddPopup",
   computed: {
-    ...mapFields(store, ["injuriesAdd.AddInjury", "injuriesAdd.AddInjuredTo"]),
+    ...mapFields(STORE, ["injuriesAdd.AddInjury", "injuriesAdd.AddInjuredTo"]),
   },
   methods: {
-    ...mapActions(store, ["addInjury"]),
-    ...mapMutations(store, ["resetInjuryAdd"]),
+    ...mapActions(STORE, ["addInjury"]),
+    ...mapMutations(STORE, ["resetInjuryAdd"]),
     closePopup: function() {
       this.$emit("closeAdd");
       this.resetForm();

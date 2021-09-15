@@ -15,21 +15,8 @@
       </div>
       <div class="row">
         <div class="col-12">
-          <div class="condition-tile">
-            <div><h3 class="little-header">Forma zawodnika: <span id="popoverLink" @click="showWithShadingOptions"><i class="fas fa-info-circle text-info"></i></span></h3></div>
-            <div class="condition" v-if="getPlayerCondition === 0">
-              <span class="declining-arrow">&#8600;</span>
-            </div>
-            <div class="condition" v-else-if="getPlayerCondition === 1">
-              <span class="stable-arrow">&#8594;</span>
-            </div>
-            <div class="condition" v-else-if="getPlayerCondition === 2">
-              <span class="rising-arrow">&#8599;</span>
-            </div>
-          </div>
+          <Condition />
         </div>
-        
-
       </div>
       <div class="row">
         <div class="col-3">
@@ -70,15 +57,14 @@
         </div>
       </div>
 
-      <!-- <div class="row mt-4"> -->
-        
-      <!-- </div> -->
-
       <div class="row mt-4">
         <h3 class="little-header">Średnie statystyki na tle reszty zespołu</h3>
         <div class="col-12">
-          <!-- statystyki na tle drużyny -->
-          <DxChart :data-source="getDataToCharts" title="" palette="Harmony Light">
+          <DxChart
+            :data-source="getDataToCharts"
+            title=""
+            palette="Harmony Light"
+          >
             <DxCommonSeriesSettings argument-field="statType" type="bar">
               <DxLabel :visible="true">
                 <DxFormat :precision="2" type="fixedPoint" />
@@ -94,7 +80,6 @@
         <div class="col-3">
           <h3 class="little-header">Rekordy w sezonie</h3>
           <div>
-            <!-- rekordy w sezonie -->
             <div
               v-for="item in getPlayerRecords"
               v-bind:key="item.statType"
@@ -105,10 +90,10 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-9">
           <h3 class="little-header">Mecze zawodnika</h3>
-          <!-- grid mecze zawodnika -->
+
           <DxDataGrid
             id="gridContainer"
             :data-source="getAllPlayerGames"
@@ -177,7 +162,14 @@
             />
             <div slot="actionsCellTemplate" slot-scope="{ data }">
               <DxButton
-                @click="function() {$router.push({name: 'games.details',params: { gameId: data.data.gameId },});}"
+                @click="
+                  () => {
+                    $router.push({
+                      name: 'games.details',
+                      params: { gameId: data.data.gameId },
+                    });
+                  }
+                "
                 hint="Szczegóły"
                 title="Szczegóły"
                 icon="fas fa-chevron-right"
@@ -189,27 +181,26 @@
         </div>
       </div>
     </div>
-    <DxPopover
-          :width="300"
-          :visible="withShadingOptionsVisible"
-          :shading="true"
-          target="#popoverLink"
-          position="top"
-          shading-color="rgba(0, 0, 0, 0.5)"
-        >
-          Forma zawodnika obliczana jest według poniższego wzoru:
-    </DxPopover>
     <div class="d-flex end-xs mt-5 mb-4">
       <DxButton
         :use-submit-behavior="false"
         type="normal"
         styling-mode="outlined"
         text="Wróć"
-        @click="function() {$router.push({ name: 'team.index' });}"/>
+        @click="
+          () => {
+            $router.push({ name: 'team.index' });
+          }
+        "
+      />
     </div>
   </div>
 </template>
 <script>
+import { mapFields } from "vuex-map-fields";
+import { mapGetters, mapActions } from "vuex";
+
+// DevExtreme
 import {
   DxChart,
   DxSeries,
@@ -218,16 +209,15 @@ import {
   DxFormat,
 } from "devextreme-vue/chart";
 import { DxDataGrid, DxColumn } from "devextreme-vue/data-grid";
-import DxPieChart, {
-  DxLegend,
-  DxConnector,
-  DxExport,
-} from "devextreme-vue/pie-chart";
-import { DxPopover } from 'devextreme-vue/popover';
+import DxPieChart, { DxLegend, DxConnector } from "devextreme-vue/pie-chart";
 import { DxButton } from "devextreme-vue";
-import { mapFields } from "vuex-map-fields";
-import { mapGetters, mapActions } from "vuex";
-const store = "TeamPlayerDetailsStore";
+
+// store
+const STORE = "TeamPlayerDetailsStore";
+
+// components
+import Condition from "./Condition.vue";
+
 export default {
   data() {
     return {
@@ -237,37 +227,31 @@ export default {
           name: "",
         },
       ],
-      withShadingOptionsVisible: false
     };
   },
   computed: {
-    ...mapGetters(store, [
+    ...mapGetters(STORE, [
       "getDataToCharts",
       "getPlayerAvgs",
       "getPlayerRecords",
       "getAllPlayerGames",
       "getDataToSpiderWeb",
-      "getPlayerCondition"
     ]),
-    ...mapFields(store, [
+    ...mapFields(STORE, [
       "detailsForm.FirstName",
       "detailsForm.LastName",
       "detailsForm.Avatar",
     ]),
   },
   methods: {
-    ...mapActions(store, [
+    ...mapActions(STORE, [
       "setDataToChart",
       "setPlayerAvgs",
       "setPlayerRecords",
       "setAllPlayerGames",
       "setDataToSpiderWeb",
-      "setPlayerCondition"
+      "setPlayerCondition",
     ]),
-    showWithShadingOptions() {
-      debugger
-      this.withShadingOptionsVisible = true;
-    }
   },
   mounted() {
     this.setDataToChart();
@@ -275,7 +259,6 @@ export default {
     this.setAllPlayerGames();
     this.setPlayerAvgs();
     this.setDataToSpiderWeb();
-    this.setPlayerCondition();
   },
   components: {
     DxChart,
@@ -289,7 +272,7 @@ export default {
     DxConnector,
     DxLegend,
     DxButton,
-    DxPopover
+    Condition,
   },
 };
 </script>
@@ -315,53 +298,20 @@ export default {
   font-size: 32px;
   color: #ff8000;
 }
-.player-tile{
+.player-tile {
   margin-top: 32px;
 }
-.player-tile img{
-  border: 1px solid #4d4d4d;;
+.player-tile img {
+  border: 1px solid #4d4d4d;
   border-radius: 5px;
 }
-.little-header{
+.little-header {
   color: #4d4d4d;
 }
-#pie{
+#pie {
   width: 700px;
 }
-.declining-arrow{
-  color: red;
-  font-size: 56px;
-  font-weight: 700;
-  text-align: center;
-}
-.stable-arrow{
-  color: black;
-  font-size: 56px;
-  font-weight: 700;
-}
-.rising-arrow{
-  color: green;
-  font-size: 56px;
-  font-weight: 700;
-}
-h4{
+h4 {
   color: #4d4d4d;
-}
-#popoverLink{
-  font-size: 18px;
-}
-#popoverLink:hover{
-  text-decoration: underline;
-  cursor: pointer;
-}
-.condition-tile{
-  border: 1px solid black;
-  padding: 8px;
-  border-radius: 5px;
-  margin-bottom: 8px;
-  width: 250px;
-}
-.condition{
-  text-align: center;
 }
 </style>

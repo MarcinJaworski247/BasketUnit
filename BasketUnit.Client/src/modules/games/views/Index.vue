@@ -81,7 +81,7 @@
 <script>
 import { mapGetters, mapActions } from "vuex";
 
-// DevExtre,e
+// DevExtreme
 import { DxButton } from "devextreme-vue";
 import { DxDataGrid, DxColumn, DxFilterRow } from "devextreme-vue/data-grid";
 

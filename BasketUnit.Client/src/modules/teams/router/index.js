@@ -1,30 +1,23 @@
-import Index from '../views/Index.vue';
-import PlayerDetails from '../views/Components/PlayerDetailsTabPanel.vue';
-import Lineup from '../views/Components/LineupTab.vue';
-import FirstLineup from '../views/Components/FirstLineupTab.vue';
+import PlayerDetails from "../views/PlayerDetails.vue";
+import Lineup from "../views/Lineup.vue";
+import FirstLineup from "../views/FirstLineup.vue";
 
 const routes = [
-    {
-        path: `/team`,
-        name: `team.index`,
-        component: Index
-    },
-    {
-        path: `/team/player/:playerId`,
-        name: `team.player.details`,
-        component: PlayerDetails
-    },
-    {
-        path: `/team/lineup`,
-        name: `team.lineup.index`,
-        component: Lineup
-    },
-    {
-        path: `/team/firstLineup`,
-        name: `team.firstLineup.index`,
-        component: FirstLineup
-    }
-]
+  {
+    path: `/team/player/:playerId`,
+    name: `team.player.details`,
+    component: PlayerDetails,
+  },
+  {
+    path: `/team/lineup`,
+    name: `team.lineup.index`,
+    component: Lineup,
+  },
+  {
+    path: `/team/firstLineup`,
+    name: `team.firstLineup.index`,
+    component: FirstLineup,
+  },
+];
 
 export default routes;
-

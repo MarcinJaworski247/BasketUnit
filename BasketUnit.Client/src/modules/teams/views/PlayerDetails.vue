@@ -29,13 +29,16 @@
     </div>
   </div>
 </template>
-
 <script>
+// DevExtreme
 import { DxTabPanel } from "devextreme-vue";
-import BioTab from "./PlayerBioTab";
-import StatsTab from "./PlayerStatsTab";
+
+// components
+import BioTab from "../components/Bio/PlayerBioTab";
+import StatsTab from "../components/Stats/PlayerStatsTab";
+
 export default {
-  name: "administration",
+  name: "playerDetails",
   data() {
     return {
       tabs: [
@@ -60,7 +63,7 @@ export default {
 };
 </script>
 <style scoped>
-.main-header-title{
+.main-header-title {
   color: #4d4d4d;
   font-size: 32px;
 }
