@@ -1,8 +1,18 @@
 # BasketUnit
 Basketball team management web application
 
-### Tech stack:
-![tech-stack](https://user-images.githubusercontent.com/52715998/133474062-f7c634e5-56f7-4bc0-a202-f44b64ef6991.png)
+### Frontend
+- Vue 2
+- Vuex
+- Axios
+- DevExtreme UI Controls
+
+### Backend
+- .NET Core 3.1 
+- EntityFramework Core
+- ML.NET
+- MS SQL
+
 
 ### Screenshots:
 ![dashboard](https://user-images.githubusercontent.com/52715998/133473367-18b7bd85-d246-4d94-84ea-38a795259766.png)
