@@ -13,8 +13,6 @@ Basketball team management web application
 - ML.NET
 - MS SQL
 
-
-### Screenshots:
 ![dashboard](https://user-images.githubusercontent.com/52715998/133473367-18b7bd85-d246-4d94-84ea-38a795259766.png)
 ![first-lineup](https://user-images.githubusercontent.com/52715998/133473368-b9927d4a-7e9e-41de-b8ab-d775204c6d05.png)
 ![game-details](https://user-images.githubusercontent.com/52715998/133473370-f5e02a4d-4c33-4b1d-98d9-ee4970fedc4f.png)
